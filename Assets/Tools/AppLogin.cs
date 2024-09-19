@@ -1,14 +1,11 @@
+using Cysharp.Threading.Tasks;
 using System;
+using UniRx;
 using Unity.Services.Authentication;
 using Unity.Services.Authentication.PlayerAccounts;
 using Unity.Services.Core;
 //using Unity.Services.RemoteConfig;
 using UnityEngine;
-using Zenject;
-using UniRx;
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
-using GluonGui.Dialog;
 
 namespace Tools
 {
