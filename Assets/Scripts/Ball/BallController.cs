@@ -12,28 +12,30 @@ public class BallController
     public IReactiveProperty<bool> Active { get; }
 
     private float m_initialAngle;
+    private Rigidbody2D m_rigidbody;
 
-    public BallController(float initialForce, int power, Vector3 startPosition, float initialAngle)
+    public BallController(float initialForce, int power, Vector3 startPosition, 
+        float initialAngle, Rigidbody2D rigidbody)
     {
         InitialForce = initialForce;
         Power = power;
         StartPosition = startPosition;
         Active = new ReactiveProperty<bool>(true);
         m_initialAngle = initialAngle;
+        m_rigidbody = rigidbody;
     }
 
-    public Vector2 AddInitialForce()
+    public void AddInitialForce()
     {
         var force = new Vector2
         {
             x = Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce,
             y = Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce
         };
-
-        return force;
+        m_rigidbody.AddForce(force);
     }
 
-    public Vector2 CalculateBounceVelocityPaddle(Collision2D collision, float maxPaddleBounceAngle)
+    public void CalculateBounceVelocityPaddle(Collision2D collision, float maxPaddleBounceAngle)
     {
         var localContact = collision.transform.InverseTransformPoint(collision.contacts[0].point);
         var paddleWidth = collision.collider.GetComponent<SpriteRenderer>().bounds.size.x;
@@ -45,6 +47,7 @@ public class BallController
             x = Mathf.Sin(bounceAngle) * InitialForce,
             y = Mathf.Cos(bounceAngle) * InitialForce
         };
-        return bounceForce;
+        m_rigidbody.velocity = Vector2.zero;  // Reset velocity before applying bounce
+        m_rigidbody.AddForce(bounceForce);
     }
 }

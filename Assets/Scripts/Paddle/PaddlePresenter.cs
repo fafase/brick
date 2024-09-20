@@ -9,28 +9,26 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
 
     private PaddleController m_paddleController;
 
-    public Vector3 XLeft => m_deckLeftLimit.position;
-    public Vector3 XRight => m_deckRightLimit.position;
     public float Size => GetComponent<SpriteRenderer>().bounds.size.x;
     public float Scale => transform.localScale.x;
 
     private void Start()
     {
         SetPaddleController();
-        SetUpdate();
+        BindInput();
     }
 
     private void SetPaddleController() 
     {
-        SpriteRenderer sp = m_paddleTr.GetComponent<SpriteRenderer>();
-        m_paddleController = new(this, m_paddleTr.position);
+        // Calculate the screen limits in world space
+        float deckLeftScreen = Camera.main.WorldToScreenPoint(m_deckLeftLimit.position).x;
+        float deckRightScreen = Camera.main.WorldToScreenPoint(m_deckRightLimit.position).x;
+        m_paddleController = new(this, m_paddleTr.position, deckLeftScreen, deckRightScreen);
         m_paddleController.PaddlePos
             .Skip(1)
-            .Subscribe(newPosition =>
-            {
-                m_paddleTr.position = newPosition;
-            })
+            .Subscribe(newPosition => m_paddleTr.position = newPosition)
             .AddTo(this);
+
         m_paddleController.PaddleScale
             .Subscribe(newScale =>
             {
@@ -39,7 +37,7 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
             });
     }
 
-    private void SetUpdate() 
+    private void BindInput() 
     {
         var update = Observable.EveryUpdate();
         update
@@ -50,15 +48,13 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
 
         update
             .Where(_ => Input.GetKeyDown(KeyCode.Space))
-            .Subscribe(m_paddleController.SetScale);
+            .Subscribe(m_paddleController.SetScale)
+            .AddTo(this);
     }
 }
 
 public interface IPaddleProvider 
 {
-    Vector3 XLeft { get; }
-    Vector3 XRight { get; }
     float Size { get; }
     float Scale { get; }
-    
 }

@@ -3,29 +3,31 @@ using UnityEngine;
 
 public class PaddleController
 {
-    private float m_speed;
     private Vector3 m_defaultPosition;
     private Vector2 m_limits;
 
-    private readonly float m_defaultSize;
     private readonly IPaddleProvider m_provider;
     private readonly float m_deckLeft, m_deckRight;
 
     public ReactiveProperty<Vector3> PaddlePos = new ReactiveProperty<Vector3>();
     public ReactiveProperty<float> PaddleScale = new ReactiveProperty<float>();
 
-    public PaddleController(IPaddleProvider provider, Vector3 defaultPos)
+    public PaddleController(IPaddleProvider provider, Vector3 defaultPos, float deckLeftScreen, float deckRightScreen)
     {
         m_provider = provider;
-        m_deckLeft = Camera.main.WorldToScreenPoint(m_provider.XLeft).x;
-        m_deckRight = Camera.main.WorldToScreenPoint(m_provider.XRight).x;
-
         m_defaultPosition = defaultPos;
+
+        m_deckLeft = deckLeftScreen;
+        m_deckRight = deckRightScreen;
+
         PaddleScale.Value =  m_provider.Scale;
         PaddleScale
+            .Skip(1)
             .DelayFrame(1)
-            .Subscribe(SetLimits);
-        SetLimits(0f);
+            .Subscribe(SetLimits)
+            .AddTo(m_provider as Component);
+
+        SetLimits(PaddleScale.Value);
     }
 
     public void ProcessPosition(Vector3 mousePos)

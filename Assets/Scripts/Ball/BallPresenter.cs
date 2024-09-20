@@ -19,33 +19,19 @@ public class BallPresenter : MonoBehaviour
     private const string s_paddleTag = "Paddle";
 
     private BallController m_ballController;
-    private Rigidbody2D m_rigidbody;
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
 
     private void Start()
     {
-        transform.position = m_startPosition.position;
-        m_rigidbody = GetComponent<Rigidbody2D>();    
-        m_ballController = new(m_initialForce, m_power, m_startPosition.position, m_initialForce);
-        SetInitialForce();
+        transform.position = m_startPosition.position;   
+        m_ballController = new(m_initialForce, m_power, m_startPosition.position, 
+            m_initialForce, GetComponent<Rigidbody2D>());
 
+        m_ballController.AddInitialForce();
         var collision = this.OnCollisionEnter2DAsObservable();
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
-            .Subscribe(ProcessBouncePaddle);
-    }
-
-    private void ProcessBouncePaddle(Collision2D collider) 
-    {
-        Vector2 bounceForce = m_ballController.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle);
-        m_rigidbody.velocity = Vector2.zero;
-        m_rigidbody.AddForce(bounceForce);
-    }
-
-    private void SetInitialForce() 
-    {
-        Vector2 force = m_ballController.AddInitialForce(this);
-        m_rigidbody.AddForce(force);
+            .Subscribe(collider => m_ballController.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle));
     }
 }
