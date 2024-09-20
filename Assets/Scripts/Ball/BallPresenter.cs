@@ -30,22 +30,22 @@ public class BallPresenter : Presenter<BallController>
         m_controller.Init(m_initialForce, m_power, m_startPosition.position, 
             m_initialAngle, GetComponent<Rigidbody2D>());
 
-        m_controlelr.AddInitialForce();
+        m_controller.AddInitialForce();
         var collision = this.OnCollisionEnter2DAsObservable();
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
-            .Subscribe(collider => m_ballController.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle))
+            .Subscribe(collider => m_controller.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle))
             .AddTo(this);
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_brickTag))
-            .Subscribe(collider => collider.gameObject.GetComponent<IDamage>().ApplyDamage(m_ballController.Power))
+            .Subscribe(collider => collider.gameObject.GetComponent<IDamage>().ApplyDamage(m_controller.Power))
             .AddTo(this);
         
         collision
             .Where(collider => collider.gameObject.CompareTag(s_deathZone))
-            .Subscribe(_ => m_ballController.Active.Value = false)
+            .Subscribe(_ => m_controller.Active.Value = false)
             .AddTo(this);
 
         m_controller.Active

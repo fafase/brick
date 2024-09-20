@@ -15,7 +15,7 @@ public class BallController
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
 
-    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle Rigidbody2D rigidbody)
+    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody)
     {
         InitialForce = initialForce;
         Power = power;
