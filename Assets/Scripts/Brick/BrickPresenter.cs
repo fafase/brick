@@ -1,17 +1,16 @@
 using UniRx;
 using UnityEngine;
 
-public class BrickPresenter : MonoBehaviour, IDamage
+public class BrickPresenter : Presenter<BrickController>, IDamage
 {
     [SerializeField] private int m_health = 1;
     [SerializeField] private GameObject m_destructionFX;
 
-    private BrickController m_brickController;
 
     void Start() 
     {
-        m_brickController = new BrickController(m_health);
-        m_brickController.HealthProperty
+        m_controller.Init(m_health);
+        m_controller.HealthProperty
             .Where(value => value <= 0)
             .Subscribe(_ => DestroyBrick())
             .AddTo(this);
@@ -24,7 +23,7 @@ public class BrickPresenter : MonoBehaviour, IDamage
             Debug.LogWarning("Invalid power value: Power must be greater than zero.");
             return;
         }
-        m_brickController.ApplyDamage(power); 
+        m_controller.ApplyDamage(power); 
     }
     private void DestroyBrick() 
     {

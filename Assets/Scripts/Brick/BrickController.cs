@@ -3,7 +3,7 @@ using UniRx;
 public class BrickController 
 {
     public ReactiveProperty<int> HealthProperty;
-    public BrickController(int health)
+    public void Init(int health)
     {
         HealthProperty = new ReactiveProperty<int>(health > 0 ? health : 1);
     }

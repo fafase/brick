@@ -1,21 +1,21 @@
+using System;
 using UniRx;
 using UnityEngine;
 
 public class BallController 
 {
-    public float InitialForce { get; }
+    public float InitialForce { get; private set; }
 
-    public int Power { get; }
+    public int Power { get; private set; }
 
-    public Vector3 StartPosition { get; }
+    public Vector3 StartPosition { get; private set; }
 
-    public IReactiveProperty<bool> Active { get; }
+    public IReactiveProperty<bool> Active { get; private set; }
 
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
 
-    public BallController(float initialForce, int power, Vector3 startPosition, 
-        float initialAngle, Rigidbody2D rigidbody)
+    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle Rigidbody2D rigidbody)
     {
         InitialForce = initialForce;
         Power = power;
