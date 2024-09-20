@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
-using UnityEngine;
 
 public class BrickController 
 {
     public ReactiveProperty<int> HealthProperty;
     public BrickController(int health)
     {
-        HealthProperty = new ReactiveProperty<int>(health);
+        HealthProperty = new ReactiveProperty<int>(health > 0 ? health : 1);
     }
     public void ApplyDamage(int damage) 
     {

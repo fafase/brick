@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 public class BrickPresenter : MonoBehaviour, IDamage
 {
     [SerializeField] private int m_health = 1;
+    [SerializeField] private GameObject m_destructionFX;
 
     private BrickController m_brickController;
 
@@ -19,6 +17,21 @@ public class BrickPresenter : MonoBehaviour, IDamage
             .AddTo(this);
     }
 
-    public void ApplyDamage(int power) => m_brickController.ApplyDamage(power);
-    private void DestroyBrick() => Destroy(gameObject);
+    public void ApplyDamage(int power) 
+    {
+        if (power <= 0)
+        {
+            Debug.LogWarning("Invalid power value: Power must be greater than zero.");
+            return;
+        }
+        m_brickController.ApplyDamage(power); 
+    }
+    private void DestroyBrick() 
+    {
+        // Optionally trigger some visual destruction effect before the brick is destroyed
+        if (m_destructionFX != null)
+        {
+            Instantiate(m_destructionFX, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject); }
 }
