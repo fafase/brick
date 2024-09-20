@@ -1,3 +1,4 @@
+using Castle.Components.DictionaryAdapter.Xml;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class BallPresenter : MonoBehaviour
     [SerializeField]
     private Transform m_startPosition;
 
-    private const string s_collisionTag = "BallBounce";
+    private const string s_brickTag = "Brick";
     private const string s_paddleTag = "Paddle";
 
     private BallController m_ballController;
@@ -32,6 +33,16 @@ public class BallPresenter : MonoBehaviour
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
-            .Subscribe(collider => m_ballController.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle));
+            .Subscribe(collider => m_ballController.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle))
+            .AddTo(this);
+
+        collision
+            .Where(collider => collider.gameObject.CompareTag(s_brickTag))
+            .Subscribe(collider => collider.gameObject.GetComponent<IDamage>().ApplyDamage(m_ballController.Power))
+            .AddTo(this);
     }
+}
+public interface IDamage 
+{
+    void ApplyDamage(int power);
 }
