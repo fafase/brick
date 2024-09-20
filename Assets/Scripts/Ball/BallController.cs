@@ -14,13 +14,15 @@ public class BallController
 
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
-
+    public BallController()
+    {
+        Active = new ReactiveProperty<bool>(true);
+    }
     public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody)
     {
         InitialForce = initialForce;
         Power = power;
         StartPosition = startPosition;
-        Active = new ReactiveProperty<bool>(true);
         m_initialAngle = initialAngle;
         m_rigidbody = rigidbody;
     }

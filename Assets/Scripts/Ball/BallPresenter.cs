@@ -1,3 +1,4 @@
+using System;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class BallPresenter : Presenter<BallController>
     private const string s_deathZone = "Death";
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
+    public BallController Ball => m_controller;
 
     private void Start()
     {
@@ -49,11 +51,16 @@ public class BallPresenter : Presenter<BallController>
             .AddTo(this);
 
         m_controller.Active
-            .Where(value => value == false)
             .Subscribe(gameObject.SetActive)
             .AddTo(this);
     }
 
+    public void ResetBall()
+    {
+        transform.position = m_startPosition.position;
+        m_controller.Active.Value = true;
+        m_controller.AddInitialForce();
+    }
 }
 public interface IDamage 
 {
