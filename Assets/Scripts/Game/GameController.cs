@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
-using UnityEngine;
 
 public class GameController
 {
     public ReactiveProperty<int> BallAmount { get; private set; }
+    public ReactiveProperty<int> Score = new ReactiveProperty<int>();
 
     public GameController()
     {
@@ -20,4 +18,6 @@ public class GameController
     {
         BallAmount.Value--;
     }
+
+    public void AddScore(int score) => Score.Value += score;
 }

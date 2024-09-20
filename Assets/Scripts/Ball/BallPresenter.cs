@@ -25,6 +25,7 @@ public class BallPresenter : Presenter<BallController>
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
     public BallController Ball => m_controller;
+    public Subject<int> Score = new Subject<int>();
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class BallPresenter : Presenter<BallController>
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_brickTag))
-            .Subscribe(collider => collider.gameObject.GetComponent<IDamage>().ApplyDamage(m_controller.Power))
+            .Subscribe(BrickCollision)
             .AddTo(this);
         
         collision
@@ -55,6 +56,15 @@ public class BallPresenter : Presenter<BallController>
             .AddTo(this);
     }
 
+    public void BrickCollision(Collision2D collider) 
+    {
+        collider.gameObject.GetComponent<IDamage>()?.ApplyDamage(m_controller.Power);
+        if(collider.gameObject.GetComponent<IScore>() is IScore score)
+        {
+            Score.OnNext(score.Score);
+        }
+    }
+
     public void ResetBall()
     {
         transform.position = m_startPosition.position;
@@ -65,4 +75,8 @@ public class BallPresenter : Presenter<BallController>
 public interface IDamage 
 {
     void ApplyDamage(int power);
+}
+public interface IScore 
+{
+    int Score { get; }
 }

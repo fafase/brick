@@ -1,11 +1,13 @@
 using UniRx;
 using UnityEngine;
 
-public class BrickPresenter : Presenter<BrickController>, IDamage
+public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
 {
     [SerializeField] private int m_health = 1;
+    [SerializeField] private int m_score = 100;
     [SerializeField] private GameObject m_destructionFX;
 
+    public int Score => m_score;
 
     void Start() 
     {
@@ -25,6 +27,7 @@ public class BrickPresenter : Presenter<BrickController>, IDamage
         }
         m_controller.ApplyDamage(power); 
     }
+
     private void DestroyBrick() 
     {
         // Optionally trigger some visual destruction effect before the brick is destroyed

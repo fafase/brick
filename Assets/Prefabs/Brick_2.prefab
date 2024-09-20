@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 2
+  m_score: 200
+  m_destructionFX: {fileID: 0}
 --- !u!61 &5291317613170254122
 BoxCollider2D:
   m_ObjectHideFlags: 0
