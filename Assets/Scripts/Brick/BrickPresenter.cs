@@ -9,10 +9,12 @@ public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
 
     public int Score => m_score;
 
+    public IBrick Brick => m_controller;
+
     void Start() 
     {
         m_controller.Init(m_health);
-        m_controller.HealthProperty
+        m_controller.Health
             .Where(value => value <= 0)
             .Subscribe(_ => DestroyBrick())
             .AddTo(this);
@@ -36,4 +38,13 @@ public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
             Instantiate(m_destructionFX, transform.position, Quaternion.identity);
         }
         Destroy(gameObject); }
+}
+
+public interface IBrick 
+{
+    IReactiveProperty<int> Health { get; }
+
+    void Init(int health);
+
+    void ApplyDamage(int damage);
 }

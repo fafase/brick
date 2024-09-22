@@ -1,17 +1,17 @@
 using UniRx;
 
-public class BrickController 
+public class BrickController :IBrick
 {
-    public ReactiveProperty<int> HealthProperty;
+    public IReactiveProperty<int> Health { get; private set; }
 
     public BrickController()
     {
-        HealthProperty = new ReactiveProperty<int>();
+        Health = new ReactiveProperty<int>();
     }
 
     public void Init(int health)
     {
-        HealthProperty.Value = health > 0 ? health : 1;
+        Health.Value = health > 0 ? health : 1;
     }
 
     public void ApplyDamage(int damage) 
@@ -20,6 +20,6 @@ public class BrickController
         {
             return;
         }
-        HealthProperty.Value -= damage;
+        Health.Value -= damage;
     }
 }

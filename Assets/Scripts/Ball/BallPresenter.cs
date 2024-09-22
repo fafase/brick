@@ -2,8 +2,9 @@ using System;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
 
-public class BallPresenter : Presenter<BallController>
+public class BallPresenter : MonoBehaviour
 {
     [SerializeField]
     [Range(0f, 90f)]
@@ -19,12 +20,15 @@ public class BallPresenter : Presenter<BallController>
     [SerializeField]
     private Transform m_startPosition;
 
+    [Inject]
+    private IBallController m_controller;
+
     private const string s_brickTag = "Brick";
     private const string s_paddleTag = "Paddle";
     private const string s_deathZone = "Death";
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
-    public BallController Ball => m_controller;
+    public IBallController Ball => m_controller;
     public Subject<int> Score = new Subject<int>();
 
     private void Start()

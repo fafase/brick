@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class BallController 
+public class BallController : IBallController
 {
     public float InitialForce { get; private set; }
 
@@ -52,4 +52,13 @@ public class BallController
         m_rigidbody.velocity = Vector2.zero;  // Reset velocity before applying bounce
         m_rigidbody.AddForce(bounceForce);
     }
+}
+public interface IBallController
+{
+    IReactiveProperty<bool> Active { get; }
+    int Power { get; }
+
+    void AddInitialForce();
+    void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
+    void Init(float m_initialForce, int m_power, Vector3 position, float m_initialAngle, Rigidbody2D rigidbody2D);
 }

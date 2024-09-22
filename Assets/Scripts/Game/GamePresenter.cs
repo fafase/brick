@@ -1,32 +1,63 @@
 using System;
+using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public class GamePresenter : Presenter<GameController>
 {
     [SerializeField] private int m_amountBalls = 3;
     [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
+    [SerializeField] private TextMeshProUGUI m_timerTxt;
     [SerializeField] private BallPresenter m_ballPresenter;
 
+    [Inject] private IBrickSystem m_brickSystem;
+
     private IDisposable m_restartUpdate;
-    
+    private IDisposable m_timer;
+    private int m_sessionDuration = 60;
+
     private void Start()
     {
         BindController();
         BindBall();
+        BindTimer();
+        BindBrickSystem();
 
         m_restartUpdate = Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
-            .Subscribe(_ => ResetBall());
+            .Subscribe(_ => ResetBall());     
+    }
+    private void BindBrickSystem() 
+    {
+        m_brickSystem.Bricks
+            .ObserveCountChanged()
+            .Where(count => count <= 0)
+            .Subscribe(_ => WinLevel());
+    }
+
+    private void BindTimer() 
+    {
+        m_timerTxt.text = $"{m_sessionDuration}s";
+
+        m_timer = Observable.Interval(System.TimeSpan.FromSeconds(1))
+            .Select(elapsed => m_sessionDuration - (int)elapsed)
+            .TakeWhile(remaining => remaining >= 0)
+            .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
+                () =>
+                {
+                    m_timer.Dispose();
+                })
+            .AddTo(this);
     }
 
     private void BindController() 
     {
         m_controller.Init(m_amountBalls);
         m_controller.BallAmount
-               .Subscribe(i => m_ballAmount.text = $"Ball : {i}")
+               .Subscribe(i => m_ballAmount.text = $"BALL\n{i}")
                .AddTo(this);
 
         m_controller.BallAmount
@@ -35,7 +66,7 @@ public class GamePresenter : Presenter<GameController>
             .AddTo(this);
 
         m_controller.Score
-            .Subscribe(score => m_scoreTxt.text = $"Score : {score}");
+            .Subscribe(score => m_scoreTxt.text = $"SCORE\n{score}");
     }
 
     private void BindBall() 
@@ -59,5 +90,12 @@ public class GamePresenter : Presenter<GameController>
     private void EndLevel() 
     {
         m_restartUpdate.Dispose();
+    }
+
+    private void WinLevel() 
+    {
+        m_restartUpdate.Dispose();
+        m_timer.Dispose ();
+        Debug.Log("WINNING");
     }
 }
