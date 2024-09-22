@@ -1,6 +1,7 @@
 using UniRx;
+using Tools;
 
-public class BrickController :IBrick
+public class BrickController : Presenter, IBrick
 {
     public IReactiveProperty<int> Health { get; private set; }
 
@@ -21,5 +22,12 @@ public class BrickController :IBrick
             return;
         }
         Health.Value -= damage;
+    }
+
+    public override void Dispose()
+    {
+        if (m_isDisposed) { return; }
+        base.Dispose();
+        (Health as ReactiveProperty<int>)?.Dispose();
     }
 }

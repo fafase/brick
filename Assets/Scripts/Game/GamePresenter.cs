@@ -4,8 +4,9 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using Tools;
 
-public class GamePresenter : Presenter<GameController>
+public class GamePresenter : View<GameController>
 {
     [SerializeField] private int m_amountBalls = 3;
     [SerializeField] private TextMeshProUGUI m_ballAmount;
@@ -55,17 +56,17 @@ public class GamePresenter : Presenter<GameController>
 
     private void BindController() 
     {
-        m_controller.Init(m_amountBalls);
-        m_controller.BallAmount
+        m_presenter.Init(m_amountBalls);
+        m_presenter.BallAmount
                .Subscribe(i => m_ballAmount.text = $"BALL\n{i}")
                .AddTo(this);
 
-        m_controller.BallAmount
+        m_presenter.BallAmount
             .Where(value => value == 0)
             .Subscribe(_ => EndLevel())
             .AddTo(this);
 
-        m_controller.Score
+        m_presenter.Score
             .Subscribe(score => m_scoreTxt.text = $"SCORE\n{score}");
     }
 
@@ -74,11 +75,11 @@ public class GamePresenter : Presenter<GameController>
         m_ballPresenter.Ball
             .Active
             .Where(value => value == false)
-            .Subscribe(_ => m_controller.DecreaseBallAmount())
+            .Subscribe(_ => m_presenter.DecreaseBallAmount())
             .AddTo(this);
 
         m_ballPresenter.Score
-            .Subscribe(m_controller.AddScore)
+            .Subscribe(m_presenter.AddScore)
             .AddTo(this);
     }
 

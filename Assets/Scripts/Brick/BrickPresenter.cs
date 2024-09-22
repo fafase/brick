@@ -1,7 +1,8 @@
 using UniRx;
 using UnityEngine;
+using Tools;
 
-public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
+public class BrickPresenter : View<BrickController>, IDamage, IScore
 {
     [SerializeField] private int m_health = 1;
     [SerializeField] private int m_score = 100;
@@ -9,12 +10,12 @@ public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
 
     public int Score => m_score;
 
-    public IBrick Brick => m_controller;
+    public IBrick Brick => m_presenter;
 
     void Start() 
     {
-        m_controller.Init(m_health);
-        m_controller.Health
+        m_presenter.Init(m_health);
+        m_presenter.Health
             .Where(value => value <= 0)
             .Subscribe(_ => DestroyBrick())
             .AddTo(this);
@@ -27,7 +28,7 @@ public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
             Debug.LogWarning("Invalid power value: Power must be greater than zero.");
             return;
         }
-        m_controller.ApplyDamage(power); 
+        m_presenter.ApplyDamage(power); 
     }
 
     private void DestroyBrick() 
