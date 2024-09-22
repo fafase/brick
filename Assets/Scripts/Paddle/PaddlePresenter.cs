@@ -45,11 +45,6 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
             .Select(_ => Input.mousePosition)
             .Subscribe(m_paddleController.ProcessPosition)
             .AddTo(this);
-
-        update
-            .Where(_ => Input.GetKeyDown(KeyCode.Space))
-            .Subscribe(m_paddleController.SetScale)
-            .AddTo(this);
     }
 }
 

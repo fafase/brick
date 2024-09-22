@@ -1,7 +1,8 @@
 using UniRx;
 using UnityEngine;
+using Tools;
 
-public class BrickPresenter : Presenter<BrickController>, IDamage, IScore
+public class BrickPresenter : View<BrickController>, IDamage, IScore
 {
     [SerializeField] private int m_health = 1;
     [SerializeField] private int m_score = 100;

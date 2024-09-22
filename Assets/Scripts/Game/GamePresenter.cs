@@ -4,8 +4,9 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using Tools;
 
-public class GamePresenter : Presenter<GameController>
+public class GamePresenter : View<GameController>
 {
     [SerializeField] private int m_amountBalls = 3;
     [SerializeField] private TextMeshProUGUI m_ballAmount;
