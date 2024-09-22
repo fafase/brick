@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace Tools
 
     public interface IPopupManager
     {
-        List<Popup> Popups { get; }
+        IEnumerable<IPopup> Popups { get; }
         RectTransform Container { get; }
 
         void Close(IPopup popup);
@@ -34,7 +35,7 @@ namespace Tools
         bool IsOpen<T>() where T : IPopup;
         IObservable<T> GetPopup<T>() where T : IPopup;
         int PopupsCount {  get; }
-        List<IPopup> PopupList { get; }
+        //IEnumerable<IPopup> PopupList { get; }
         IPopup Clone(IPopup popup);
     }
 }

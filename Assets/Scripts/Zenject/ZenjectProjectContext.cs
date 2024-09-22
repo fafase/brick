@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Tools;
+using UnityEditor.Localization.Editor;
 using UnityEngine;
+using Zenject;
 
-public class ZenjectProjectContext : MonoBehaviour
+public class ZenjectProjectContext : MonoInstaller
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private PopupManager m_popupManager;
+
+    public override void InstallBindings()
     {
-        
+        Container.BindInterfacesTo<PopupManager>().FromComponentInNewPrefab(m_popupManager).AsSingle().NonLazy();
     }
 }

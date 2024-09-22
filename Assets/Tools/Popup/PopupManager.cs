@@ -10,12 +10,11 @@ namespace Tools
     public class PopupManager : View<PopupManagerPresenter>, IPopupManager
     {
         [SerializeField] private List<Popup> m_popups = new List<Popup>();
-        public List<Popup> Popups => m_popups;
+        public IEnumerable<IPopup> Popups => m_popups.Cast<IPopup>();
         public RectTransform Container => transform as RectTransform;
         public IObservable<PopupState> OpenPopups => m_presenter.PopupStateSubject.AsObservable();
         public IReactiveProperty<int> PopupsCountObservable => m_presenter.PopupsCountObservable;
         public int PopupsCount => m_presenter.Count;
-        public List<IPopup> PopupList => m_popups.Cast<IPopup>().ToList();
 
         protected override void Awake()
         {

@@ -15,6 +15,7 @@ public class GamePresenter : View<GameController>
     [SerializeField] private BallPresenter m_ballPresenter;
 
     [Inject] private IBrickSystem m_brickSystem;
+    [Inject] private IPopupManager m_popupManager;
 
     private IDisposable m_restartUpdate;
     private IDisposable m_timer;
@@ -29,7 +30,7 @@ public class GamePresenter : View<GameController>
 
         m_restartUpdate = Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
-            .Subscribe(_ => ResetBall());     
+            .Subscribe(_ => ResetBall());
     }
     private void BindBrickSystem() 
     {

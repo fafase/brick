@@ -20,7 +20,7 @@ namespace Tools
         {
             m_compositeDisposable = new CompositeDisposable();
             m_popupManager = popupManager;
-            m_prefabs = m_popupManager.PopupList.ToDictionary(p => p.GetType(), p => p);
+            m_prefabs = m_popupManager.Popups.ToDictionary(p => p.GetType(), p => p);
             PopupsCountObservable = new ReactiveProperty<int>(m_openPopups.Count);
 
             m_openPopups.ObserveAdd()
