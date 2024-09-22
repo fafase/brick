@@ -8,7 +8,7 @@ using State = Tools.IPopup.State;
 namespace Tools
 {
     [RequireComponent(typeof(Animation))]
-    public class Popup : View<PopupPresenter>, IPopup, IObservable<IPopup>
+    public class Popup : View<PopupPresenter>, IPopup
     {
         [SerializeField] protected Button m_closeBtn;
         [SerializeField] private AnimationClip m_openAnimation;
@@ -16,10 +16,10 @@ namespace Tools
 
         private Animation m_animation;
 
-        public IObservable<IPopup> OnCloseAsObservable => m_controller.OnCloseAsObservable;
-        public IObservable<IPopup> OnOpenAsObservable => m_controller.OnOpenAsObservable;
-        public IReadOnlyReactiveProperty<bool> IsOpen => m_controller.IsOpen;
-        public IReactiveProperty<State> PopupState => m_controller.PopupState;  
+        public IObservable<IPopup> OnCloseAsObservable => m_presenter.OnCloseAsObservable;
+        public IObservable<IPopup> OnOpenAsObservable => m_presenter.OnOpenAsObservable;
+        public IReadOnlyReactiveProperty<bool> IsOpen => m_presenter.IsOpen;
+        public IReactiveProperty<State> PopupState => m_presenter.PopupState;
 
         public virtual void Init(IPopupManager popupManager)
         {           
@@ -31,13 +31,9 @@ namespace Tools
             AddAnimation(m_openAnimation);
             AddAnimation(m_closeAnimation);
 
-            m_controller.Init(popupManager, this);
+            m_presenter.Init(popupManager, this);
         }
 
-        private void OnDestroy()
-        {
-            (m_controller as IDisposable)?.Dispose();    
-        }
 
         private void SetCloseButton()
         {
@@ -55,7 +51,7 @@ namespace Tools
         {
             if (closeImmediate) 
             {
-                m_controller.ClosePopup(null); // No observable needed for immediate close.
+                m_presenter.ClosePopup(null); // No observable needed for immediate close.
                 Destroy(gameObject);
                 return Observable.ReturnUnit();
             }
@@ -66,7 +62,7 @@ namespace Tools
                 .Subscribe()
                 .AddTo(this);
 
-            m_controller.ClosePopup(observable);
+            m_presenter.ClosePopup(observable);
             return observable;
         }
 
@@ -101,9 +97,9 @@ namespace Tools
 
         public void SetButtonsInteractable(bool value) => Array.ForEach(GetComponentsInChildren<Button>(), (btn => btn.interactable = value));
 
-        public IDisposable Subscribe(IObserver<IPopup> observer)
-        {
-            return m_controller.OnCloseAsObservable.Subscribe(observer);
-        }
+        //public IDisposable Subscribe(IObserver<IPopup> observer)
+        //{
+        //    return m_controller.OnCloseAsObservable.Subscribe(observer);
+        //}
     }
 }

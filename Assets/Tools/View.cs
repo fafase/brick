@@ -2,12 +2,18 @@ using UnityEngine;
 
 namespace Tools
 {
-    public abstract class View<T> : MonoBehaviour where T : new()
+    public class View<TPresenter> : MonoBehaviour where TPresenter : Presenter, new()
     {
-        protected T m_controller;
+        protected TPresenter m_presenter;
+
         protected virtual void Awake()
         {
-            m_controller = new T();
+            m_presenter = new TPresenter();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            m_presenter?.Dispose();
         }
     }
 }

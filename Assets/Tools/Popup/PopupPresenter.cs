@@ -6,20 +6,19 @@ using State = Tools.IPopup.State;
 
 namespace Tools
 {
-    public class PopupPresenter : IDisposable
+    public class PopupPresenter : Presenter, IDisposable
     {
         private IPopupManager m_popupManager;
         private IPopup m_popupView;
 
         private AsyncSubject<IPopup> m_onClose = new AsyncSubject<IPopup>();
         private AsyncSubject<IPopup> m_onOpen = new AsyncSubject<IPopup>();
+        private AsyncSubject<State> m_state = new AsyncSubject<State>();
 
         public IReadOnlyReactiveProperty<bool> IsOpen { get; private set; }
         public IReactiveProperty<State> PopupState { get; private set; }
         public IObservable<IPopup> OnCloseAsObservable => m_onClose.AsObservable();
         public IObservable<IPopup> OnOpenAsObservable => m_onOpen.AsObservable();
-        
-        private CompositeDisposable m_compositeDisposable;
 
         public void Init(IPopupManager popupManager, IPopup popupView)
         {
@@ -80,14 +79,13 @@ namespace Tools
             m_compositeDisposable?.Dispose();
         }
 
-        private bool m_isDisposed = false;
-        public void Dispose()
+        public override void Dispose()
         {
             if (m_isDisposed) 
             {
                 return;
             }
-            m_isDisposed = true;
+            base.Dispose();
             (PopupState as ReactiveProperty<State>)?.Dispose();
             (IsOpen as ReadOnlyReactiveProperty<bool>)?.Dispose();
         }

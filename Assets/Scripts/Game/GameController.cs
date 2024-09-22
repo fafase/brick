@@ -1,9 +1,10 @@
 using UniRx;
+using Tools;
 
-public class GameController
+public class GameController : Presenter
 {
-    public ReactiveProperty<int> BallAmount { get; private set; }
-    public ReactiveProperty<int> Score = new ReactiveProperty<int>();
+    public IReactiveProperty<int> BallAmount { get; private set; }
+    public IReactiveProperty<int> Score = new ReactiveProperty<int>();
 
     public GameController()
     {
@@ -20,4 +21,12 @@ public class GameController
     }
 
     public void AddScore(int score) => Score.Value += score;
+
+    public override void Dispose()
+    {
+        if(m_isDisposed) return;
+        base.Dispose();
+        (BallAmount as ReactiveProperty<int>)?.Dispose();
+        (Score as ReactiveProperty<int>)?.Dispose();
+    }
 }
