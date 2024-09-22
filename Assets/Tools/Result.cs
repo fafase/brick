@@ -3,41 +3,45 @@ using UnityEngine;
 
 namespace Tools
 {
-
-    public class Result<T>
+    public class Result 
     {
         public readonly bool IsSuccess;
-        public readonly T Obj;
         public readonly string Message;
-
-        public Result()
+        public Result(bool isSuccess, string message = null)
         {
-            this.Obj = default(T);
-            this.Message = string.Empty;
-            IsSuccess = false;
+            IsSuccess = isSuccess;
+            Message = message;
+        }
+        public static Result Success() => new Result(true);
+        public static Result Failure(string message) => new Result(false, message);
+        public void CheckForDebug()
+        {
+            if (!IsSuccess)
+            {
+                Debug.Log(Message);
+            }
+        }
+    }
+
+    public class Result<T> : Result
+    {
+        public readonly T Obj;
+
+        public Result() :base (false, string.Empty)
+        {
+            Obj = default(T);
         }
 
-        public Result(T obj, string message, bool isSuccess)
+        public Result(T obj, bool isSuccess, string message) : base (isSuccess, message)
         {
-            this.Obj = obj;
-            this.Message = message;
-            IsSuccess = isSuccess;
+            Obj = obj;
             if(!IsSuccess && string.IsNullOrEmpty(message)) 
             {
                 Debug.LogError("Missing message when failure");
             }
         }
 
-        public static Result<T> Success() => new Result<T>(default(T), null, true);
-        public static Result<T> Success(T obj) => new Result<T>(obj, null, true);
-        public static Result<T> Failure(string message) => new Result<T>(default(T), message, false);
-
-        public void CheckForDebug() 
-        {
-            if (!IsSuccess) 
-            {
-                Debug.Log(Message);
-            }
-        }
+        public static Result<T> Success(T obj) => new Result<T>(obj, true, null);
+        public new static Result<T> Failure(string message) => new Result<T>(default(T), false, message);
     }
 }
