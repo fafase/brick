@@ -25,11 +25,11 @@ namespace Tools
             m_presenter.Init(this);
         }
 
-        public IPopup Show<T>() where T : IPopup
+        public T Show<T>() where T : IPopup
         {
             Result<IPopup> result = m_presenter.Show<T>();
             result.CheckForDebug();
-            return result.Obj;
+            return (T)result.Obj;
         }
 
         public void Close(IPopup popup)
@@ -51,7 +51,7 @@ namespace Tools
             }
             if (popup is Popup p) 
             {
-                return m_factory.Create(p); //Instantiate(p);
+                return m_factory.Create(p); 
             }
             return null;
         }

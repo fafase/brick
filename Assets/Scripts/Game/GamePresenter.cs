@@ -1,10 +1,13 @@
 using UniRx;
 using Tools;
+using UnityEngine;
 
 public class GamePresenter : Presenter
 {
     public IReactiveProperty<int> BallAmount { get; private set; }
     public IReactiveProperty<int> Score = new ReactiveProperty<int>();
+
+    private int m_defaultScorePerSecond = 10;
 
     public GamePresenter()
     {
@@ -21,7 +24,7 @@ public class GamePresenter : Presenter
     }
 
     public void AddScore(int score) => Score.Value += score;
-
+    public int CalculateScore(int timer) => Mathf.Abs(timer) * m_defaultScorePerSecond + Score.Value;
     public override void Dispose()
     {
         if (m_isDisposed) return;

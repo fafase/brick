@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -31,7 +30,7 @@ namespace Tools
         RectTransform Container { get; }
 
         void Close(IPopup popup);
-        IPopup Show<T>() where T : IPopup;
+        T Show<T>() where T : IPopup;
         bool IsOpen<T>() where T : IPopup;
         IObservable<T> GetPopup<T>() where T : IPopup;
         int PopupsCount {  get; }

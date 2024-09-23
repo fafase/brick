@@ -1,8 +1,9 @@
 using System;
+using Tools;
 using UniRx;
 using UnityEngine;
 
-public class BallController : IBallController
+public class BallController : Presenter, IBallController, IDisposable
 {
     public float InitialForce { get; private set; }
 
@@ -16,8 +17,14 @@ public class BallController : IBallController
     private Rigidbody2D m_rigidbody;
     public BallController()
     {
+        m_compositeDisposable = new CompositeDisposable();
         Active = new ReactiveProperty<bool>(true);
+        Active
+            .Skip(1)
+            .Subscribe(state => m_rigidbody.gameObject.SetActive(state))
+            .AddTo(m_compositeDisposable);
     }
+
     public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody)
     {
         InitialForce = initialForce;

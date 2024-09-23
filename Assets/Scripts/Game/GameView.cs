@@ -19,7 +19,8 @@ public class GameView : View<GamePresenter>
 
     private IDisposable m_restartUpdate;
     private IDisposable m_timer;
-    private int m_sessionDuration = 60;
+    private int m_sessionDuration = 30;
+    private int m_remainingTime;
     public IReactiveProperty<GameState> GameState { get; private set; }
 
     private void Start()
@@ -40,20 +41,23 @@ public class GameView : View<GamePresenter>
         m_brickSystem.Bricks
             .ObserveCountChanged()
             .Where(count => count <= 0)
+            .DelayFrame(1)
             .Subscribe(_ => WinLevel());
     }
-
     private void BindTimer() 
     {
         m_timerTxt.text = $"{m_sessionDuration}s";
 
-        m_timer = Observable.Interval(System.TimeSpan.FromSeconds(1))
-            .Select(elapsed => m_sessionDuration - (int)elapsed)
+        m_timer = Observable.Interval(TimeSpan.FromSeconds(1))
+            .Select(elapsed => m_remainingTime = m_sessionDuration - (int)elapsed)
             .TakeWhile(remaining => remaining >= 0)
+            .DelayFrame(1)
             .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
                 () =>
                 {
                     m_timer.Dispose();
+                    m_remainingTime = 0;
+                    WinLevel();
                 })
             .AddTo(this);
     }
@@ -99,10 +103,13 @@ public class GameView : View<GamePresenter>
 
     private void WinLevel() 
     {
+        m_ballPresenter.Ball.Active.Value = false;    
         m_restartUpdate.Dispose();
         m_timer.Dispose ();
         Debug.Log("WINNING");
-        m_popupManager.Show<LevelWinPopup>();
+        int score = m_presenter.CalculateScore(m_remainingTime);
+        LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
+        popup.Init(score);
     }
 }
 
