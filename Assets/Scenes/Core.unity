@@ -3224,7 +3224,6 @@ MonoBehaviour:
   m_scoreTxt: {fileID: 793864227}
   m_timerTxt: {fileID: 1652056774}
   m_ballPresenter: {fileID: 703324866}
-  m_scoreBooster: {fileID: 0}
 --- !u!1001 &1820915266
 PrefabInstance:
   m_ObjectHideFlags: 0

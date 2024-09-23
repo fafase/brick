@@ -13,7 +13,6 @@ public class GameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private TextMeshProUGUI m_timerTxt;
     [SerializeField] private BallPresenter m_ballPresenter;
-    [SerializeField] private ScoreBooster m_scoreBooster;
 
     [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
