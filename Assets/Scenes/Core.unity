@@ -3722,6 +3722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_brickSystem: {fileID: 1270197380}
+  m_coreScene: {fileID: 34053084}
 --- !u!114 &2072556695
 MonoBehaviour:
   m_ObjectHideFlags: 0

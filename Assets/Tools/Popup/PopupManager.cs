@@ -4,6 +4,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using State = Tools.IPopup.State;
+using Zenject;
 
 namespace Tools
 {
@@ -16,6 +17,8 @@ namespace Tools
         public IReactiveProperty<int> PopupsCountObservable => m_presenter.PopupsCountObservable;
         public int PopupsCount => m_presenter.Count;
 
+        [Inject] private Popup.Factory m_factory;
+            
         protected override void Awake()
         {
             base.Awake();
@@ -48,7 +51,7 @@ namespace Tools
             }
             if (popup is Popup p) 
             {
-                return Instantiate(p);
+                return m_factory.Create(p); //Instantiate(p);
             }
             return null;
         }
@@ -65,4 +68,5 @@ namespace Tools
             CurrentState = currentState;
         }
     }
+
 }

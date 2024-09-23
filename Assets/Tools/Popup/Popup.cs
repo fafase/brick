@@ -3,6 +3,7 @@ using System.Collections;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using State = Tools.IPopup.State;
 
 namespace Tools
@@ -13,6 +14,9 @@ namespace Tools
         [SerializeField] protected Button m_closeBtn;
         [SerializeField] private AnimationClip m_openAnimation;
         [SerializeField] private AnimationClip m_closeAnimation;
+        [SerializeField] protected Button m_primaryAction;
+        
+        [Inject] protected IPopupManager m_popupManager;
 
         private Animation m_animation;
 
@@ -20,10 +24,11 @@ namespace Tools
         public IObservable<IPopup> OnOpenAsObservable => m_presenter.OnOpenAsObservable;
         public IReadOnlyReactiveProperty<bool> IsOpen => m_presenter.IsOpen;
         public IReactiveProperty<State> PopupState => m_presenter.PopupState;
+        public IObservable<Unit> PrimaryActionObservable => m_closeBtn.OnClickAsObservable();
 
-        public virtual void Init(IPopupManager popupManager)
+        public virtual void Init()
         {           
-            transform.SetParent(popupManager.Container, false);
+            transform.SetParent(m_popupManager.Container, false);
             SetCloseButton();
 
             m_animation = GetComponent<Animation>();
@@ -31,9 +36,8 @@ namespace Tools
             AddAnimation(m_openAnimation);
             AddAnimation(m_closeAnimation);
 
-            m_presenter.Init(popupManager, this);
+            m_presenter.Init(m_popupManager, this);
         }
-
 
         private void SetCloseButton()
         {
@@ -97,9 +101,6 @@ namespace Tools
 
         public void SetButtonsInteractable(bool value) => Array.ForEach(GetComponentsInChildren<Button>(), (btn => btn.interactable = value));
 
-        //public IDisposable Subscribe(IObserver<IPopup> observer)
-        //{
-        //    return m_controller.OnCloseAsObservable.Subscribe(observer);
-        //}
+        public class Factory : PlaceholderFactory<UnityEngine.Object,Popup> { }
     }
 }

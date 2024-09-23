@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using Tools;
+using Zenject;
 
 public class MetaManager : MonoBehaviour
 {
     [SerializeField] private Button m_levelBtn;
     [SerializeField] private Button m_multiBtn;
 
+    [Inject] private IPopupManager m_popupManager;
+    
     private void Start()
     {
         RegisterButton(m_levelBtn, "Core");
@@ -23,15 +26,13 @@ public class MetaManager : MonoBehaviour
                .AddTo(this);
     }
 
-    private void OnLevelBtnClicked() 
-    {
-        m_levelBtn.interactable = false;
-        SceneLoading.Load("Core");
-    }
-
     private void OnBtnClicked(string scene, Button button) 
     {
         button.interactable = false;
-        SceneLoading.Load(scene);
+        IPopup startPopup = m_popupManager.Show<LevelStartPopup>();
+        startPopup
+            .OnCloseAsObservable
+            .Subscribe(_ => m_levelBtn.interactable = true)
+            .AddTo(this);
     }
 }

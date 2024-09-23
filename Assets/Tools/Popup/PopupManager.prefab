@@ -52,7 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_popups:
-  - {fileID: 6182511711987224975, guid: abbb3e2dda5d30742bda844490514614, type: 3}
+  - {fileID: 5052957538885912295, guid: dd30ae9466e21bd44aac66f37da478c7, type: 3}
+  - {fileID: 2615249755704469410, guid: 087609e0d96d28b4c9d40b723d26c133, type: 3}
 --- !u!223 &4066458002547204833
 Canvas:
   m_ObjectHideFlags: 0

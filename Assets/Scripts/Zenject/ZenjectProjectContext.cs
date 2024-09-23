@@ -1,5 +1,4 @@
 using Tools;
-using UnityEditor.Localization.Editor;
 using UnityEngine;
 using Zenject;
 
@@ -11,5 +10,7 @@ public class ZenjectProjectContext : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<PopupManager>().FromComponentInNewPrefab(m_popupManager).AsSingle().NonLazy();
+        Container.BindInterfacesTo<SceneLoading>().AsSingle();
+        Container.BindFactory< Object, Popup, Popup.Factory>().FromFactory<PopupFactory>();
     }
 }

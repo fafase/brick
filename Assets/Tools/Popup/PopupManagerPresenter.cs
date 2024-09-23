@@ -44,7 +44,7 @@ namespace Tools
             {
                 IPopup instance = m_popupManager.Clone(popup);
                 m_openPopups.Add(instance);
-                instance.Init(m_popupManager);
+                instance.Init();
                 return Result<IPopup>.Success(instance);
             }
             return Result<IPopup>.Failure("Popup prefab not found");

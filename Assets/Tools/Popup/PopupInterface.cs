@@ -8,7 +8,7 @@ namespace Tools
 {
     public interface IPopup
     {
-        void Init(IPopupManager popupManager);
+        void Init();
         IObservable<Unit> Open();
         IObservable<Unit> Close(bool closeImmediate = false);
 

@@ -13,7 +13,7 @@ public abstract class CoreBase : MonoBehaviour
             .Subscribe(_ => LoadMeta())
             .AddTo(this);
     }
-    protected virtual void LoadMeta() 
+    public virtual void LoadMeta() 
     {
         SceneLoading.Load("Meta")
             .Do(progress => Debug.Log(progress))
