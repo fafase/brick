@@ -1,0 +1,261 @@
+fileFormatVersion: 2
+guid: 7bc68640c66642a428d432275355ba52
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014set buttons games_6964540_6"
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 1973
+        width: 2600
+        height: 675
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 390, y: 150, z: 345, w: 150}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a02d72bc8f23c144db5a71ef9acc2fc5
+      internalID: 1108606570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014set buttons games_6964540_20"
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1168
+        width: 2600
+        height: 695
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fed9177fd23781a46a34e4c1c174be27
+      internalID: 1572474188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014set buttons games_6964540_26"
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 355
+        width: 2600
+        height: 689
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 390, y: 153, z: 344, w: 147}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f796a6d72181e47933b4528e516d05
+      internalID: 1502095654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014set buttons games_6964540_29"
+      rect:
+        serializedVersion: 2
+        x: 2558
+        y: 1046
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5dbc8e4615ce9c4e909f40dc527b31b
+      internalID: 1680154016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      "\u2014Pngtree\u2014set buttons games_6964540_0": 557674418
+      "\u2014Pngtree\u2014set buttons games_6964540_1": -473443816
+      "\u2014Pngtree\u2014set buttons games_6964540_10": -1382942671
+      "\u2014Pngtree\u2014set buttons games_6964540_11": 1072435089
+      "\u2014Pngtree\u2014set buttons games_6964540_12": -597383659
+      "\u2014Pngtree\u2014set buttons games_6964540_13": -773426094
+      "\u2014Pngtree\u2014set buttons games_6964540_14": 1229665868
+      "\u2014Pngtree\u2014set buttons games_6964540_15": -1556790244
+      "\u2014Pngtree\u2014set buttons games_6964540_16": -1710546633
+      "\u2014Pngtree\u2014set buttons games_6964540_17": -739663965
+      "\u2014Pngtree\u2014set buttons games_6964540_18": -693306870
+      "\u2014Pngtree\u2014set buttons games_6964540_19": 1887768378
+      "\u2014Pngtree\u2014set buttons games_6964540_2": 79906274
+      "\u2014Pngtree\u2014set buttons games_6964540_20": 1572474188
+      "\u2014Pngtree\u2014set buttons games_6964540_21": -1526969772
+      "\u2014Pngtree\u2014set buttons games_6964540_22": 731610672
+      "\u2014Pngtree\u2014set buttons games_6964540_23": 292013364
+      "\u2014Pngtree\u2014set buttons games_6964540_24": 1534749413
+      "\u2014Pngtree\u2014set buttons games_6964540_25": -576990944
+      "\u2014Pngtree\u2014set buttons games_6964540_26": 1502095654
+      "\u2014Pngtree\u2014set buttons games_6964540_27": -1292488696
+      "\u2014Pngtree\u2014set buttons games_6964540_28": 949401192
+      "\u2014Pngtree\u2014set buttons games_6964540_29": 1680154016
+      "\u2014Pngtree\u2014set buttons games_6964540_3": 1214406076
+      "\u2014Pngtree\u2014set buttons games_6964540_30": -1861510302
+      "\u2014Pngtree\u2014set buttons games_6964540_31": 2092413279
+      "\u2014Pngtree\u2014set buttons games_6964540_32": 293059654
+      "\u2014Pngtree\u2014set buttons games_6964540_33": -630682677
+      "\u2014Pngtree\u2014set buttons games_6964540_34": 222564804
+      "\u2014Pngtree\u2014set buttons games_6964540_35": -1825807903
+      "\u2014Pngtree\u2014set buttons games_6964540_36": -953543322
+      "\u2014Pngtree\u2014set buttons games_6964540_4": 683117240
+      "\u2014Pngtree\u2014set buttons games_6964540_5": -761239731
+      "\u2014Pngtree\u2014set buttons games_6964540_6": 1108606570
+      "\u2014Pngtree\u2014set buttons games_6964540_7": -1543840435
+      "\u2014Pngtree\u2014set buttons games_6964540_8": -113227193
+      "\u2014Pngtree\u2014set buttons games_6964540_9": -1216651530
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

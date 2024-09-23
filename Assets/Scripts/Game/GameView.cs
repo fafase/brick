@@ -6,16 +6,18 @@ using UnityEngine;
 using Zenject;
 using Tools;
 
-public class GameView : View<GamePresenter>
+public class GameView : MonoBehaviour
 {
     [SerializeField] private int m_amountBalls = 3;
     [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private TextMeshProUGUI m_timerTxt;
     [SerializeField] private BallPresenter m_ballPresenter;
+    [SerializeField] private ScoreBooster m_scoreBooster;
 
     [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
+    [Inject] private IGamePresenter m_presenter;
 
     private IDisposable m_restartUpdate;
     private IDisposable m_timer;
@@ -87,7 +89,11 @@ public class GameView : View<GamePresenter>
             .AddTo(this);
 
         m_ballPresenter.Score
-            .Subscribe(m_presenter.AddScore)
+            .Subscribe(score => 
+                {
+                    m_presenter.AddScore(score);
+                    
+                })
             .AddTo(this);
     }
 
@@ -107,7 +113,7 @@ public class GameView : View<GamePresenter>
         m_restartUpdate.Dispose();
         m_timer.Dispose ();
         Debug.Log("WINNING");
-        int score = m_presenter.CalculateScore(m_remainingTime);
+        int score = m_presenter.CalculateEndScore(m_remainingTime);
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
         popup.Init(score);
     }
