@@ -10,20 +10,22 @@ public class LifeView : MonoBehaviour
 
     [Inject] private ILife m_life;
 
+    private const string FULL = "Full";
+
     private void Start()
     {
-        m_life.CountdownTracker
+        m_life.CountdownTrackerAsObservable
             .Do(time => 
             {
-                if (time < 0) m_refillTimeTxt.text = "Full";
+                if (time < 0) m_refillTimeTxt.text = FULL;
                 else
                     m_refillTimeTxt.text = time.ToString(); 
             })
             .Subscribe()
             .AddTo(this);
 
-        m_refillTimeTxt.text = "Full";
-        m_life.Lives
+        m_refillTimeTxt.text = FULL;
+        m_life.LivesAsObservable
             .Subscribe(value => m_lifeTxt.text = value.ToString())
             .AddTo(this);
     }

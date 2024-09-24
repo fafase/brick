@@ -893,9 +893,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_closeBtn: {fileID: 2816122108143184945}
+  m_primaryAction: {fileID: 877900116483619853}
   m_openAnimation: {fileID: 7400000, guid: 88d2a1b97e2f03941866c46d219000e5, type: 2}
   m_closeAnimation: {fileID: 7400000, guid: 3ac87b2a1e09fbf4da8ac8e8af9e391e, type: 2}
-  m_primaryAction: {fileID: 877900116483619853}
 --- !u!1 &6510465602423911691
 GameObject:
   m_ObjectHideFlags: 0

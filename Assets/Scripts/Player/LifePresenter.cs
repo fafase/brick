@@ -1,3 +1,4 @@
+using Fusion;
 using System;
 using Tools;
 using UniRx;
@@ -7,12 +8,13 @@ public class LifePresenter : Presenter, ILife
 {
     private int m_maxLives = 5;
 
-    private int m_refillInterval = 5;
+    private int m_refillInterval = 10;
     private ReactiveProperty<int> m_currentLives;
     private IDisposable m_refillSubscription;
-    public IObservable<int> Lives => m_currentLives.AsObservable();
+    public IObservable<int> LivesAsObservable => m_currentLives.AsObservable();
     private Subject<int> m_countdownSubject = new Subject<int>();
-    public IObservable<int> CountdownTracker => m_countdownSubject.AsObservable();
+    public IObservable<int> CountdownTrackerAsObservable => m_countdownSubject.AsObservable();
+    public int Lives => m_currentLives.Value;
 
     public LifePresenter()
     {
@@ -27,41 +29,35 @@ public class LifePresenter : Presenter, ILife
         if (m_currentLives.Value >= m_maxLives) return;
 
         int initialCountdown = Mathf.RoundToInt(m_refillInterval);
-        m_refillSubscription = 
-            Observable.Interval(TimeSpan.FromSeconds(1))
-            //.Select(secondsElapsed => initialCountdown - (int)(secondsElapsed % m_refillInterval))
-            .Do(timeLeft =>
-            {
-                initialCountdown--;
-                m_countdownSubject.OnNext(initialCountdown);
+        m_refillSubscription = Observable.Interval(TimeSpan.FromSeconds(1))
+                                .Do(timeLeft =>
+                                {
+                                    initialCountdown--;
+                                    m_countdownSubject.OnNext(initialCountdown);
 
-                if (initialCountdown <= 0)
-                {
-                    if (m_currentLives.Value < m_maxLives)
-                    {
-                        m_currentLives.Value++;
-                        Debug.Log("Life refilled!");
-                    }
-
-                    // Reset the countdown for the next interval
-                    initialCountdown = Mathf.RoundToInt(m_refillInterval);
-                }
-
-                // If the lives are full, stop the refill
-                if (m_currentLives.Value >= m_maxLives)
-                {
-                    StopRefill();
-                }
-            })
-            .Subscribe()
-            .AddTo(m_compositeDisposable);
+                                    if (initialCountdown <= 0)
+                                    {
+                                        if (m_currentLives.Value < m_maxLives)
+                                        {
+                                            m_currentLives.Value++;
+                                            Debug.Log("Life refilled!");
+                                        }
+                                        initialCountdown = Mathf.RoundToInt(m_refillInterval);
+                                    }
+                                    if (m_currentLives.Value >= m_maxLives)
+                                    {
+                                        StopRefill();
+                                    }
+                                })
+                                .Subscribe()
+                                .AddTo(m_compositeDisposable);
     }
     public void LoseLife()
     {
          if (m_currentLives.Value > 0)
          {
             m_currentLives.Value--;
-
+            Debug.Log("Using a life");
             if (m_refillSubscription == null && m_currentLives.Value < m_maxLives)
             {
                 StartRefill();
@@ -83,6 +79,7 @@ public interface ILifeProvider
 public interface ILife 
 {
     void LoseLife();
-    IObservable<int> Lives { get; }
-    IObservable<int> CountdownTracker { get; }
+    IObservable<int> LivesAsObservable { get; }
+    IObservable<int> CountdownTrackerAsObservable { get; }
+    int Lives { get; }
 }
