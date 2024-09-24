@@ -35,6 +35,8 @@ public interface IScoreBooster
 }
 public class ScoreBoosterPresenter : Presenter, IScoreBooster
 {
+    [Inject] IGamePresenter m_gamePresenter;
+
     private IDisposable m_updateDisposable;
 
     private float decrementRate = 0.5f;
@@ -50,12 +52,13 @@ public class ScoreBoosterPresenter : Presenter, IScoreBooster
         Multiplier = new ReactiveProperty<int>(1);
 
         m_updateDisposable = Observable.EveryUpdate()
-                        .Subscribe(_ =>
-                        {
-                            float temp = Countdown.Value - decrementRate * Time.deltaTime;
-                            Countdown.Value = Mathf.Clamp(temp, 0f, m_max);
-                        })
-                        .AddTo(m_compositeDisposable);
+            .Where(_ => m_gamePresenter.CurrentGameState == GameState.Play)
+            .Subscribe(_ =>
+            {
+                float temp = Countdown.Value - decrementRate * Time.deltaTime;
+                Countdown.Value = Mathf.Clamp(temp, 0f, m_max);
+            })
+            .AddTo(m_compositeDisposable);
     }
     
     public override void Dispose()

@@ -1,11 +1,14 @@
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public class PaddleView : MonoBehaviour, IPaddleProvider
 {
     [SerializeField] private Transform m_paddleTr;
     [SerializeField] private Transform m_deckLeftLimit, m_deckRightLimit;
     [SerializeField] private Transform m_paddleLeftLimit, m_paddleRightLimit;
+
+    [Inject] private IGamePresenter m_gamePresenter;
 
     private PaddleController m_paddleController;
 
@@ -41,7 +44,7 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
     {
         var update = Observable.EveryUpdate();
         update
-            .Where(_ => Input.GetMouseButton(0))
+            .Where(_ => Input.GetMouseButton(0) && m_gamePresenter.CurrentGameState == GameState.Play)
             .Select(_ => Input.mousePosition)
             .Subscribe(m_paddleController.ProcessPosition)
             .AddTo(this);
