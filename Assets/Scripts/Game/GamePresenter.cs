@@ -61,4 +61,5 @@ public interface IGamePresenter
     void DecreaseBallAmount();
     int CalculateEndScore(int timer);
     void SetGameState(GameState state);
+    GameState CurrentGameState {  get; }
 }

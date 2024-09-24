@@ -58,10 +58,10 @@ public class GameView : MonoBehaviour
         retryPopup
             .OnPrimaryActionObservable
             .SelectMany(_ => 
-                {
-                    retryPopup.Close();
-                    return retryPopup.OnCloseAsObservable;
-                })
+            {
+                retryPopup.Close();
+                return retryPopup.OnCloseAsObservable;
+            })
             .Subscribe(_ => m_sceneLoading.LoadCore())
             .AddTo(this);
 
@@ -98,12 +98,12 @@ public class GameView : MonoBehaviour
                 .TakeWhile(remaining => remaining >= 0)
                 .DelayFrame(1)
                 .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
-                    () =>
-                    {
-                        m_timer.Dispose();
-                        m_remainingTime = 0;
-                        WinLevel();
-                    })
+                () =>
+                {
+                    m_timer.Dispose();
+                    m_remainingTime = 0;
+                    WinLevel();
+                })
                 .AddTo(this);
         }
 
@@ -118,11 +118,12 @@ public class GameView : MonoBehaviour
     {
         m_presenter.Init(m_amountBalls);
         m_presenter.BallAmount
-               .Subscribe(i => m_ballAmount.text = $"BALL\n{i}")
-               .AddTo(this);
+            .Where(value => value >= 0)
+            .Subscribe(i => m_ballAmount.text = $"BALL\n{i}")
+            .AddTo(this);
 
         m_presenter.BallAmount
-            .Where(value => value == 0)
+            .Where(value => value < 0)
             .Subscribe(_ => EndLevel())
             .AddTo(this);
 
@@ -134,16 +135,16 @@ public class GameView : MonoBehaviour
     {
         m_ballPresenter.Ball
             .Active
-            .Where(value => value == false)
+            .Where(value => value == false && m_presenter.CurrentGameState == GameState.Play)
             .Subscribe(_ => m_presenter.DecreaseBallAmount())
             .AddTo(this);
 
         m_ballPresenter.Score
+            .Where(value => value > 0)
             .Subscribe(score => 
-                {
-                    m_presenter.AddScore(score);
-                    
-                })
+            {
+                m_presenter.AddScore(score);       
+            })
             .AddTo(this);
     }
 
@@ -152,9 +153,10 @@ public class GameView : MonoBehaviour
         m_ballPresenter.ResetBall();
     }
 
-    private void EndLevel() 
+    private void EndLevel()
     {
-        
+        m_presenter.SetGameState(GameState.Loss);
+        m_popupManager.Show<LevelLossPopup>();
     }
 
     private void WinLevel() 

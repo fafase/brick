@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Tools;
+using UniRx;
+using Zenject;
 
-public class LevelLossPopup : MonoBehaviour
+public class LevelLossPopup : Popup 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Inject] private ISceneLoading m_sceneLoading;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        OnQuitAsObservable
+             .SelectMany(_ => OnCloseAsObservable)
+             .Subscribe(_ => m_sceneLoading.LoadMeta())
+             .AddTo(this);
+
+        OnPrimaryActionObservable
+            .SelectMany(_ =>
+            {
+                Close();
+                return OnCloseAsObservable;
+            })
+            .Subscribe(_ => m_sceneLoading.LoadCore())
+            .AddTo(this);
     }
 }

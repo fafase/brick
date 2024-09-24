@@ -30,6 +30,7 @@ public class BallPresenter : Presenter, IBallController, IDisposable
                 {
                     switch(data.NextState)
                     {
+                        case GameState.Loss:
                         case GameState.Pause: 
                             ProcessPause(); 
                             break;
