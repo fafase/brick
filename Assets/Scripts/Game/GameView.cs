@@ -22,7 +22,6 @@ public class GameView : MonoBehaviour
     [Inject] private IGamePresenter m_presenter;
     [Inject] private ISceneLoading m_sceneLoading;
 
-    private IDisposable m_restartUpdate;
     private IDisposable m_timer;
     private int m_sessionDuration = 30;
     private int m_remainingTime;
@@ -34,7 +33,7 @@ public class GameView : MonoBehaviour
         BindTimer();
         BindBrickSystem();
 
-        m_restartUpdate = Observable.EveryUpdate()
+        Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
             .Subscribe(_ => ResetBall())
             .AddTo(this);
@@ -42,10 +41,7 @@ public class GameView : MonoBehaviour
         Popup startPopup = m_popupManager.Show<LevelStartPopup>();
         startPopup
             .OnCloseAsObservable
-            .Subscribe(_ =>
-                {
-                    m_presenter.SetGameState(GameState.Play);
-                })
+            .Subscribe(_ => m_presenter.SetGameState(GameState.Play))
             .AddTo(this);
 
         m_quitBtn
@@ -158,13 +154,13 @@ public class GameView : MonoBehaviour
 
     private void EndLevel() 
     {
-        m_restartUpdate.Dispose();
+        
     }
 
     private void WinLevel() 
     {
         m_ballPresenter.Ball.Active.Value = false;    
-        m_restartUpdate.Dispose();
+        
         m_timer.Dispose ();
         Debug.Log("WINNING");
         int score = m_presenter.CalculateEndScore(m_remainingTime);
