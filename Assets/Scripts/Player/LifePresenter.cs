@@ -8,7 +8,7 @@ public class LifePresenter : Presenter, ILife
 {
     private int m_maxLives = 5;
 
-    private int m_refillInterval = 10;
+    private int m_refillInterval = 300;
     private ReactiveProperty<int> m_currentLives;
     private IDisposable m_refillSubscription;
     public IObservable<int> LivesAsObservable => m_currentLives.AsObservable();

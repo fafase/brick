@@ -1,14 +1,14 @@
-using UniRx;
+using System;
 using Tools;
+using UniRx;
 using UnityEngine;
 using Zenject;
-using Cysharp.Threading.Tasks;
-using System;
 
 public class GamePresenter : Presenter, IGamePresenter
 {
     [Inject] IScoreBooster m_scoreBooster;
-
+    [Inject] IBallController m_ballController;
+    [Inject] ILife m_life;
     public IReactiveProperty<int> BallAmount { get; private set; }
     public IReactiveProperty<int> Score { get; private set; }
 
@@ -26,6 +26,20 @@ public class GamePresenter : Presenter, IGamePresenter
     {
         BallAmount.Value = ballAmount > 0 ? ballAmount : 1;
         m_coreStateMachine = new CoreStateMachine(GameState.Waiting);
+
+        m_ballController
+            .Active
+            .Where(value => value == false && CurrentGameState == GameState.Play)
+            .Subscribe(_ => DecreaseBallAmount())
+            .AddTo(m_compositeDisposable);
+
+        m_ballController.Score
+            .Where(value => value > 0)
+            .Subscribe(score =>
+            {
+                AddScore(score);
+            })
+            .AddTo(m_compositeDisposable);
     }
 
     public void DecreaseBallAmount()
@@ -40,6 +54,12 @@ public class GamePresenter : Presenter, IGamePresenter
     public void SetGameState(GameState state) 
     {
         m_coreStateMachine.SetNewState(state);
+    }
+
+    public void EndLevel() 
+    {
+        m_life.LoseLife();
+        SetGameState(GameState.Loss);
     }
 
     public override void Dispose()
@@ -61,5 +81,7 @@ public interface IGamePresenter
     void DecreaseBallAmount();
     int CalculateEndScore(int timer);
     void SetGameState(GameState state);
+    void EndLevel();
+
     GameState CurrentGameState {  get; }
 }

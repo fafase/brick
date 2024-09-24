@@ -6,7 +6,6 @@ using UnityEngine;
 using Zenject;
 using Tools;
 using UnityEngine.UI;
-using System.Runtime.CompilerServices;
 
 public class GameView : MonoBehaviour
 {
@@ -29,7 +28,6 @@ public class GameView : MonoBehaviour
     private void Start()
     {
         BindController();
-        BindBall();
         BindTimer();
         BindBrickSystem();
 
@@ -102,7 +100,8 @@ public class GameView : MonoBehaviour
                 {
                     m_timer.Dispose();
                     m_remainingTime = 0;
-                    WinLevel();
+                    EndLevel();
+                    //WinLevel();
                 })
                 .AddTo(this);
         }
@@ -131,23 +130,6 @@ public class GameView : MonoBehaviour
             .Subscribe(score => m_scoreTxt.text = $"SCORE\n{score}");
     }
 
-    private void BindBall() 
-    {
-        m_ballPresenter.Ball
-            .Active
-            .Where(value => value == false && m_presenter.CurrentGameState == GameState.Play)
-            .Subscribe(_ => m_presenter.DecreaseBallAmount())
-            .AddTo(this);
-
-        m_ballPresenter.Score
-            .Where(value => value > 0)
-            .Subscribe(score => 
-            {
-                m_presenter.AddScore(score);       
-            })
-            .AddTo(this);
-    }
-
     private void ResetBall() 
     {
         m_ballPresenter.ResetBall();
@@ -155,7 +137,7 @@ public class GameView : MonoBehaviour
 
     private void EndLevel()
     {
-        m_presenter.SetGameState(GameState.Loss);
+        m_presenter.EndLevel();
         m_popupManager.Show<LevelLossPopup>();
     }
 

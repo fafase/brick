@@ -29,7 +29,7 @@ public class BallView : MonoBehaviour
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
     public IBallController Ball => m_controller;
-    public Subject<int> Score = new Subject<int>();
+    //public Subject<int> Score = new Subject<int>();
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class BallView : MonoBehaviour
         collider.gameObject.GetComponent<IDamage>()?.ApplyDamage(m_controller.Power);
         if(collider.gameObject.GetComponent<IScore>() is IScore score)
         {
-            Score.OnNext(score.Score);
+            m_controller.Score.OnNext(score.Score);
         }
     }
 

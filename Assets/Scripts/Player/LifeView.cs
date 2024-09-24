@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using Tools;
 
 public class LifeView : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class LifeView : MonoBehaviour
             {
                 if (time < 0) m_refillTimeTxt.text = FULL;
                 else
-                    m_refillTimeTxt.text = time.ToString(); 
+                    m_refillTimeTxt.text = TimeConverter.ConvertSeconds(time); 
             })
             .Subscribe()
             .AddTo(this);

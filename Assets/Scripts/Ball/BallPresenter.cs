@@ -12,6 +12,7 @@ public class BallPresenter : Presenter, IBallController, IDisposable
     public Vector3 StartPosition { get; private set; }
 
     public IReactiveProperty<bool> Active { get; private set; }
+    public Subject<int> Score { get; private set; } = new Subject<int>();
 
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
@@ -103,6 +104,7 @@ public interface IBallController
 {
     IReactiveProperty<bool> Active { get; }
     int Power { get; }
+    Subject<int> Score { get; }
 
     void AddInitialForce();
     void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
