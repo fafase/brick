@@ -23,7 +23,6 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
 
     private void SetPaddleController() 
     {
-        // Calculate the screen limits in world space
         float deckLeftScreen = Camera.main.WorldToScreenPoint(m_deckLeftLimit.position).x;
         float deckRightScreen = Camera.main.WorldToScreenPoint(m_deckRightLimit.position).x;
         m_paddleController = new(this, m_paddleTr.position, deckLeftScreen, deckRightScreen);
@@ -42,8 +41,7 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
 
     private void BindInput() 
     {
-        var update = Observable.EveryUpdate();
-        update
+        Observable.EveryUpdate()
             .Where(_ => Input.GetMouseButton(0) && m_gamePresenter.CurrentGameState == GameState.Play)
             .Select(_ => Input.mousePosition)
             .Subscribe(m_paddleController.ProcessPosition)

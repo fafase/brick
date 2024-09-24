@@ -26,7 +26,9 @@ public class BallPresenter : Presenter, IBallController, IDisposable
             .AddTo(m_compositeDisposable);
 
         ObservableSignal.AsObservable<GameStateData>()
-            .Where(data => data.NextState.Equals(GameState.Pause) || data.NextState.Equals(GameState.Play))
+            .Where(data => data.NextState.Equals(GameState.Pause) 
+                || data.NextState.Equals(GameState.Play)
+                || data.NextState.Equals(GameState.Loss))
             .Subscribe(data => 
                 {
                     switch(data.NextState)
