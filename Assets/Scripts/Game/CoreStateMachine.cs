@@ -12,6 +12,11 @@ public class CoreStateMachine : IDisposable
         State = new ReactiveProperty<GameState>(GameState.Idle);
     }
 
+    public CoreStateMachine(GameState initialState) 
+    {
+        State = new ReactiveProperty<GameState>(initialState);
+    }
+
     public void SetNewState(GameState newState) 
     {
         if(newState == State.Value) 
@@ -43,5 +48,5 @@ public class GameStateData : SignalData
 
 public enum GameState
 {
-    Idle, Play, Start, Win, Loss, Pause
+    Idle, Play, Start, Win, Loss, Pause, Waiting
 }

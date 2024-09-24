@@ -13,12 +13,13 @@ namespace Tools
             Message = message;
         }
         public static Result Success() => new Result(true);
+        public static Result Success(string message) => new Result(true, message);
         public static Result Failure(string message) => new Result(false, message);
         public void CheckForDebug()
         {
             if (!IsSuccess)
             {
-                Debug.Log(Message);
+                Debug.LogError(Message);
             }
         }
     }

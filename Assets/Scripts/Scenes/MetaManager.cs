@@ -29,7 +29,7 @@ public class MetaManager : MonoBehaviour
     private void OnBtnClicked(string scene, Button button) 
     {
         button.interactable = false;
-        IPopup startPopup = m_popupManager.Show<LevelStartPopup>();
+        IPopup startPopup = m_popupManager.Show<PlayLevelPopup>();
         startPopup
             .OnCloseAsObservable
             .Subscribe(_ => m_levelBtn.interactable = true)

@@ -56,9 +56,9 @@ namespace Tools
             if (m_openPopups.Contains(popup))
             {
                 m_openPopups.Remove(popup);
-                return Result.Success(); 
+                return Result.Success($"{((Popup)popup).name} closed"); 
             }
-            return Result.Failure("Popup was not already open");
+            return Result.Failure("Popup was not open");
         }
 
         public bool IsOpen<T>() where T : IPopup => GetPopup<T>() != null;

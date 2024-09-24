@@ -12,7 +12,7 @@ public class GameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private TextMeshProUGUI m_timerTxt;
-    [SerializeField] private BallPresenter m_ballPresenter;
+    [SerializeField] private BallView m_ballPresenter;
 
     [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
@@ -22,7 +22,6 @@ public class GameView : MonoBehaviour
     private IDisposable m_timer;
     private int m_sessionDuration = 30;
     private int m_remainingTime;
-    public IReactiveProperty<GameState> GameState { get; private set; }
 
     private void Start()
     {
@@ -31,11 +30,18 @@ public class GameView : MonoBehaviour
         BindTimer();
         BindBrickSystem();
 
-        GameState = new ReactiveProperty<GameState>(global::GameState.Idle);
-
         m_restartUpdate = Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
             .Subscribe(_ => ResetBall());
+
+        Popup startPopup = m_popupManager.Show<LevelStartPopup>();
+        startPopup
+            .OnCloseAsObservable
+            .Subscribe(_ =>
+                {
+                    m_presenter.SetGameState(GameState.Play);
+                })
+            .AddTo(this);
     }
     private void BindBrickSystem() 
     {

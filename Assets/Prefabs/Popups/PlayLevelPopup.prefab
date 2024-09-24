@@ -798,9 +798,9 @@ GameObject:
   - component: {fileID: 6874899860107550419}
   - component: {fileID: 224709593153749172}
   - component: {fileID: 3321753882072879064}
-  - component: {fileID: -671738685174903198}
+  - component: {fileID: 5105961764503482651}
   m_Layer: 0
-  m_Name: LevelStartPopup
+  m_Name: PlayLevelPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -880,7 +880,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &-671738685174903198
+--- !u!114 &5105961764503482651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -889,7 +889,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4934359103435060564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3fb2dae6810f3441bb43084da8795f2, type: 3}
+  m_Script: {fileID: 11500000, guid: bd621ffdb69aa2b46ac8d1a9c651ff5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_closeBtn: {fileID: 2816122108143184945}
@@ -961,7 +961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Remove all the bricks before the end of the timer
+  m_text: Play level ?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.6
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

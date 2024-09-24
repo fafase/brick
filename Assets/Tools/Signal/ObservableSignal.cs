@@ -18,11 +18,11 @@ namespace Tools
             }
         }
 
-        public static IDisposable Subscribe<T>(this IObservable<T> observable, Action<T> onSignalReceived) where T : SignalData 
+        public static IDisposable Subscribe<T>(Action<T> onSignalReceived) where T : SignalData 
         {
             lock (s_subjects)
             {
-                return observable.Subscribe(onSignalReceived);
+                return GetSubject<T>().Subscribe(onSignalReceived);
             }
         }
 

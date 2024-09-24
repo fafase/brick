@@ -31,10 +31,6 @@ namespace Tools
                 .Select(state => state == State.Opening || state == State.Idle)
                 .ToReadOnlyReactiveProperty();
 
-            m_popupView.OnCloseAsObservable
-                .Subscribe(_=> OnClose())
-                .AddTo(m_compositeDisposable);
-
             OpenPopup();
         }
 

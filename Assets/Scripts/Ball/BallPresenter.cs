@@ -1,86 +1,82 @@
 using System;
+using Tools;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using Zenject;
 
-public class BallPresenter : MonoBehaviour
+public class BallPresenter : Presenter, IBallController, IDisposable
 {
-    [SerializeField]
-    [Range(0f, 90f)]
-    private float m_maxPaddleBounceAngle = 75f;
-    [SerializeField]
-    private float m_initialForce = 50f;
-    [SerializeField]
-    [Range(0f, 90f)]
-    private float m_initialAngle = 45f;
-    [SerializeField]
-    [Tooltip("How much damage I can inflict on a brick per collision.")]
-    private int m_power = 1;
-    [SerializeField]
-    private Transform m_startPosition;
+    public float InitialForce { get; private set; }
 
-    [Inject]
-    private IBallController m_controller;
+    public int Power { get; private set; }
 
-    private const string s_brickTag = "Brick";
-    private const string s_paddleTag = "Paddle";
-    private const string s_deathZone = "Death";
+    public Vector3 StartPosition { get; private set; }
 
-    public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
-    public IBallController Ball => m_controller;
-    public Subject<int> Score = new Subject<int>();
+    public IReactiveProperty<bool> Active { get; private set; }
 
-    private void Start()
+    private float m_initialAngle;
+    private Rigidbody2D m_rigidbody;
+    public BallPresenter()
     {
-        transform.position = m_startPosition.position;   
-        m_controller.Init(m_initialForce, m_power, m_startPosition.position, 
-            m_initialAngle, GetComponent<Rigidbody2D>());
+        m_compositeDisposable = new CompositeDisposable();
+        Active = new ReactiveProperty<bool>(false);
+        Active
+            .Skip(1)
+            .Subscribe(state => m_rigidbody.gameObject.SetActive(state))
+            .AddTo(m_compositeDisposable);
 
-        m_controller.AddInitialForce();
-        var collision = this.OnCollisionEnter2DAsObservable();
-
-        collision
-            .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
-            .Subscribe(collider => m_controller.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle))
-            .AddTo(this);
-
-        collision
-            .Where(collider => collider.gameObject.CompareTag(s_brickTag))
-            .Subscribe(BrickCollision)
-            .AddTo(this);
-        
-        collision
-            .Where(collider => collider.gameObject.CompareTag(s_deathZone))
-            .Subscribe(_ => m_controller.Active.Value = false)
-            .AddTo(this);
-
-        m_controller.Active
-            .Subscribe(gameObject.SetActive)
-            .AddTo(this);
+        ObservableSignal
+            .AsObservable<GameStateData>()
+            .Where(data => data.NextState.Equals(GameState.Play))
+            .Subscribe(_ => ProcessChangeGameState())
+            .AddTo(m_compositeDisposable);
     }
 
-    public void BrickCollision(Collision2D collider) 
+    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody)
     {
-        collider.gameObject.GetComponent<IDamage>()?.ApplyDamage(m_controller.Power);
-        if(collider.gameObject.GetComponent<IScore>() is IScore score)
+        InitialForce = initialForce;
+        Power = power;
+        StartPosition = startPosition;
+        m_initialAngle = initialAngle;
+        m_rigidbody = rigidbody;
+    }
+
+    public void AddInitialForce()
+    {
+        var force = new Vector2
         {
-            Score.OnNext(score.Score);
-        }
+            x = Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce,
+            y = Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce
+        };
+        m_rigidbody.AddForce(force);
     }
 
-    public void ResetBall()
+    public void CalculateBounceVelocityPaddle(Collision2D collision, float maxPaddleBounceAngle)
     {
-        transform.position = m_startPosition.position;
-        m_controller.Active.Value = true;
-        m_controller.AddInitialForce();
+        var localContact = collision.transform.InverseTransformPoint(collision.contacts[0].point);
+        var paddleWidth = collision.collider.GetComponent<SpriteRenderer>().bounds.size.x;
+        var normalizedLocalContactX = localContact.x / (paddleWidth / 2);
+        var bounceAngle = normalizedLocalContactX * maxPaddleBounceAngle;
+
+        var bounceForce = new Vector2
+        {
+            x = Mathf.Sin(bounceAngle) * InitialForce,
+            y = Mathf.Cos(bounceAngle) * InitialForce
+        };
+        m_rigidbody.velocity = Vector2.zero;  // Reset velocity before applying bounce
+        m_rigidbody.AddForce(bounceForce);
+    }
+    private void ProcessChangeGameState() 
+    {
+        Active.Value = true;
+        AddInitialForce();
     }
 }
-public interface IDamage 
+public interface IBallController
 {
-    void ApplyDamage(int power);
-}
-public interface IScore 
-{
-    int Score { get; }
+    IReactiveProperty<bool> Active { get; }
+    int Power { get; }
+
+    void AddInitialForce();
+    void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
+    void Init(float m_initialForce, int m_power, Vector3 position, float m_initialAngle, Rigidbody2D rigidbody2D);
 }
