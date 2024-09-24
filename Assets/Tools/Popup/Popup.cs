@@ -12,9 +12,9 @@ namespace Tools
     public class Popup : View<PopupPresenter>, IPopup
     {
         [SerializeField] protected Button m_closeBtn;
+        [SerializeField] protected Button m_primaryAction;
         [SerializeField] private AnimationClip m_openAnimation;
         [SerializeField] private AnimationClip m_closeAnimation;
-        [SerializeField] protected Button m_primaryAction;
         
         [Inject] protected IPopupManager m_popupManager;
 
@@ -24,7 +24,8 @@ namespace Tools
         public IObservable<IPopup> OnOpenAsObservable => m_presenter.OnOpenAsObservable;
         public IReadOnlyReactiveProperty<bool> IsOpen => m_presenter.IsOpen;
         public IReactiveProperty<State> PopupState => m_presenter.PopupState;
-        public IObservable<Unit> PrimaryActionObservable => m_closeBtn.OnClickAsObservable();
+        public IObservable<Unit> OnPrimaryActionObservable => m_primaryAction.OnClickAsObservable();
+        public IObservable<Unit> OnQuitAsObservable => m_closeBtn.OnClickAsObservable();
 
         public virtual void Init()
         {           

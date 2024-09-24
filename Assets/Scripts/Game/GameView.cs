@@ -5,6 +5,8 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 using Tools;
+using UnityEngine.UI;
+using System.Runtime.CompilerServices;
 
 public class GameView : MonoBehaviour
 {
@@ -13,10 +15,12 @@ public class GameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private TextMeshProUGUI m_timerTxt;
     [SerializeField] private BallView m_ballPresenter;
+    [SerializeField] private Button m_quitBtn;
 
     [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
     [Inject] private IGamePresenter m_presenter;
+    [Inject] private ISceneLoading m_sceneLoading;
 
     private IDisposable m_restartUpdate;
     private IDisposable m_timer;
@@ -32,7 +36,8 @@ public class GameView : MonoBehaviour
 
         m_restartUpdate = Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
-            .Subscribe(_ => ResetBall());
+            .Subscribe(_ => ResetBall())
+            .AddTo(this);
 
         Popup startPopup = m_popupManager.Show<LevelStartPopup>();
         startPopup
@@ -42,7 +47,41 @@ public class GameView : MonoBehaviour
                     m_presenter.SetGameState(GameState.Play);
                 })
             .AddTo(this);
+
+        m_quitBtn
+            .OnClickAsObservable()
+            .Subscribe(_ => SetRetry())
+            .AddTo(this);
     }
+
+    private void SetRetry() 
+    {
+        m_presenter.SetGameState(GameState.Pause);
+        LevelRetryPopup retryPopup = m_popupManager.Show<LevelRetryPopup>();
+
+        retryPopup
+            .OnPrimaryActionObservable
+            .SelectMany(_ => 
+                {
+                    retryPopup.Close();
+                    return retryPopup.OnCloseAsObservable;
+                })
+            .Subscribe(_ => m_sceneLoading.LoadCore())
+            .AddTo(this);
+
+        retryPopup
+            .OnContinueAsObservable
+            .SelectMany(_ =>  retryPopup.OnCloseAsObservable)
+            .Subscribe(_=> m_presenter.SetGameState(GameState.Play))
+            .AddTo(this);
+
+        retryPopup
+            .OnQuitAsObservable
+            .SelectMany (_ => retryPopup.OnCloseAsObservable)
+            .Subscribe(_=> m_sceneLoading.LoadMeta())
+            .AddTo(this);
+    }
+
     private void BindBrickSystem() 
     {
         m_brickSystem.Bricks

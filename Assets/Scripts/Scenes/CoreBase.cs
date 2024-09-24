@@ -9,9 +9,9 @@ public abstract class CoreBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_backBtn.OnClickAsObservable()
-            .Subscribe(_ => LoadMeta())
-            .AddTo(this);
+        //m_backBtn.OnClickAsObservable()
+        //    .Subscribe(_ => LoadMeta())
+        //    .AddTo(this);
     }
     public virtual void LoadMeta() 
     {

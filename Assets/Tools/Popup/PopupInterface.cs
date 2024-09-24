@@ -15,6 +15,8 @@ namespace Tools
         IReadOnlyReactiveProperty<bool> IsOpen { get; }
         IObservable<IPopup> OnCloseAsObservable { get; }
         IObservable<IPopup> OnOpenAsObservable { get; }
+        IObservable<Unit> OnQuitAsObservable { get; }
+        IObservable<Unit> OnPrimaryActionObservable { get; }
 
         void SetButtonsInteractable(bool value);
 

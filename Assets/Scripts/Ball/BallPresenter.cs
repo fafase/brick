@@ -26,11 +26,11 @@ public class BallPresenter : Presenter, IBallController, IDisposable
         IDisposable signalDisposable = null;
         signalDisposable = ObservableSignal
             .AsObservable<GameStateData>()
-            .Where(data => data.NextState.Equals(GameState.Play))
-            .Subscribe(_ => 
+            .Where(data => data.NextState.Equals(GameState.Play) || data.NextState.Equals(GameState.Pause))
+            .Subscribe(data => 
                 {
                     signalDisposable?.Dispose();
-                    ProcessChangeGameState(); 
+                    ProcessChangeGameState(data.NextState); 
                 })
             .AddTo(m_compositeDisposable);
     }
@@ -69,10 +69,13 @@ public class BallPresenter : Presenter, IBallController, IDisposable
         m_rigidbody.velocity = Vector2.zero;  // Reset velocity before applying bounce
         m_rigidbody.AddForce(bounceForce);
     }
-    private void ProcessChangeGameState() 
+    private void ProcessChangeGameState(GameState state) 
     {
-        Active.Value = true;
-        AddInitialForce();
+        Active.Value = !(state == GameState.Play);
+        if (state == GameState.Play)
+        {
+            AddInitialForce();
+        }
     }
 }
 public interface IBallController

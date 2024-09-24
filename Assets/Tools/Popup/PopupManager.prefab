@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 5052957538885912295, guid: dd30ae9466e21bd44aac66f37da478c7, type: 3}
   - {fileID: 5105961764503482651, guid: 087609e0d96d28b4c9d40b723d26c133, type: 3}
   - {fileID: -671738685174903198, guid: 30bc0cdea8dab2e4696e2c314ab75184, type: 3}
+  - {fileID: 8868362472100450956, guid: 3a0ef99e839081845ad89a43ed8e9662, type: 3}
 --- !u!223 &4066458002547204833
 Canvas:
   m_ObjectHideFlags: 0
