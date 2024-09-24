@@ -54,18 +54,28 @@ public class GameView : MonoBehaviour
     private void BindTimer() 
     {
         m_timerTxt.text = $"{m_sessionDuration}s";
+        IDisposable signalDisposable = null;
+        void StartTimer()
+        {
+            signalDisposable?.Dispose();
+            m_timer = Observable.Interval(TimeSpan.FromSeconds(1))
+                .Select(elapsed => m_remainingTime = m_sessionDuration - (int)elapsed)
+                .TakeWhile(remaining => remaining >= 0)
+                .DelayFrame(1)
+                .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
+                    () =>
+                    {
+                        m_timer.Dispose();
+                        m_remainingTime = 0;
+                        WinLevel();
+                    })
+                .AddTo(this);
+        }
 
-        m_timer = Observable.Interval(TimeSpan.FromSeconds(1))
-            .Select(elapsed => m_remainingTime = m_sessionDuration - (int)elapsed)
-            .TakeWhile(remaining => remaining >= 0)
-            .DelayFrame(1)
-            .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
-                () =>
-                {
-                    m_timer.Dispose();
-                    m_remainingTime = 0;
-                    WinLevel();
-                })
+        signalDisposable = ObservableSignal
+            .AsObservable<GameStateData>()
+            .Where(data => data.NextState.Equals(GameState.Play))
+            .Subscribe(data => StartTimer())
             .AddTo(this);
     }
 

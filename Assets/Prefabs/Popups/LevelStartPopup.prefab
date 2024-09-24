@@ -432,7 +432,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: 0}
+  m_SizeDelta: {x: -100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5892553854660080298
 CanvasRenderer:
@@ -464,8 +464,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
+  m_sharedMaterial: {fileID: 8800181858995547458, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -687,7 +687,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: 0}
+  m_SizeDelta: {x: -100, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4822887240799242024
 CanvasRenderer:
@@ -719,8 +719,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play level
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
+  m_sharedMaterial: {fileID: 8800181858995547458, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 58.95
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -963,8 +963,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Remove all the bricks before the end of the timer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
+  m_sharedMaterial: {fileID: 8800181858995547458, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.6
+  m_fontSize: 47.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1097,8 +1097,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 49ae56e9b6f9cac4caff997896aa4974, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
+  m_sharedMaterial: {fileID: 8800181858995547458, guid: 358e1232eeec7a2408a756a4a30dda88, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

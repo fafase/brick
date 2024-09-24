@@ -23,11 +23,15 @@ public class BallPresenter : Presenter, IBallController, IDisposable
             .Skip(1)
             .Subscribe(state => m_rigidbody.gameObject.SetActive(state))
             .AddTo(m_compositeDisposable);
-
-        ObservableSignal
+        IDisposable signalDisposable = null;
+        signalDisposable = ObservableSignal
             .AsObservable<GameStateData>()
             .Where(data => data.NextState.Equals(GameState.Play))
-            .Subscribe(_ => ProcessChangeGameState())
+            .Subscribe(_ => 
+                {
+                    signalDisposable?.Dispose();
+                    ProcessChangeGameState(); 
+                })
             .AddTo(m_compositeDisposable);
     }
 
