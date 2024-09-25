@@ -29,13 +29,21 @@ namespace Tools
         {
             Result<IPopup> result = m_presenter.Show<T>();
             result.CheckForDebug();
+            if (result.IsSuccess) 
+            {
+                ObservableSignal.Broadcast(new PopupSignal(typeof(T), State.Opening));
+            }
             return (T)result.Obj;
         }
 
         public void Close(IPopup popup)
         {
-            m_presenter.Close(popup)
-                .CheckForDebug();
+            Result result = m_presenter.Close(popup);
+            result.CheckForDebug();
+            if (result.IsSuccess)
+            {
+                ObservableSignal.Broadcast(new PopupSignal(popup.GetType(), State.Closing));
+            }
         }
     
         public bool IsOpen<T>() where T : IPopup => m_presenter.IsOpen<T>();
@@ -69,4 +77,15 @@ namespace Tools
         }
     }
 
+    public class PopupSignal : SignalData 
+    {
+        public readonly Type PopupType;
+        public readonly IPopup.State State;
+
+        public PopupSignal(Type popupType, State state)
+        {
+            PopupType = popupType;
+            State = state;
+        }
+    }
 }

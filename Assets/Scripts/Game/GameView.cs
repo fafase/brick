@@ -14,8 +14,8 @@ public class GameView : MonoBehaviour
     [SerializeField] private Button m_quitBtn;
 
     [SerializeField] private TimerView m_timerView;
+    [SerializeField] private ScoreView m_scoreView;
 
-    [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
     [Inject] private IGamePresenter m_presenter;
     [Inject] private ISceneLoading m_sceneLoading;
@@ -83,11 +83,6 @@ public class GameView : MonoBehaviour
             .AsObservable<WinLevelSignal>()
             .Subscribe(_ => WinLevel())
             .AddTo(this);
-        //m_brickSystem.Bricks
-        //    .ObserveCountChanged()
-        //    .Where(count => count <= 0)
-        //    .DelayFrame(1)
-        //    .Subscribe(_ => WinLevel());
     }
 
     private void BindController() 
@@ -102,9 +97,6 @@ public class GameView : MonoBehaviour
             .Where(value => value < 0)
             .Subscribe(_ => EndLevel())
             .AddTo(this);
-
-        m_presenter.Score
-            .Subscribe(score => m_scoreTxt.text = $"SCORE\n{score}");
     }
 
     private void ResetBall() 
@@ -119,10 +111,9 @@ public class GameView : MonoBehaviour
     }
 
     private void WinLevel() 
-    {
-        //Ball.Ball.Active.Value = false;          
+    {        
         Debug.Log("WINNING");
-        int score = m_presenter.CalculateEndScore(m_timerView.RemainingTime);
+        int score = m_scoreView.CalculateEndScore(m_timerView.RemainingTime);
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
         popup.Init(score);
     }

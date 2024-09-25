@@ -30,13 +30,11 @@ namespace Tools
     {
         IEnumerable<IPopup> Popups { get; }
         RectTransform Container { get; }
-
         void Close(IPopup popup);
         T Show<T>() where T : IPopup;
         bool IsOpen<T>() where T : IPopup;
         IObservable<T> GetPopup<T>() where T : IPopup;
         int PopupsCount {  get; }
-        //IEnumerable<IPopup> PopupList { get; }
         IPopup Clone(IPopup popup);
     }
 }
