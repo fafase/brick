@@ -8,8 +8,6 @@ using Zenject;
 
 public class GameView : MonoBehaviour
 {
-    [SerializeField] private int m_amountBalls = 3;
-    [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private Button m_quitBtn;
 
@@ -20,17 +18,11 @@ public class GameView : MonoBehaviour
     [Inject] private IGamePresenter m_presenter;
     [Inject] private ISceneLoading m_sceneLoading;
 
-
     public BallView Ball { get; set; }
 
     private void Start()
     {
-        BindController();
-        BindBrickSystem();
-
-        ObservableSignal
-            .AsObservable<EndTimerSignal>()
-            .Subscribe(_=>EndLevel());
+        BindEndLevel();
 
         Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
@@ -49,14 +41,14 @@ public class GameView : MonoBehaviour
             .AddTo(this);
     }
 
-    private void SetRetry() 
+    private void SetRetry()
     {
         m_presenter.SetGameState(GameState.Pause);
         LevelRetryPopup retryPopup = m_popupManager.Show<LevelRetryPopup>();
 
         retryPopup
             .OnPrimaryActionObservable
-            .SelectMany(_ => 
+            .SelectMany(_ =>
             {
                 retryPopup.Close();
                 return retryPopup.OnCloseAsObservable;
@@ -66,52 +58,49 @@ public class GameView : MonoBehaviour
 
         retryPopup
             .OnContinueAsObservable
-            .SelectMany(_ =>  retryPopup.OnCloseAsObservable)
-            .Subscribe(_=> m_presenter.SetGameState(GameState.Play))
+            .SelectMany(_ => retryPopup.OnCloseAsObservable)
+            .Subscribe(_ => m_presenter.SetGameState(GameState.Play))
             .AddTo(this);
 
         retryPopup
             .OnQuitAsObservable
-            .SelectMany (_ => retryPopup.OnCloseAsObservable)
-            .Subscribe(_=> m_sceneLoading.LoadMeta())
+            .SelectMany(_ => retryPopup.OnCloseAsObservable)
+            .Subscribe(_ => m_sceneLoading.LoadMeta())
             .AddTo(this);
     }
 
-    private void BindBrickSystem() 
+    private void BindEndLevel()
     {
-        ObservableSignal
-            .AsObservable<WinLevelSignal>()
-            .Subscribe(_ => WinLevel())
+        var observable = ObservableSignal
+            .AsObservable<EndLevelSignal>()
+            .Subscribe(data =>
+            {
+                if (data.IsWinning)
+                {
+                    WinLevel();
+                }
+                else 
+                {
+                    LossLevel();
+                }
+            })
             .AddTo(this);
     }
 
-    private void BindController() 
-    {
-        m_presenter.Init(m_amountBalls);
-        m_presenter.BallAmount
-            .Where(value => value >= 0)
-            .Subscribe(i => m_ballAmount.text = $"BALL\n{i}")
-            .AddTo(this);
 
-        m_presenter.BallAmount
-            .Where(value => value < 0)
-            .Subscribe(_ => EndLevel())
-            .AddTo(this);
-    }
-
-    private void ResetBall() 
+    private void ResetBall()
     {
         Ball.ResetBall();
     }
 
-    private void EndLevel()
+    private void LossLevel()
     {
         m_presenter.EndLevel();
         m_popupManager.Show<LevelLossPopup>();
     }
 
-    private void WinLevel() 
-    {        
+    private void WinLevel()
+    {
         Debug.Log("WINNING");
         int score = m_scoreView.CalculateEndScore(m_timerView.RemainingTime);
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();

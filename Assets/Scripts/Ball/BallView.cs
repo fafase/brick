@@ -57,7 +57,7 @@ public class BallView : MonoBehaviour
             .AddTo(this);
 
         ObservableSignal
-            .AsObservable<WinLevelSignal>()
+            .AsObservable<EndLevelSignal>()
             .Subscribe(_ => Ball.Active.Value = false)
             .AddTo(this);
     }

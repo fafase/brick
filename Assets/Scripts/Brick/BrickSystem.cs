@@ -23,7 +23,7 @@ public class BrickSystem : MonoBehaviour, IBrickSystem
             .ObserveCountChanged()
             .Where(count => count <= 0)
             .DelayFrame(1)
-            .Subscribe(_ => ObservableSignal.Broadcast(new WinLevelSignal()))
+            .Subscribe(_ => ObservableSignal.Broadcast(new EndLevelSignal(true)))
             .AddTo(this);
     }
 }
@@ -32,4 +32,23 @@ public interface IBrickSystem
 {
     public IReactiveCollection<BrickView> Bricks { get; }
 }
-public class WinLevelSignal : SignalData { }
+public class EndLevelSignal : SignalData 
+{
+    public readonly bool IsWinning;
+    public readonly LossReason Reason;
+    public EndLevelSignal(bool isWinning)
+    {
+        IsWinning = isWinning;
+    }
+
+    public EndLevelSignal(bool isWinning, LossReason reason)
+    {
+        IsWinning = isWinning;
+        Reason = reason;    
+    }
+
+    public enum LossReason 
+    {
+        TimeUp, NoBall
+    }
+}

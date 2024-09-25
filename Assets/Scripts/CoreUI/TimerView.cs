@@ -20,7 +20,7 @@ public class TimerView : MonoBehaviour
         BindTimer();
 
         ObservableSignal
-            .AsObservable<WinLevelSignal>()
+            .AsObservable<EndLevelSignal>()
             .Subscribe(_ => m_timer.Dispose())
             .AddTo(this);
     }
@@ -41,7 +41,7 @@ public class TimerView : MonoBehaviour
                 {
                     m_timer.Dispose();
                     m_remainingTime = 0;
-                    ObservableSignal.Broadcast(new EndTimerSignal());
+                    ObservableSignal.Broadcast(new EndLevelSignal(false, EndLevelSignal.LossReason.TimeUp));
                 })
                 .AddTo(this);
         }
@@ -53,5 +53,3 @@ public class TimerView : MonoBehaviour
             .AddTo(this);
     }
 }
-public class EndTimerSignal : SignalData 
-{ }

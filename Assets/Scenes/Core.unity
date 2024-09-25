@@ -3013,7 +3013,8 @@ MonoBehaviour:
   m_ballAmount: {fileID: 1246028994}
   m_scoreTxt: {fileID: 793864227}
   m_quitBtn: {fileID: 1189060338}
-  m_timerView: {fileID: 0}
+  m_timerView: {fileID: 1652056777}
+  m_scoreView: {fileID: 0}
 --- !u!114 &1762894288
 MonoBehaviour:
   m_ObjectHideFlags: 0
