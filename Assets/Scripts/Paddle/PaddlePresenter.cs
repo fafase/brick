@@ -54,7 +54,7 @@ public interface IPaddlePresenter
 {
     ReactiveProperty<Vector3> PaddlePos { get; }
     ReactiveProperty<float> PaddleScale { get; }
-
+    Vector3 StartPosition { get; }
     void SetScale(long obj);
     void ProcessPosition(Vector3 mousePos);
     void Init(IPaddleProvider provider, Vector3 defaultPos, float deckLeftScreen, float deckRightScreen);

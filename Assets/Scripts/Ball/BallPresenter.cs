@@ -9,14 +9,14 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
 
     public int Power { get; private set; }
 
-    public Vector3 StartPosition { get; private set; }
-
     public IReactiveProperty<bool> Active { get; private set; }
     public Subject<int> Score { get; private set; } = new Subject<int>();
 
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
     public bool IsExtraBall { get; set; }
+
+    private Vector3 StartPosition { get; set; } 
 
     public BallPresenter()
     {
@@ -143,10 +143,9 @@ public interface IBallPresenter
     IReactiveProperty<bool> Active { get; }
     int Power { get; }
     Subject<int> Score { get; }
-
     void AddInitialForce();
     void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
-    void Init(float m_initialForce, int m_power, Vector3 position, float m_initialAngle, Rigidbody2D rigidbody2D);
+    void Init(float m_initialForce, int m_power, Vector3 startPosition, float m_initialAngle, Rigidbody2D rigidbody2D);
     void UpdateScore(int score);
     bool IsExtraBall { get; set; }
 }

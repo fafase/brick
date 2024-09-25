@@ -4,10 +4,11 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-public abstract class CoreBase: Presenter, ICore
+public abstract class CoreBase : Presenter, ICore
 {
     [Inject] private BrickView.Factory m_brickFactory;
     [Inject] private PowerUp.Factory m_powerUpFactory;
+    [Inject] private BallView.Factory m_ballFactory;
     [Inject] private IPrefabContainer m_container;
 
     protected CoreBase()
@@ -20,14 +21,14 @@ public abstract class CoreBase: Presenter, ICore
 
     public virtual PowerUp CreatePowerUp(PowerUp prefab)
     {
-        if(prefab == null) 
+        if (prefab == null)
         {
             throw new ArgumentNullException("Null prefab for PowerUp in CoreBase for Factory");
         }
         return m_powerUpFactory.Create(prefab);
     }
 
-    public virtual BrickView CreateBrick(GameObject prefab)
+    public virtual BrickView CreateBrick(BrickView prefab)
     {
         if (prefab == null)
         {
@@ -35,8 +36,15 @@ public abstract class CoreBase: Presenter, ICore
         }
         return m_brickFactory.Create(prefab);
     }
-
-    private void ProcessBrickDestruction(BrickDestroyedSignal data) 
+    public BallView CreateBall(BallView prefab) 
+    {
+        if (prefab == null)
+        {
+            throw new ArgumentNullException("Null prefab for Brick in CoreBase for Factory");
+        }
+        return m_ballFactory.Create(prefab);
+    }
+    private void ProcessBrickDestruction(BrickDestroyedSignal data)
     {
         // Basic probability logic,
         // should be reviewed to avoid streak of creation and forced creation if too long without new power-up
@@ -47,7 +55,7 @@ public abstract class CoreBase: Presenter, ICore
             _ => 0
         };
 
-        if(UnityEngine.Random.Range(0,99) < prob) 
+        if (UnityEngine.Random.Range(0, 99) < prob)
         {
             try
             {
@@ -55,7 +63,7 @@ public abstract class CoreBase: Presenter, ICore
                 PowerUp powerUp = CreatePowerUp(prefab);
                 powerUp.transform.position = data.Position;
             }
-            catch(System.Exception e) 
+            catch (System.Exception e)
             {
                 Debug.LogError(e.Message);
             }
@@ -65,33 +73,7 @@ public abstract class CoreBase: Presenter, ICore
 public interface ICore
 {
     PowerUp CreatePowerUp(PowerUp prefab);
-    BrickView CreateBrick(GameObject prefab);
+    BrickView CreateBrick(BrickView prefab);
+    BallView CreateBall(BallView prefab);
 }
 
-public class PowerUpFactory : IFactory<PowerUp, PowerUp>
-{
-    readonly DiContainer m_container;
-
-    public PowerUpFactory(DiContainer container)
-    {
-        m_container = container;
-    }
-    public PowerUp Create(PowerUp prefab)
-    {
-        return m_container.InstantiatePrefabForComponent<PowerUp>(prefab);
-    }
-}
-
-public class BrickFactory : IFactory<UnityEngine.Object, BrickView>
-{
-    readonly DiContainer m_container;
-
-    public BrickFactory(DiContainer container)
-    {
-        m_container = container;
-    }
-    public BrickView Create(UnityEngine.Object prefab)
-    {
-        return m_container.InstantiatePrefabForComponent<BrickView>(prefab);
-    }
-}

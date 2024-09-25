@@ -13,7 +13,6 @@ public class GameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
     [SerializeField] private TextMeshProUGUI m_timerTxt;
-    [SerializeField] private BallView m_ballPresenter;
     [SerializeField] private Button m_quitBtn;
 
     [Inject] private IBrickSystem m_brickSystem;
@@ -24,6 +23,8 @@ public class GameView : MonoBehaviour
     private IDisposable m_timer;
     private int m_sessionDuration = 30;
     private int m_remainingTime;
+
+    public BallView Ball { get; set; }
 
     private void Start()
     {
@@ -101,7 +102,6 @@ public class GameView : MonoBehaviour
                     m_timer.Dispose();
                     m_remainingTime = 0;
                     EndLevel();
-                    //WinLevel();
                 })
                 .AddTo(this);
         }
@@ -132,7 +132,7 @@ public class GameView : MonoBehaviour
 
     private void ResetBall() 
     {
-        m_ballPresenter.ResetBall();
+        Ball.ResetBall();
     }
 
     private void EndLevel()
@@ -143,7 +143,7 @@ public class GameView : MonoBehaviour
 
     private void WinLevel() 
     {
-        m_ballPresenter.Ball.Active.Value = false;    
+        Ball.Ball.Active.Value = false;    
         
         m_timer.Dispose ();
         Debug.Log("WINNING");

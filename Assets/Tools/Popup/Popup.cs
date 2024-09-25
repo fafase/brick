@@ -102,6 +102,6 @@ namespace Tools
 
         public void SetButtonsInteractable(bool value) => Array.ForEach(GetComponentsInChildren<Button>(), (btn => btn.interactable = value));
 
-        public class Factory : PlaceholderFactory<UnityEngine.Object,Popup> { }
+        public class Factory : PlaceholderFactory<Popup, Popup> { }
     }
 }

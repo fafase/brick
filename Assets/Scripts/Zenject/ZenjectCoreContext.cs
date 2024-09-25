@@ -1,3 +1,4 @@
+using Tools;
 using UnityEngine;
 using Zenject;
 
@@ -15,7 +16,8 @@ public class ZenjectCoreContext : MonoInstaller
         Container.BindInterfacesTo<CoreScene>().FromNew().AsSingle().NonLazy();
 
         Container.BindFactory<PowerUp, PowerUp, PowerUp.Factory>().FromFactory<PowerUpFactory>();
-        Container.BindFactory<Object, BrickView, BrickView.Factory>().FromFactory<BrickFactory>();
+        Container.BindFactory<BrickView, BrickView, BrickView.Factory>().FromFactory<BrickFactory>();
+        Container.BindFactory<BallView, BallView, BallView.Factory>().FromFactory<BallFactory>();
     }
 
     private void BindPresenters() 

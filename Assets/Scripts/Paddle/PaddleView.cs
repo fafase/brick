@@ -1,16 +1,16 @@
+using System;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 public class PaddleView : MonoBehaviour, IPaddleProvider
 {
-    [SerializeField] private Transform m_paddleTr;
-    [SerializeField] private Transform m_deckLeftLimit, m_deckRightLimit;
+    [SerializeField] private Transform m_leftDeck;
+    [SerializeField] private Transform m_rightDeck;
     [SerializeField] private Transform m_paddleLeftLimit, m_paddleRightLimit;
     [SerializeField] private Transform m_startPosition;
 
     [Inject] private IGamePresenter m_gamePresenter;
-
     [Inject] private IPaddlePresenter m_presenter;
     [Inject] private ICore m_core;
 
@@ -26,19 +26,19 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
 
     private void SetPaddleController() 
     {
-        float deckLeftScreen = Camera.main.WorldToScreenPoint(m_deckLeftLimit.position).x;
-        float deckRightScreen = Camera.main.WorldToScreenPoint(m_deckRightLimit.position).x;
-        m_presenter.Init(this, m_paddleTr.position, deckLeftScreen, deckRightScreen);
+        float deckLeftScreen = Camera.main.WorldToScreenPoint(m_leftDeck.position).x;
+        float deckRightScreen = Camera.main.WorldToScreenPoint(m_rightDeck.position).x;
+        m_presenter.Init(this, transform.position, deckLeftScreen, deckRightScreen);
         m_presenter.PaddlePos
             .Skip(1)
-            .Subscribe(newPosition => m_paddleTr.position = newPosition)
+            .Subscribe(newPosition => transform.position = newPosition)
             .AddTo(this);
 
         m_presenter.PaddleScale
             .Subscribe(newScale =>
             {
-                Vector3 scale = m_paddleTr.localScale;
-                m_paddleTr.localScale = new Vector3(newScale, scale.y, scale.z);
+                Vector3 scale = transform.localScale;
+                transform.localScale = new Vector3(newScale, scale.y, scale.z);
             });
     }
 

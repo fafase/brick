@@ -14,6 +14,6 @@ public class ZenjectProjectContext : MonoInstaller
 
         Container.BindInterfacesTo<PopupManager>().FromComponentInNewPrefab(m_popupManager).AsSingle().NonLazy();
         Container.BindInterfacesTo<SceneLoading>().AsSingle();
-        Container.BindFactory< Object, Popup, Popup.Factory>().FromFactory<PopupFactory>();
+        Container.BindFactory< Popup, Popup, Popup.Factory>().FromFactory<PopupFactory>();
     }
 }

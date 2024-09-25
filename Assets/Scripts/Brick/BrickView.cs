@@ -36,16 +36,15 @@ public class BrickView : View<BrickPresenter>, IDamage, IScore
         m_presenter.ApplyDamage(power); 
     }
 
-    private void DestroyBrick() 
+    private void DestroyBrick()
     {
         if (m_destructionFX != null)
         {
             Instantiate(m_destructionFX, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
-
-    public class Factory:PlaceholderFactory<Object, BrickView> { }
+    public class Factory : PlaceholderFactory<BrickView, BrickView> { }
 }
 
 public interface IBrick 
