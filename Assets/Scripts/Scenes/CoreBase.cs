@@ -50,8 +50,8 @@ public abstract class CoreBase : Presenter, ICore
         // should be reviewed to avoid streak of creation and forced creation if too long without new power-up
         int prob = data.Type switch
         {
-            BrickType.Blue => 50,
-            BrickType.Orange => 70,
+            BrickType.Blue => 0,
+            BrickType.Orange => 0,
             _ => 0
         };
 

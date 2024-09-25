@@ -24,6 +24,11 @@ public abstract class PowerUp : MonoBehaviour
             .AddTo(this);
     }
 
+    private void OnDestroy()
+    {
+        m_presenter?.Dispose();
+    }
+
     protected virtual void OnCollision(Collider2D collider) 
     {
         if (collider.gameObject.CompareTag(TagContent.PADDLE))

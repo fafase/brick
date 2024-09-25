@@ -1,36 +1,36 @@
-using System;
 using System.Linq;
 using TMPro;
+using Tools;
 using UniRx;
 using UnityEngine;
-using Zenject;
-using Tools;
 using UnityEngine.UI;
+using Zenject;
 
 public class GameView : MonoBehaviour
 {
     [SerializeField] private int m_amountBalls = 3;
     [SerializeField] private TextMeshProUGUI m_ballAmount;
     [SerializeField] private TextMeshProUGUI m_scoreTxt;
-    [SerializeField] private TextMeshProUGUI m_timerTxt;
     [SerializeField] private Button m_quitBtn;
+
+    [SerializeField] private TimerView m_timerView;
 
     [Inject] private IBrickSystem m_brickSystem;
     [Inject] private IPopupManager m_popupManager;
     [Inject] private IGamePresenter m_presenter;
     [Inject] private ISceneLoading m_sceneLoading;
 
-    private IDisposable m_timer;
-    private int m_sessionDuration = 30;
-    private int m_remainingTime;
 
     public BallView Ball { get; set; }
 
     private void Start()
     {
         BindController();
-        BindTimer();
         BindBrickSystem();
+
+        ObservableSignal
+            .AsObservable<EndTimerSignal>()
+            .Subscribe(_=>EndLevel());
 
         Observable.EveryUpdate()
             .Where(_ => Input.GetKeyDown(KeyCode.R))
@@ -79,38 +79,15 @@ public class GameView : MonoBehaviour
 
     private void BindBrickSystem() 
     {
-        m_brickSystem.Bricks
-            .ObserveCountChanged()
-            .Where(count => count <= 0)
-            .DelayFrame(1)
-            .Subscribe(_ => WinLevel());
-    }
-    private void BindTimer() 
-    {
-        m_timerTxt.text = $"{m_sessionDuration}s";
-        IDisposable signalDisposable = null;
-        void StartTimer()
-        {
-            signalDisposable?.Dispose();
-            m_timer = Observable.Interval(TimeSpan.FromSeconds(1))
-                .Select(elapsed => m_remainingTime = m_sessionDuration - (int)elapsed)
-                .TakeWhile(remaining => remaining >= 0)
-                .DelayFrame(1)
-                .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
-                () =>
-                {
-                    m_timer.Dispose();
-                    m_remainingTime = 0;
-                    EndLevel();
-                })
-                .AddTo(this);
-        }
-
-        signalDisposable = ObservableSignal
-            .AsObservable<GameStateData>()
-            .Where(data => data.NextState.Equals(GameState.Play))
-            .Subscribe(data => StartTimer())
+        ObservableSignal
+            .AsObservable<WinLevelSignal>()
+            .Subscribe(_ => WinLevel())
             .AddTo(this);
+        //m_brickSystem.Bricks
+        //    .ObserveCountChanged()
+        //    .Where(count => count <= 0)
+        //    .DelayFrame(1)
+        //    .Subscribe(_ => WinLevel());
     }
 
     private void BindController() 
@@ -143,11 +120,9 @@ public class GameView : MonoBehaviour
 
     private void WinLevel() 
     {
-        Ball.Ball.Active.Value = false;    
-        
-        m_timer.Dispose ();
+        //Ball.Ball.Active.Value = false;          
         Debug.Log("WINNING");
-        int score = m_presenter.CalculateEndScore(m_remainingTime);
+        int score = m_presenter.CalculateEndScore(m_timerView.RemainingTime);
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
         popup.Init(score);
     }

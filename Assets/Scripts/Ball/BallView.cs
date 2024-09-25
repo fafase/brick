@@ -1,4 +1,5 @@
 using System;
+using Tools;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -54,6 +55,11 @@ public class BallView : MonoBehaviour
         Ball.Active
             .Subscribe(gameObject.SetActive)
             .AddTo(this);
+
+        ObservableSignal
+            .AsObservable<WinLevelSignal>()
+            .Subscribe(_ => Ball.Active.Value = false)
+            .AddTo(this);
     }
 
     public void Init(Transform startTransform)
@@ -78,6 +84,11 @@ public class BallView : MonoBehaviour
         transform.position = m_startTr.position;
         Ball.Active.Value = true;
         Ball.AddInitialForce();
+    }
+
+    private void OnDestroy()
+    {
+        ((IDisposable)Ball)?.Dispose();
     }
 
     public class Factory : PlaceholderFactory<BallView, BallView> { }

@@ -48,6 +48,6 @@ public class PowerUpPresenter : Presenter
 
     public void ProcessLoss() 
     {
-        Object.Destroy(m_rigidbody.gameObject);
+        Object.Destroy(m_rigidbody?.gameObject);
     }
 }

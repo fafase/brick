@@ -527,6 +527,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 118197801165260098, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
   m_PrefabInstance: {fileID: 161972044}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &166446862
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1762894286}
+    m_Modifications:
+    - target: {fileID: 3704931938401202559, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_Name
+      value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281222626081461676, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_leftDeck
+      value: 
+      objectReference: {fileID: 170556650}
+    - target: {fileID: 6281222626081461676, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_rightDeck
+      value: 
+      objectReference: {fileID: 1124661017}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
 --- !u!1 &170556649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1308,7 @@ GameObject:
   - component: {fileID: 793864226}
   - component: {fileID: 793864228}
   - component: {fileID: 793864227}
+  - component: {fileID: 793864229}
   m_Layer: 5
   m_Name: ScoreTxt
   m_TagString: Untagged
@@ -1366,6 +1432,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793864225}
   m_CullTransparentMesh: 1
+--- !u!114 &793864229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793864225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6600af5da9ffc64c9af5a8e1def8809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &820046392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2572,6 +2650,7 @@ GameObject:
   - component: {fileID: 1652056776}
   - component: {fileID: 1652056775}
   - component: {fileID: 1652056774}
+  - component: {fileID: 1652056777}
   m_Layer: 5
   m_Name: TimeTxt
   m_TagString: Untagged
@@ -2695,6 +2774,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1652056777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652056773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1b1ee61d2eb4f45a5dfa9920c13a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1685647808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,6 +2853,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 118197801165260098, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
   m_PrefabInstance: {fileID: 1685647808}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1697144846 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+  m_PrefabInstance: {fileID: 166446862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1697144848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6281222626081461676, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+  m_PrefabInstance: {fileID: 166446862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7097a0ecb17ef7f4bad17d9f7cbb3b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1747316608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2992,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1697144846}
   - {fileID: 1258265249}
   - {fileID: 1270197379}
   m_Father: {fileID: 0}
@@ -2904,8 +3012,8 @@ MonoBehaviour:
   m_amountBalls: 3
   m_ballAmount: {fileID: 1246028994}
   m_scoreTxt: {fileID: 793864227}
-  m_timerTxt: {fileID: 1652056774}
   m_quitBtn: {fileID: 1189060338}
+  m_timerView: {fileID: 0}
 --- !u!114 &1762894288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2918,11 +3026,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3790020e9dca3b34a912c4fd87d7f1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_paddleView: {fileID: 6281222626081461676, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
   m_ballPrefab: {fileID: 8999159800277566562, guid: 7d14067b55ba9854c8810291a8157c45, type: 3}
   m_gameView: {fileID: 1762894287}
-  m_leftDeck: {fileID: 145472154}
-  m_rightDeck: {fileID: 298920504}
+  m_paddle: {fileID: 1697144848}
 --- !u!1001 &1820915266
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Linq;
+using Tools;
 using UniRx;
 using UnityEngine;
 
@@ -17,6 +18,13 @@ public class BrickSystem : MonoBehaviour, IBrickSystem
                 .Subscribe(_ => Bricks.Remove(brick))
                 .AddTo(this);  
         }
+
+        Bricks
+            .ObserveCountChanged()
+            .Where(count => count <= 0)
+            .DelayFrame(1)
+            .Subscribe(_ => ObservableSignal.Broadcast(new WinLevelSignal()))
+            .AddTo(this);
     }
 }
 
@@ -24,3 +32,4 @@ public interface IBrickSystem
 {
     public IReactiveCollection<BrickView> Bricks { get; }
 }
+public class WinLevelSignal : SignalData { }
