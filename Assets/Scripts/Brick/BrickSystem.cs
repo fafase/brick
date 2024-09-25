@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BrickSystem : MonoBehaviour, IBrickSystem
 {
-    public IReactiveCollection<BrickPresenter> Bricks { get; private set; }
+    public IReactiveCollection<BrickView> Bricks { get; private set; }
     
     void Start()
     {
-        Bricks = GetComponentsInChildren<BrickPresenter>(true).ToReactiveCollection();
+        Bricks = GetComponentsInChildren<BrickView>(true).ToReactiveCollection();
         foreach(var brick in Bricks) 
         {
             brick.Brick.Health
@@ -22,5 +22,5 @@ public class BrickSystem : MonoBehaviour, IBrickSystem
 
 public interface IBrickSystem 
 {
-    public IReactiveCollection<BrickPresenter> Bricks { get; }
+    public IReactiveCollection<BrickView> Bricks { get; }
 }

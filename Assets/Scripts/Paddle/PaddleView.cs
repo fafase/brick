@@ -12,10 +12,11 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
     [Inject] private IGamePresenter m_gamePresenter;
 
     [Inject] private IPaddlePresenter m_presenter;
+    [Inject] private ICore m_core;
 
     public float Size => GetComponent<SpriteRenderer>().bounds.size.x;
     public float Scale => transform.localScale.x;
-    public Transform SartPosition => m_startPosition;
+    public Transform StartTransform => m_startPosition;
 
     private void Start()
     {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7267956606199623577}
   - component: {fileID: 8460336102299593364}
   m_Layer: 0
-  m_Name: PowerUp
+  m_Name: PowerUpExtraBall
   m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

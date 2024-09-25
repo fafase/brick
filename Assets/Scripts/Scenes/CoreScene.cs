@@ -1,22 +1,19 @@
-using UnityEngine;
-using Zenject;
-
-public class CoreScene : CoreBase, ICoreScene
+public class CoreScene : CoreBase
 {
-    [Inject] private IBrickSystem m_brickSystem;
-
-    [ContextMenu("End Level")]
-    public void EndGame()
-    {     
-        foreach(var brick in m_brickSystem.Bricks)
-        {
-            GameObject go = brick.gameObject;
-            Destroy(go);
-        }
-        m_brickSystem.Bricks.Clear();
+    public CoreScene() : base()
+    {
+        
     }
-}
-public interface ICoreScene 
-{
-    void LoadMeta();
+    //[Inject] private IBrickSystem m_brickSystem;
+
+    //[ContextMenu("End Level")]
+    //public void EndGame()
+    //{     
+    //    foreach(var brick in m_brickSystem.Bricks)
+    //    {
+    //        GameObject go = brick.gameObject;
+    //        Object.Destroy(go);
+    //    }
+    //    m_brickSystem.Bricks.Clear();
+    //}
 }
