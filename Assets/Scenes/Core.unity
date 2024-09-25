@@ -361,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -454,6 +458,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -515,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -708,6 +720,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -729,6 +745,10 @@ PrefabInstance:
     - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_Name
       value: Brick_2 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -863,6 +883,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -924,6 +948,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -987,6 +1015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1049,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1110,6 +1146,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1339,6 +1379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1535,6 +1579,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1597,6 +1645,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1618,6 +1670,10 @@ PrefabInstance:
     - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_Name
       value: Brick_2 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1841,6 +1897,10 @@ PrefabInstance:
     - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_Name
       value: Brick_2 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2620,6 +2680,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -2681,6 +2745,10 @@ PrefabInstance:
     - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_Name
       value: Brick_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2783,6 +2851,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2979,6 +3051,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3179,6 +3255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -3280,6 +3360,10 @@ PrefabInstance:
     - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
       propertyPath: m_Name
       value: Brick_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3473,6 +3557,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8769151849332025736, guid: 263a8c8d26d9da9409465a48785826aa, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3494,6 +3582,10 @@ PrefabInstance:
     - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_Name
       value: Brick_2 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3926,6 +4018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_2 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -4190,6 +4286,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brick_2 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2759859149270641022, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6095797186018368933, guid: 6c5c29b8c92a4b643a5105541239bc2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -4253,13 +4353,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1270197379}
     m_Modifications:
-    - target: {fileID: 6243960683155191125, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9186802078372101272, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
       propertyPath: m_Name
       value: PowerUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186802078372101272, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9197349840570559235, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4267,7 +4367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9197349840570559235, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.79
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 9197349840570559235, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
       propertyPath: m_LocalPosition.z

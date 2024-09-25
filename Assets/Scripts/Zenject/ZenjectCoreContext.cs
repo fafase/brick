@@ -6,7 +6,7 @@ public class ZenjectCoreContext : MonoInstaller
 {
     [SerializeField] private BrickSystem m_brickSystem;
     [SerializeField] private CoreScene m_coreScene;
-   // [SerializeField] private ScoreBooster m_booster;
+
     public override void InstallBindings()
     {
         BindPresenters();
@@ -17,7 +17,7 @@ public class ZenjectCoreContext : MonoInstaller
     private void BindPresenters() 
     {
         Container.BindInterfacesAndSelfTo<GamePresenter>().FromNew().AsSingle().NonLazy();
-        Container.BindInterfacesTo<BallPresenter>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesTo<PaddlePresenter>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ScoreBoosterPresenter>().FromNew().AsSingle().NonLazy();//.FromInstance(m_booster);
     }
 }

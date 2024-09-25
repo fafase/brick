@@ -2,6 +2,7 @@ using Tools;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class PowerUp : MonoBehaviour
@@ -27,8 +28,14 @@ public abstract class PowerUp : MonoBehaviour
         {
             ApplyEffect(collider);
         }
+        if(m_fx != null) 
+        {
+            Instantiate(m_fx);
+        }
         Destroy(gameObject);
     }
 
     protected abstract void ApplyEffect(Collider2D collider);
+
+    public class Factory : PlaceholderFactory<Object, PowerUp> { }
 }

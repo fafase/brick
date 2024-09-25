@@ -3,7 +3,7 @@ using Tools;
 using UniRx;
 using UnityEngine;
 
-public class BallPresenter : Presenter, IBallController, IDisposable
+public class BallPresenter : Presenter, IBallPresenter, IDisposable
 {
     public float InitialForce { get; private set; }
 
@@ -16,13 +16,30 @@ public class BallPresenter : Presenter, IBallController, IDisposable
 
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
+    public bool IsExtraBall { get; set; }
+
     public BallPresenter()
     {
         m_compositeDisposable = new CompositeDisposable();
         Active = new ReactiveProperty<bool>(false);
+
         Active
             .Skip(1)
-            .Subscribe(state => m_rigidbody.gameObject.SetActive(state))
+            .Subscribe(state => 
+            {
+                if (!IsExtraBall)
+                {
+                    ObservableSignal.Broadcast(new BallActiveSignal(state));
+                }
+                m_rigidbody.gameObject.SetActive(state); 
+            })
+            .AddTo(m_compositeDisposable);
+
+        Score
+            .Subscribe(score =>
+            {
+                ObservableSignal.Broadcast(new BallScoreSignal(score));
+            })
             .AddTo(m_compositeDisposable);
 
         ObservableSignal.AsObservable<GameStateData>()
@@ -76,18 +93,16 @@ public class BallPresenter : Presenter, IBallController, IDisposable
             x = Mathf.Sin(bounceAngle) * InitialForce,
             y = Mathf.Cos(bounceAngle) * InitialForce
         };
-        m_rigidbody.velocity = Vector2.zero;  // Reset velocity before applying bounce
+        m_rigidbody.velocity = Vector2.zero;  
         m_rigidbody.AddForce(bounceForce);
     }
 
     private Vector2 m_velocity;
     private void ProcessPause() 
     {
-
         m_velocity = m_rigidbody.velocity;
-        Debug.Log("VELOCITY" + m_velocity);
         Active.Value = false;       
-        m_rigidbody.velocity = Vector2.zero; // Pause the movement
+        m_rigidbody.velocity = Vector2.zero; 
     }
 
     private void ProcessPlay() 
@@ -101,8 +116,29 @@ public class BallPresenter : Presenter, IBallController, IDisposable
             m_velocity = Vector2.zero;
         }
     }
+    public void UpdateScore(int score) 
+    {
+        Score.OnNext(score);
+    }
 }
-public interface IBallController
+public class BallActiveSignal : SignalData 
+{
+    public readonly bool IsActive;
+    public BallActiveSignal(bool isActive)
+    {
+        IsActive = isActive;
+    }
+}
+public class BallScoreSignal : SignalData 
+{
+    public readonly int Score;
+    public BallScoreSignal(int score)
+    {
+        Score = score;
+    }
+
+}
+public interface IBallPresenter
 {
     IReactiveProperty<bool> Active { get; }
     int Power { get; }
@@ -111,4 +147,6 @@ public interface IBallController
     void AddInitialForce();
     void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
     void Init(float m_initialForce, int m_power, Vector3 position, float m_initialAngle, Rigidbody2D rigidbody2D);
+    void UpdateScore(int score);
+    bool IsExtraBall { get; set; }
 }

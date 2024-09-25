@@ -6,6 +6,6 @@ public class PowerUpExtraBall : PowerUp
 {
     protected override void ApplyEffect(Collider2D collider)
     {
-        Debug.Log("Add extra ball");
+        
     }
 }

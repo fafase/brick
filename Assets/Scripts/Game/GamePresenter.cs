@@ -7,7 +7,6 @@ using Zenject;
 public class GamePresenter : Presenter, IGamePresenter
 {
     [Inject] IScoreBooster m_scoreBooster;
-    [Inject] IBallController m_ballController;
     [Inject] ILife m_life;
     public IReactiveProperty<int> BallAmount { get; private set; }
     public IReactiveProperty<int> Score { get; private set; }
@@ -27,17 +26,17 @@ public class GamePresenter : Presenter, IGamePresenter
         BallAmount.Value = ballAmount > 0 ? ballAmount : 1;
         m_coreStateMachine = new CoreStateMachine(GameState.Waiting);
 
-        m_ballController
-            .Active
-            .Where(value => value == false && CurrentGameState == GameState.Play)
+        ObservableSignal
+            .AsObservable<BallActiveSignal>()
+            .Where(data => data.IsActive == false && CurrentGameState == GameState.Play)
             .Subscribe(_ => DecreaseBallAmount())
             .AddTo(m_compositeDisposable);
 
-        m_ballController.Score
-            .Where(value => value > 0)
-            .Subscribe(score =>
+        ObservableSignal.AsObservable<BallScoreSignal>()
+            .Where(data => data.Score > 0)
+            .Subscribe(data =>
             {
-                AddScore(score);
+                AddScore(data.Score);
             })
             .AddTo(m_compositeDisposable);
     }

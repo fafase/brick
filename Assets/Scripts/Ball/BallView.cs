@@ -20,19 +20,18 @@ public class BallView : MonoBehaviour
     [SerializeField]
     private Transform m_startPosition;
 
-    [Inject]
-    private IBallController m_controller;
+    private IBallPresenter m_controller;
 
     private const string s_brickTag = "Brick";
     private const string s_paddleTag = "Paddle";
     private const string s_deathZone = "Death";
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
-    public IBallController Ball => m_controller;
-    //public Subject<int> Score = new Subject<int>();
+    public IBallPresenter Ball => m_controller;
 
     private void Start()
     {
+        m_controller = new BallPresenter();
         transform.position = m_startPosition.position;
         m_controller.Init(m_initialForce, m_power, m_startPosition.position,
             m_initialAngle, GetComponent<Rigidbody2D>());
@@ -65,7 +64,7 @@ public class BallView : MonoBehaviour
         collider.gameObject.GetComponent<IDamage>()?.ApplyDamage(m_controller.Power);
         if(collider.gameObject.GetComponent<IScore>() is IScore score)
         {
-            m_controller.Score.OnNext(score.Score);
+            m_controller.UpdateScore(score.Score);
         }
     }
 
