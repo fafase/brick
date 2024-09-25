@@ -6,10 +6,13 @@ using Zenject;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class PowerUp : MonoBehaviour
 {
+    [SerializeField] private PowerUpType m_powerUpType;
     [SerializeField] private float m_speed;
     [SerializeField] private GameObject m_fx;
     private PowerUpPresenter m_presenter;
 
+    public PowerUpType PowerUpType => m_powerUpType;
+    
     protected virtual void Start()
     {
         m_presenter = new PowerUpPresenter();
@@ -36,5 +39,10 @@ public abstract class PowerUp : MonoBehaviour
 
     protected abstract void ApplyEffect(Collider2D collider);
 
-    public class Factory : PlaceholderFactory<Object, PowerUp> { }
+    public class Factory : PlaceholderFactory<PowerUp, PowerUp> { }
+}
+
+public enum PowerUpType
+{
+    ExtraBall, GrowPad, Shoot
 }

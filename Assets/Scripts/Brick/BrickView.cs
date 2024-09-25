@@ -3,8 +3,9 @@ using UnityEngine;
 using Tools;
 using Zenject;
 
-public class BrickView : View<BrickController>, IDamage, IScore
+public class BrickView : View<BrickPresenter>, IDamage, IScore
 {
+    [SerializeField] private BrickType m_type;
     [SerializeField] private int m_health = 1;
     [SerializeField] private int m_score = 100;
     [SerializeField] private GameObject m_destructionFX;
@@ -12,13 +13,16 @@ public class BrickView : View<BrickController>, IDamage, IScore
     public int Score => m_score;
 
     public IBrick Brick => m_presenter;
-
+    public BrickType BrickType => m_type;
     void Start() 
     {
-        m_presenter.Init(m_health);
+        m_presenter.Init(m_health, transform.position, m_type);
         m_presenter.Health
             .Where(value => value <= 0)
-            .Subscribe(_ => DestroyBrick())
+            .Subscribe(_ =>
+            {
+                DestroyBrick();
+            })
             .AddTo(this);
     }
 
@@ -48,7 +52,7 @@ public interface IBrick
 {
     IReactiveProperty<int> Health { get; }
 
-    void Init(int health);
+    void Init(int health, Vector3 position, BrickType brickType);
 
     void ApplyDamage(int damage);
 }
