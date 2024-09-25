@@ -1,8 +1,9 @@
 using UniRx;
 using UnityEngine;
 using Tools;
+using Zenject;
 
-public class BrickPresenter : View<BrickController>, IDamage, IScore
+public class BrickView : View<BrickController>, IDamage, IScore
 {
     [SerializeField] private int m_health = 1;
     [SerializeField] private int m_score = 100;
@@ -33,12 +34,14 @@ public class BrickPresenter : View<BrickController>, IDamage, IScore
 
     private void DestroyBrick() 
     {
-        // Optionally trigger some visual destruction effect before the brick is destroyed
         if (m_destructionFX != null)
         {
             Instantiate(m_destructionFX, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject); }
+        Destroy(gameObject); 
+    }
+
+    public class Factory:PlaceholderFactory<Object, BrickView> { }
 }
 
 public interface IBrick 

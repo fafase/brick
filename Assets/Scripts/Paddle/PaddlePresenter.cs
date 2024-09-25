@@ -1,7 +1,7 @@
 using UniRx;
 using UnityEngine;
 
-public class PaddlePresenter
+public class PaddlePresenter : IPaddlePresenter
 {
     private Vector3 m_defaultPosition;
     private Vector2 m_limits;
@@ -9,8 +9,8 @@ public class PaddlePresenter
     private IPaddleProvider m_provider;
     private float m_deckLeft, m_deckRight;
 
-    public ReactiveProperty<Vector3> PaddlePos = new ReactiveProperty<Vector3>();
-    public ReactiveProperty<float> PaddleScale = new ReactiveProperty<float>();
+    public ReactiveProperty<Vector3> PaddlePos { get; private set; } = new ReactiveProperty<Vector3>();
+    public ReactiveProperty<float> PaddleScale { get; private set; } = new ReactiveProperty<float>();
     public Vector3 StartPosition => m_provider.StartTransform.position;
     public void Init(IPaddleProvider provider, Vector3 defaultPos, float deckLeftScreen, float deckRightScreen)
     {
@@ -53,7 +53,7 @@ public class PaddlePresenter
 public interface IPaddlePresenter 
 {
     ReactiveProperty<Vector3> PaddlePos { get; }
-    ReactiveProperty<long> PaddleScale { get; }
+    ReactiveProperty<float> PaddleScale { get; }
 
     void SetScale(long obj);
     void ProcessPosition(Vector3 mousePos);

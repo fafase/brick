@@ -1,23 +1,57 @@
 using Tools;
-using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 
-public abstract class CoreBase : MonoBehaviour
+public abstract class CoreBase: ICore
 {
-    [SerializeField] private Button m_backBtn;
+    [Inject] private BrickView.Factory m_brickFactory;
+    [Inject] private PowerUp.Factory m_powerUpFactory;
 
-    protected virtual void Awake()
+    protected CoreBase()
     {
-        //m_backBtn.OnClickAsObservable()
-        //    .Subscribe(_ => LoadMeta())
-        //    .AddTo(this);
+        
     }
-    public virtual void LoadMeta() 
+
+    public virtual PowerUp CreatePowerUp(GameObject prefab)
     {
-        SceneLoading.Load("Meta")
-            .Do(progress => Debug.Log(progress))
-            .Subscribe()
-            .AddTo(this);
+        return m_powerUpFactory.Create(prefab);
+    }
+
+    public virtual BrickView CreateBrick(GameObject prefab)
+    {
+        return m_brickFactory.Create(prefab);
+    }
+}
+public interface ICore
+{
+    PowerUp CreatePowerUp(GameObject prefab);
+    BrickView CreateBrick(GameObject prefab);
+}
+
+public class PowerUpFactory : IFactory<Object, PowerUp>
+{
+    readonly DiContainer m_container;
+
+    public PowerUpFactory(DiContainer container)
+    {
+        m_container = container;
+    }
+    public PowerUp Create(Object prefab)
+    {
+        return m_container.InstantiatePrefabForComponent<PowerUp>(prefab);
+    }
+}
+
+public class BrickFactory : IFactory<Object, BrickView>
+{
+    readonly DiContainer m_container;
+
+    public BrickFactory(DiContainer container)
+    {
+        m_container = container;
+    }
+    public BrickView Create(Object prefab)
+    {
+        return m_container.InstantiatePrefabForComponent<BrickView>(prefab);
     }
 }
