@@ -19,9 +19,10 @@ public class CoreStateMachine : IDisposable
 
     public void SetNewState(GameState newState) 
     {
+        Debug.Log($"Changing state from {State.Value} to {newState}");
         if(newState == State.Value) 
         {
-            Debug.LogError("Attempt to set same GameState");
+            Debug.LogError($"Attempt to set same GameState {newState}");
             return;
         }
 

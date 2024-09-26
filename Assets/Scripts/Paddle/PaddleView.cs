@@ -48,7 +48,7 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
     private void BindInput() 
     {
         Observable.EveryUpdate()
-            .Where(_ => Input.GetMouseButton(0) && m_gamePresenter.CurrentGameState == GameState.Play)
+            .Where(_ => Input.GetMouseButton(0) && (m_gamePresenter.CurrentGameState == GameState.Play || m_gamePresenter.CurrentGameState == GameState.Waiting))
             .Select(_ => Input.mousePosition)
             .Subscribe(m_presenter.ProcessPosition)
             .AddTo(this);

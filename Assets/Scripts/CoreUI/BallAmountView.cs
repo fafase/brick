@@ -49,8 +49,7 @@ public class BallAmountView : MonoBehaviour
             .AddTo(this);
 
         ObservableSignal
-            .AsObservable<BallActiveSignal>()
-            .Where(data => data.IsActive == false && m_currentGameState == GameState.Play)
+            .AsObservable<BallDeathSignal>()
             .Subscribe(_ => DecreaseBallAmount())
             .AddTo(this);
     }

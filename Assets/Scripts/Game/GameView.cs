@@ -45,7 +45,11 @@ public class GameView : MonoBehaviour
 
         ObservableSignal
             .AsObservable<BallDeathSignal>()
-            .Subscribe(_ => BindInput())
+            .Subscribe(_ => 
+            {
+                m_presenter.SetGameState(GameState.Waiting);
+               // BindInput(); 
+            })
             .AddTo(this);
     }
 
@@ -111,6 +115,7 @@ public class GameView : MonoBehaviour
 
     private void ResetBall(Vector2 swipe)
     {
+        m_presenter.SetGameState(GameState.Play);
         Ball.ResetBall(swipe);
     }
 
