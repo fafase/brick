@@ -26,7 +26,7 @@ public class BallView : MonoBehaviour
     private const string s_deathZone = "Death";
 
     public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
-    public IBallPresenter Ball { get; private set; }
+    private IBallPresenter Ball { get;  set; }
 
     private void Awake()
     {
@@ -56,6 +56,7 @@ public class BallView : MonoBehaviour
                     Destroy(gameObject);
                     return;
                 }
+                ObservableSignal.Broadcast(new BallDeathSignal());
                 Ball.Active.Value = false;
             })
             .AddTo(this);
@@ -70,12 +71,12 @@ public class BallView : MonoBehaviour
             .AddTo(this);
     }
 
-    public void Init(Transform startTransform)
+    public void Init(Transform startTransform, bool isExtraBall = false)
     {
         m_startTr = startTransform;
         transform.position = m_startTr.position;
         Ball.Init(m_initialForce, m_power, m_startTr.position,
-            m_initialAngle, GetComponent<Rigidbody2D>());
+            m_initialAngle, GetComponent<Rigidbody2D>(),isExtraBall);
     }
 
     public void BrickCollision(Collision2D collider) 
@@ -87,11 +88,11 @@ public class BallView : MonoBehaviour
         }
     }
 
-    public void ResetBall()
+    public void ResetBall(Vector2 swipe)
     {
         transform.position = m_startTr.position;
         Ball.Active.Value = true;
-        Ball.AddInitialForce();
+        Ball.AddInitialForce(swipe);
     }
 
     private void OnDestroy()
@@ -109,3 +110,6 @@ public interface IScore
 {
     int Score { get; }
 }
+
+public class BallDeathSignal : SignalData 
+{ }

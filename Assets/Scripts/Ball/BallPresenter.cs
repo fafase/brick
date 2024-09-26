@@ -2,6 +2,7 @@ using System;
 using Tools;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public class BallPresenter : Presenter, IBallPresenter, IDisposable
 {
@@ -55,29 +56,30 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
                             ProcessPause(); 
                             break;
                         case GameState.Play : 
-                            ProcessPlay();
+                            if(data.PreviousState.Equals(GameState.Pause))
+                                ProcessPlay();
                             break;
                     }
                 })
             .AddTo(m_compositeDisposable);
     }
 
-    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody)
+    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody, bool isExtraBall)
     {
         InitialForce = initialForce;
         Power = power;
         StartPosition = startPosition;
         m_initialAngle = initialAngle;
         m_rigidbody = rigidbody;
+        IsExtraBall = isExtraBall;
     }
 
-    public void AddInitialForce()
+    public void AddInitialForce(Vector2 swipe)
     {
-        var force = new Vector2
-        {
-            x = Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce,
-            y = Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce
-        };
+        
+        var force = (swipe == Vector2.zero) ? new Vector2(Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce, Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce)
+            : swipe.normalized * InitialForce;
+        
         m_rigidbody.AddForce(force);
     }
 
@@ -109,7 +111,7 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
     {
         Active.Value = true;
         if (m_velocity == Vector2.zero)
-            AddInitialForce();
+            AddInitialForce(Vector2.zero);
         else
         {
             m_rigidbody.AddForce(m_velocity.normalized * InitialForce);
@@ -143,9 +145,9 @@ public interface IBallPresenter
     IReactiveProperty<bool> Active { get; }
     int Power { get; }
     Subject<int> Score { get; }
-    void AddInitialForce();
+    void AddInitialForce(Vector2 swipe);
     void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
-    void Init(float m_initialForce, int m_power, Vector3 startPosition, float m_initialAngle, Rigidbody2D rigidbody2D);
+    void Init(float m_initialForce, int m_power, Vector3 startPosition, float m_initialAngle, Rigidbody2D rigidbody2D, bool isExtraBall);
     void UpdateScore(int score);
     bool IsExtraBall { get; set; }
 }

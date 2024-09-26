@@ -12,7 +12,7 @@ public class GamePresenter : Presenter, IGamePresenter
 
     public GamePresenter()
     {
-        m_coreStateMachine = new CoreStateMachine(GameState.Waiting);
+        m_coreStateMachine = new CoreStateMachine(GameState.Start);
     }
 
     public void SetGameState(GameState state) 

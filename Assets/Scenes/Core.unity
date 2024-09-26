@@ -536,6 +536,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1762894286}
     m_Modifications:
+    - target: {fileID: 58254401637978472, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 58254401637978472, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3704931938401202559, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
       propertyPath: m_Name
       value: Paddle
@@ -548,6 +556,10 @@ PrefabInstance:
       propertyPath: m_rightDeck
       value: 
       objectReference: {fileID: 1124661017}
+    - target: {fileID: 8253910032688887129, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3132,7 +3144,7 @@ MonoBehaviour:
   m_scoreTxt: {fileID: 793864227}
   m_quitBtn: {fileID: 1189060338}
   m_timerView: {fileID: 1652056777}
-  m_scoreView: {fileID: 0}
+  m_scoreView: {fileID: 793864229}
 --- !u!114 &1762894288
 MonoBehaviour:
   m_ObjectHideFlags: 0

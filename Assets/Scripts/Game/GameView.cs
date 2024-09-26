@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TMPro;
 using Tools;
@@ -13,6 +14,7 @@ public class GameView : MonoBehaviour
 
     [SerializeField] private TimerView m_timerView;
     [SerializeField] private ScoreView m_scoreView;
+    [SerializeField] private SwipeDetector m_swipeDetector;
 
     [Inject] private IPopupManager m_popupManager;
     [Inject] private IGamePresenter m_presenter;
@@ -22,22 +24,28 @@ public class GameView : MonoBehaviour
 
     private void Start()
     {
-        BindEndLevel();
-
-        Observable.EveryUpdate()
-            .Where(_ => Input.GetKeyDown(KeyCode.R))
-            .Subscribe(_ => ResetBall())
-            .AddTo(this);
+        BindEndLevel(); 
 
         Popup startPopup = m_popupManager.Show<LevelStartPopup>();
         startPopup
             .OnCloseAsObservable
-            .Subscribe(_ => m_presenter.SetGameState(GameState.Play))
+            .Subscribe(_ => m_presenter.SetGameState(GameState.Waiting))
             .AddTo(this);
 
         m_quitBtn
             .OnClickAsObservable()
             .Subscribe(_ => SetRetry())
+            .AddTo(this);
+
+        ObservableSignal
+            .AsObservable<GameStateData>()
+            .Where(data => data.NextState == GameState.Waiting)
+            .Subscribe(_=> BindInput())
+            .AddTo(this);
+
+        ObservableSignal
+            .AsObservable<BallDeathSignal>()
+            .Subscribe(_ => BindInput())
             .AddTo(this);
     }
 
@@ -69,6 +77,19 @@ public class GameView : MonoBehaviour
             .AddTo(this);
     }
 
+    private void BindInput() 
+    {
+        IDisposable dispose = null;
+        dispose = m_swipeDetector
+            .SwipeAsObservable
+            .Subscribe(swipe => 
+            {
+                dispose.Dispose();
+                ResetBall(swipe); 
+            })
+            .AddTo(this);
+    }
+
     private void BindEndLevel()
     {
         var observable = ObservableSignal
@@ -88,9 +109,9 @@ public class GameView : MonoBehaviour
     }
 
 
-    private void ResetBall()
+    private void ResetBall(Vector2 swipe)
     {
-        Ball.ResetBall();
+        Ball.ResetBall(swipe);
     }
 
     private void LossLevel()

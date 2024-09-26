@@ -10,10 +10,9 @@ public class PowerUpExtraBall : PowerUp
     protected override void ApplyEffect(Collider2D collider)
     {
         BallView ball = m_core.CreateBall(m_ballPrefab); 
-        ball.Init(m_paddle.StartTr);
-        ball.Ball.IsExtraBall = true;
+        ball.Init(m_paddle.StartTr, true);
         ball.transform.localScale = ball.transform.localScale * 0.7f;
         ball.GetComponent<SpriteRenderer>().color = Color.blue;
-        ball.ResetBall();
+        ball.ResetBall(Vector2.zero);
     }
 }
