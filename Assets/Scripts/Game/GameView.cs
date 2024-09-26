@@ -48,7 +48,6 @@ public class GameView : MonoBehaviour
             .Subscribe(_ => 
             {
                 m_presenter.SetGameState(GameState.Waiting);
-               // BindInput(); 
             })
             .AddTo(this);
     }
