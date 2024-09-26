@@ -49,7 +49,15 @@ public class BallView : MonoBehaviour
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_deathZone))
-            .Subscribe(_ => Ball.Active.Value = false)
+            .Subscribe(_ =>
+            {
+                if (Ball.IsExtraBall) 
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+                Ball.Active.Value = false;
+            })
             .AddTo(this);
 
         Ball.Active

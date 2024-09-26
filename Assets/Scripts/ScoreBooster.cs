@@ -25,6 +25,11 @@ public class ScoreBooster : MonoBehaviour
             .Subscribe(value => m_multiplierTxt.text = "x" + value)
             .AddTo(this);
     }
+
+    private void OnDestroy()
+    {
+        (m_presenter as IDisposable)?.Dispose();
+    }
 }
 public interface IScoreBooster 
 {
@@ -45,6 +50,8 @@ public class ScoreBoosterPresenter : Presenter, IScoreBooster
     public IReactiveProperty<float> Countdown { get; private set; }
     public IReactiveProperty<int> Multiplier { get; private set; }
 
+    private int m_powerUpMultiplier = 1;
+
     public ScoreBoosterPresenter()
     {
         m_compositeDisposable = new CompositeDisposable();
@@ -57,6 +64,19 @@ public class ScoreBoosterPresenter : Presenter, IScoreBooster
             {
                 float temp = Countdown.Value - decrementRate * Time.deltaTime;
                 Countdown.Value = Mathf.Clamp(temp, 0f, m_max);
+            })
+            .AddTo(m_compositeDisposable);
+
+        ObservableSignal
+            .AsObservable<PowerUpSignal>()
+            .Where(data => data.PowerUp.PowerUpType.Equals(PowerUpType.ShrinkPad) || data.PowerUp.PowerUpType.Equals(PowerUpType.GrowPad))
+            .Subscribe(data => 
+            { 
+                m_powerUpMultiplier = (data.IsStarting) ? 2 : 1;
+                if (!data.IsStarting) 
+                {
+                    Multiplier.Value /= 2; 
+                }
             })
             .AddTo(m_compositeDisposable);
     }
@@ -72,8 +92,8 @@ public class ScoreBoosterPresenter : Presenter, IScoreBooster
 
     public float ProcessCountdown(float value) 
     {
-        Multiplier.Value = 1 + Mathf.Clamp((int)value, 0, (int)m_max - 1);
-        return value / m_max; ;
+        Multiplier.Value = (1 + Mathf.Clamp((int)value, 0, (int)m_max - 1)) * m_powerUpMultiplier;
+        return (value / m_max) * m_powerUpMultiplier;
     }
     public int ProcessMultiplier()
     {

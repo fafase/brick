@@ -1,3 +1,4 @@
+using Tools;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -6,10 +7,11 @@ using Zenject;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class PowerUp : MonoBehaviour
 {
-    [SerializeField] private PowerUpType m_powerUpType;
+    [SerializeField] protected PowerUpType m_powerUpType;
     [SerializeField] private float m_speed;
     [SerializeField] private GameObject m_fx;
     private PowerUpPresenter m_presenter;
+    protected bool m_destroyOnCollision = true;
 
     public PowerUpType PowerUpType => m_powerUpType;
     
@@ -27,6 +29,7 @@ public abstract class PowerUp : MonoBehaviour
     private void OnDestroy()
     {
         m_presenter?.Dispose();
+        ObservableSignal.Broadcast(new PowerUpSignal(this, false));
     }
 
     protected virtual void OnCollision(Collider2D collider) 
@@ -34,12 +37,18 @@ public abstract class PowerUp : MonoBehaviour
         if (collider.gameObject.CompareTag(TagContent.PADDLE))
         {
             ApplyEffect(collider);
-        }
-        if(m_fx != null) 
-        {
-            Instantiate(m_fx);
+            if (m_destroyOnCollision)
+            {
+                Destroy(gameObject);
+            }
+            if (m_fx != null)
+            {
+                Instantiate(m_fx);
+            }
+            return;
         }
         Destroy(gameObject);
+
     }
 
     protected abstract void ApplyEffect(Collider2D collider);
@@ -49,5 +58,17 @@ public abstract class PowerUp : MonoBehaviour
 
 public enum PowerUpType
 {
-    ExtraBall, GrowPad, Shoot
+    ExtraBall, GrowPad, Shoot, ShrinkPad
+}
+
+public class PowerUpSignal : SignalData 
+{
+    public readonly bool IsStarting;
+    public readonly PowerUp PowerUp;
+
+    public PowerUpSignal(PowerUp powerUp, bool isStarting)
+    {
+        PowerUp = powerUp;
+        IsStarting = isStarting;
+    }
 }

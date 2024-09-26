@@ -102,7 +102,7 @@ public class GameView : MonoBehaviour
     private void WinLevel()
     {
         Debug.Log("WINNING");
-        int score = m_scoreView.CalculateEndScore(m_timerView.RemainingTime);
+        int score = m_scoreView.CalculateEndScore(m_timerView.RemainingTime); 
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
         popup.Init(score);
     }

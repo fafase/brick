@@ -1,7 +1,10 @@
+using Cysharp.Threading.Tasks;
+using System;
+using Tools;
 using UniRx;
 using UnityEngine;
 
-public class PaddlePresenter : IPaddlePresenter
+public class PaddlePresenter : Presenter, IPaddlePresenter
 {
     private Vector3 m_defaultPosition;
     private Vector2 m_limits;
@@ -12,6 +15,7 @@ public class PaddlePresenter : IPaddlePresenter
     public ReactiveProperty<Vector3> PaddlePos { get; private set; } = new ReactiveProperty<Vector3>();
     public ReactiveProperty<float> PaddleScale { get; private set; } = new ReactiveProperty<float>();
     public Vector3 StartPosition => m_provider.StartTransform.position;
+    public Transform StartTr => m_provider.StartTransform;
     public void Init(IPaddleProvider provider, Vector3 defaultPos, float deckLeftScreen, float deckRightScreen)
     {
         m_provider = provider;
@@ -28,6 +32,28 @@ public class PaddlePresenter : IPaddlePresenter
             .AddTo(m_provider as Component);
 
         SetLimits(PaddleScale.Value);
+
+        ObservableSignal
+             .AsObservable<PowerUpSignal>()
+             .Where(data => !data.PowerUp.PowerUpType.Equals(PowerUpType.ExtraBall))
+             .Subscribe(data => 
+             {
+                 switch (data.PowerUp.PowerUpType) 
+                 {
+                    case PowerUpType.Shoot:
+                         PowerUpShoot();
+                         break;
+                    case PowerUpType.ShrinkPad:
+                         PaddleScale.Value = (data.IsStarting) ? PaddleScale.Value /= 2f : PaddleScale.Value *= 2;
+                         break;
+                    case PowerUpType.GrowPad:
+                         PaddleScale.Value = (data.IsStarting) ? PaddleScale.Value *= 1.5f : PaddleScale.Value /= 1.5f;
+                         break;
+                    default:
+                         break;
+                 }
+             })
+             .AddTo(m_compositeDisposable);
     }
 
     public void ProcessPosition(Vector3 mousePos)
@@ -49,12 +75,53 @@ public class PaddlePresenter : IPaddlePresenter
         float adjustedDeckRight = m_deckRight - paddleHalfWidthScreen;
         m_limits = new Vector2(adjustedDeckLeft, adjustedDeckRight);
     }
+
+    private void PowerUpShoot() 
+    {
+        CannonAnimSequence(0.25f, true)
+            .Concat(CannonShootingSequence(0.2f, 2f))
+            .Concat(CannonAnimSequence(0.3f, false))
+            .Subscribe()
+            .AddTo(m_compositeDisposable);
+    }
+
+
+    private IObservable<Unit> CannonAnimSequence(float duration, bool isStarting) 
+    {
+        float elapsedTime = 0f;
+        return Observable
+            .EveryUpdate()
+            .TakeWhile(_ => elapsedTime < duration)
+            .Do(_ =>
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                m_provider.SetCanons(t, isStarting);
+            })
+            .AsUnitObservable();
+    }
+
+    private IObservable<Unit> CannonShootingSequence(float interval, float duration) 
+    {
+        return Observable
+                .Interval(TimeSpan.FromSeconds(interval))
+                .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(duration)))
+                .Do(_ => Shoot())
+                .AsUnitObservable();
+    }
+
+    private void Shoot() 
+    {
+        Debug.Log("Pew");
+        m_provider.Shoot();
+    }
 }
 public interface IPaddlePresenter 
 {
     ReactiveProperty<Vector3> PaddlePos { get; }
     ReactiveProperty<float> PaddleScale { get; }
     Vector3 StartPosition { get; }
+    Transform StartTr { get; }
     void SetScale(long obj);
     void ProcessPosition(Vector3 mousePos);
     void Init(IPaddleProvider provider, Vector3 defaultPos, float deckLeftScreen, float deckRightScreen);

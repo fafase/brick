@@ -9,7 +9,7 @@ public class TimerView : MonoBehaviour
 {
     private TextMeshProUGUI m_timerTxt;
 
-    private int m_sessionDuration = 30;
+    private int m_sessionDuration = 60;
     private int m_remainingTime;
     private IDisposable m_timer;
     public int RemainingTime => m_remainingTime;

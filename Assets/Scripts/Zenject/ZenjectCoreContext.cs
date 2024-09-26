@@ -25,5 +25,6 @@ public class ZenjectCoreContext : MonoInstaller
         Container.BindInterfacesAndSelfTo<GamePresenter>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesTo<PaddlePresenter>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ScoreBoosterPresenter>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<PowerUpController>().FromNew().AsSingle().NonLazy();
     }
 }

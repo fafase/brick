@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bricks: []
   m_powerUps:
+  - {fileID: 7693063803557914499, guid: 9993a64097ef4434badff5f50a605bdd, type: 3}
   - {fileID: 7267956606199623577, guid: 006e633c0eec13b49be442d9276e6940, type: 3}
+  - {fileID: 1053136544261258547, guid: aa23b31f270001d4a8ba69900444bc59, type: 3}
+  - {fileID: -1148193339260956046, guid: b21c8a74327f15443a00c253e515e915, type: 3}

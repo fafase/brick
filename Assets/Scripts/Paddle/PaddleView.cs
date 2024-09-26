@@ -9,6 +9,9 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
     [SerializeField] private Transform m_rightDeck;
     [SerializeField] private Transform m_paddleLeftLimit, m_paddleRightLimit;
     [SerializeField] private Transform m_startPosition;
+    [SerializeField] private Transform m_leftCannon;
+    [SerializeField] private Transform m_rightCannon;
+    [SerializeField] private GameObject m_shootPrefab;
 
     [Inject] private IGamePresenter m_gamePresenter;
     [Inject] private IPaddlePresenter m_presenter;
@@ -50,6 +53,34 @@ public class PaddleView : MonoBehaviour, IPaddleProvider
             .Subscribe(m_presenter.ProcessPosition)
             .AddTo(this);
     }
+
+    public void SetCanons(float ratio, bool isStarting) 
+    {
+        Vector3 startL = m_leftCannon.localPosition;
+        Vector3 endL = new Vector3(startL.x, isStarting ? 0.3f : 0.0f, 0f);
+        m_leftCannon.localPosition = Vector3.Lerp(startL, endL, ratio);
+
+        Vector3 startR = m_rightCannon.localPosition;
+        Vector3 endR = new Vector3(startR.x, isStarting ? 0.3f : 0.0f, 0f);
+        m_rightCannon.localPosition = Vector3.Lerp(startR, endR, ratio);
+    }
+
+    public void Shoot() 
+    {
+        void GetProjectile(Vector3 position) 
+        {
+            GameObject projectile = Instantiate(m_shootPrefab);
+            projectile.SetActive(true);
+            projectile.transform.position = position;
+        }
+        GetProjectile(m_leftCannon.position);
+        GetProjectile(m_rightCannon.position);
+    }
+
+    private void OnDestroy()
+    {
+        (m_presenter as IDisposable)?.Dispose();
+    }
 }
 
 public interface IPaddleProvider 
@@ -57,4 +88,6 @@ public interface IPaddleProvider
     float Size { get; }
     float Scale { get; }
     Transform StartTransform { get; }
+    void SetCanons(float ratio, bool isStarting);
+    void Shoot();
 }
