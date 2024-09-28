@@ -1,4 +1,3 @@
-using Fusion;
 using System;
 using Tools;
 using UniRx;
@@ -18,9 +17,7 @@ public class LifePresenter : Presenter, ILife
 
     public LifePresenter()
     {
-        //m_maxLives = provider.MaxLives;
         m_currentLives = new ReactiveProperty<int>(m_maxLives);
-        //m_refillInterval = provider.RefillLifeInSec;
         StartRefill();
     }
 

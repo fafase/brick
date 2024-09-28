@@ -1,9 +1,8 @@
-using System.ComponentModel;
 using TMPro;
+using Tools;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using Tools;
 
 public class LifeView : MonoBehaviour
 {

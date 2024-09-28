@@ -25,7 +25,7 @@ public class BallView : MonoBehaviour
     private const string s_paddleTag = "Paddle";
     private const string s_deathZone = "Death";
 
-    public float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
+    private float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
     private IBallPresenter Ball { get;  set; }
 
     private void Awake()
