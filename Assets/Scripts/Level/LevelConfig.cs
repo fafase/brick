@@ -1,13 +1,16 @@
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+using System;
 using System.Collections.Generic;
+using Tools;
 
+[Serializable]
 public class Reward
 {
     public string rewardType { get; set; }
     public int amount { get; set; }
 }
 
-public class LevelConfig
+[Serializable]
+public class LevelConfig : ILevelConfig
 {
     public string name { get; set; }
     public string version { get; set; }

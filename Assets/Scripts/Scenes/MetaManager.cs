@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Tools;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
-using Tools;
 using Zenject;
 
 public class MetaManager : MonoBehaviour
