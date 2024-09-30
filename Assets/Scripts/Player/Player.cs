@@ -1,30 +1,23 @@
-using System;
 using Tools;
 using UniRx;
-using Zenject;
 
 
-public class Player : IDisposable, IPlayer
+public class Player : Presenter, IPlayer
 {
-    [Inject] private ILife m_life;
-    private bool m_disposed = false;
-    public int Lives => 0;
-
-    private CompositeDisposable m_disposables = new CompositeDisposable();
+    private int m_level;
+    public int Level => m_level;
 
     public Player()
-    {  
-
-    }
-  
-    public void Dispose()
     {
-        if(m_disposed) return;
-        m_disposed = true;
-        m_disposables?.Dispose();
+        m_level = 1;
+        ObservableSignal
+            .AsObservable<EndLevelSignal>()
+            .Where(data => data.IsWinning)
+            .Subscribe(_ => IncreaseLevel())
+            .AddTo(m_compositeDisposable);
     }
+
+    public void IncreaseLevel () => m_level++;
+    public void SetLevel(int level) => m_level = level; 
 }
-public interface IPlayer 
-{
-    int Lives { get; }
-}
+

@@ -115,7 +115,7 @@ public class GameView : MonoBehaviour
     private void ResetBall(Vector2 swipe)
     {
         m_presenter.SetGameState(GameState.Play);
-        Ball.ResetBall(swipe);
+        ObservableSignal.Broadcast(new ResetBallSignal(swipe));
     }
 
     private void LossLevel()
@@ -130,6 +130,15 @@ public class GameView : MonoBehaviour
         int score = m_scoreView.CalculateEndScore(m_timerView.RemainingTime); 
         LevelWinPopup popup = m_popupManager.Show<LevelWinPopup>();
         popup.Init(score);
+    }
+}
+public class ResetBallSignal : SignalData 
+{
+    public readonly Vector2 Swipe;
+
+    public ResetBallSignal(Vector2 swipe)
+    {
+        Swipe = swipe;
     }
 }
 

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Level
+  m_EditorClassIdentifier: 
+  m_GroupName: Level
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f2df9a4a54be54741ae3e1f07eb11119
+  m_SerializeEntries:
+  - m_GUID: adad4a3a547caeb45ae9627aafad5bd7
+    m_Address: Levels/level_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2c62baba84252f4b992eeaa36207b4e
+    m_Address: Levels/level_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efbd422e2605f73468f607b2649129b8
+    m_Address: Levels/level_3.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1ceb9baf7d0d644e90bed37f2e41bd5
+    m_Address: Levels/level_4.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 002c5df89f112cd48bde57d391d0e4b1
+    m_Address: Levels/level_5.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 257c1e3cb7b3bce4fbb9d39b32e1929f
+    m_Address: Levels/level_6.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 431d9c530e8cc964a8eab431106a3e95
+    m_Address: Levels/level_7.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8199e907ea38c2745956c39303b355de
+    m_Address: Levels/level_8.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4e808d690928e947b8c8c3a89a33399
+    m_Address: Levels/level_9.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9f2984c1e8135a4a820192881b2d412
+    m_Address: Levels/level_10.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 81f6af79d6da22d4485b96118d7c96d1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e3bed6429baf2354483e9a6666ee1d52, type: 2}
+    - {fileID: 11400000, guid: a761e91fcd29dc347a174f877019eb01, type: 2}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Tools;
 using UniRx;
@@ -7,9 +8,9 @@ public class BrickSystem : MonoBehaviour, IBrickSystem
 {
     public IReactiveCollection<BrickView> Bricks { get; private set; }
     
-    void Start()
+    public void InitWithBricks(List<BrickView> list)
     {
-        Bricks = GetComponentsInChildren<BrickView>(true).ToReactiveCollection();
+        Bricks = list.ToReactiveCollection();
         foreach(var brick in Bricks) 
         {
             brick.Brick.Health
@@ -31,6 +32,7 @@ public class BrickSystem : MonoBehaviour, IBrickSystem
 public interface IBrickSystem 
 {
     public IReactiveCollection<BrickView> Bricks { get; }
+    void InitWithBricks(List<BrickView> list);
 }
 public class EndLevelSignal : SignalData 
 {

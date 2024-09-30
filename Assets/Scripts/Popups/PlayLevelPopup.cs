@@ -9,23 +9,23 @@ public class PlayLevelPopup : Popup
 
     private void Start()
     {
-        //OnOpenAsObservable
-        //    .Subscribe(_ => 
-        //    {
-        //        if (m_life.Lives <= 0)
-        //        {
-        //            m_primaryAction.interactable = false;
-        //            m_life
-        //                .LivesAsObservable
-        //                .Where(lives => lives > 0)
-        //                .Subscribe(_ => m_primaryAction.interactable = true)
-        //                .AddTo(this);
+        OnOpenAsObservable
+            .Subscribe(_ =>
+            {
+                if (m_life.Lives <= 0)
+                {
+                    m_primaryAction.interactable = false;
+                    m_life
+                        .LivesAsObservable
+                        .Where(lives => lives > 0)
+                        .Subscribe(_ => m_primaryAction.interactable = true)
+                        .AddTo(this);
 
-        //            return;
-        //        }
-        //        BindPrimaryButton();
-        //    })
-        //    .AddTo(this);    
+                    return;
+                }
+                BindPrimaryButton();
+            })
+            .AddTo(this);
     }
 
     private void BindPrimaryButton() 
@@ -39,7 +39,6 @@ public class PlayLevelPopup : Popup
     {
         if (m_life.Lives <= 0) 
         {
-
             return;
         }
         Close()

@@ -11,9 +11,11 @@ public class ZenjectProjectContext : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<LifePresenter>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<Player>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<LevelManager>().FromNew().AsSingle().NonLazy();
 
         Container.BindInterfacesTo<PopupManager>().FromComponentInNewPrefab(m_popupManager).AsSingle().NonLazy();
         Container.BindInterfacesTo<SceneLoading>().AsSingle();
-        Container.BindFactory< Popup, Popup, Popup.Factory>().FromFactory<PopupFactory>();
+
+        Container.BindFactory<Popup, Popup, Popup.Factory>().FromFactory<PopupFactory>();
     }
 }

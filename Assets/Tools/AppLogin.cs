@@ -23,8 +23,13 @@ namespace Tools
                 .ObserveOnMainThread()
                 .Do(_ => Debug.Log("Initializing services"))
                 .SelectMany(_ => InitializeAuthentication())
+                .SelectMany(_ =>
+                {
+                    ILoader loader = GetComponent<ILoader>();
+                    return loader.InitializeAll();
+                })
                 .DoOnCompleted(() => 
-                ObservableSignal.BroadcastComplete(new LoginSignalData()))
+                    ObservableSignal.BroadcastComplete(new LoginSignalData()))
                 .DoOnError(error => Debug.LogError(error));
         }
 
@@ -83,5 +88,7 @@ namespace Tools
         ////    }
         ////}
     }
-    public class LoginSignalData : SignalData{  }
+    public class LoginSignalData : SignalData
+    {
+    }
 }
