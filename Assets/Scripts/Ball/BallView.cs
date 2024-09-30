@@ -41,7 +41,11 @@ public class BallView : MonoBehaviour
 
         collision
             .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
-            .Subscribe(collider => Ball.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle))
+            .Subscribe(collider =>
+            {
+                Ball.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle);
+                ObservableSignal.Broadcast(new AudioSignal("Bloop"));
+            })
             .AddTo(this);
 
         collision

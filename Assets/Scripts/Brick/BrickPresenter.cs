@@ -16,7 +16,11 @@ public class BrickPresenter : Presenter, IBrick
         Health.Value = health > 0 ? health : 1;
         Health
             .Where(x => x <= 0)
-            .Subscribe(_ => ObservableSignal.Broadcast(new BrickDestroyedSignal(position, type)))
+            .Subscribe(_ =>
+            {
+                ObservableSignal.Broadcast(new BrickDestroyedSignal(position, type));
+                ObservableSignal.Broadcast(new AudioSignal("Brick_Hit", 0.5f));
+            })
             .AddTo(m_compositeDisposable);
     }
 

@@ -1,13 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Tools;
+using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
-using UniRx;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine.UIElements;
-using NSubstitute.Core;
 public class PowerUpController : Presenter
 {
     [Inject] private PowerUp.Factory m_powerUpFactory;

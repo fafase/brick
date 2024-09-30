@@ -16,7 +16,27 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: deb17b0e33730274880be3b655150f98
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 830c673d1fa609142992f3b6b6728868
+    m_Address: Assets/Audio/Brick_Hit.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3dceb31fed409f9478cf290d749d56b2
+    m_Address: Assets/Audio/Coin.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aab73a6c8a8b29b4d8c466a6ae59df13
+    m_Address: Assets/Audio/Jazz.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 575b3e1e742122e418346b199ed280e9
+    m_Address: Assets/Audio/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 81f6af79d6da22d4485b96118d7c96d1, type: 2}
   m_SchemaSet:
