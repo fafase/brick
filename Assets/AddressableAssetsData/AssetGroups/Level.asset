@@ -17,26 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f2df9a4a54be54741ae3e1f07eb11119
   m_SerializeEntries:
-  - m_GUID: 716d04dd3f902a040ae969879d890328
-    m_Address: Levels/level_6
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - level_bundle_1
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 88da3d041db668447b835fd14f3f3946
-    m_Address: Levels/level_8
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - level_bundle_1
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 03e0abb21db033e42adcad1ba20face5
-    m_Address: Levels/level_4
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - level_bundle_1
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ed55fe968e6d8124d9859108d34194c3
-    m_Address: Levels/level_5
+  - m_GUID: adad4a3a547caeb45ae9627aafad5bd7
+    m_Address: Levels/level_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1
@@ -47,32 +29,50 @@ MonoBehaviour:
     m_SerializedLabels:
     - level_bundle_1
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1f725feeff184344eac9084dfc85a5dc
-    m_Address: Levels/level_7
+  - m_GUID: efbd422e2605f73468f607b2649129b8
+    m_Address: Levels/level_3.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6d01703717a6d454ab1db71b381d4348
-    m_Address: Levels/level_3
+  - m_GUID: c1ceb9baf7d0d644e90bed37f2e41bd5
+    m_Address: Levels/level_4.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b56a01aadb9f4454c94c6fda4a9e7a5a
-    m_Address: Levels/level_9
+  - m_GUID: 002c5df89f112cd48bde57d391d0e4b1
+    m_Address: Levels/level_5.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c7c1d6ce40c53945a6734c5033ebf28
-    m_Address: Levels/level_10
+  - m_GUID: 257c1e3cb7b3bce4fbb9d39b32e1929f
+    m_Address: Levels/level_6.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: adad4a3a547caeb45ae9627aafad5bd7
-    m_Address: Levels/level_2
+  - m_GUID: 431d9c530e8cc964a8eab431106a3e95
+    m_Address: Levels/level_7.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8199e907ea38c2745956c39303b355de
+    m_Address: Levels/level_8.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4e808d690928e947b8c8c3a89a33399
+    m_Address: Levels/level_9.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_bundle_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9f2984c1e8135a4a820192881b2d412
+    m_Address: Levels/level_10.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - level_bundle_1

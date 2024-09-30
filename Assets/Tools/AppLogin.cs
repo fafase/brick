@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using log4net.Core;
 using System;
 using UniRx;
 using Unity.Services.Authentication;

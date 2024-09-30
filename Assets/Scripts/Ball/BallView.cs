@@ -19,6 +19,8 @@ public class BallView : MonoBehaviour
     [Tooltip("How much damage I can inflict on a brick per collision.")]
     private int m_power = 1;
 
+    [Inject] private IPaddlePresenter m_paddle;
+
     private Transform m_startTr;
 
     private const string s_brickTag = "Brick";
@@ -71,11 +73,11 @@ public class BallView : MonoBehaviour
             .AddTo(this);
     }
 
-    public void Init(Transform startTransform, bool isExtraBall = false)
+    public void Init(bool isExtraBall = false)
     {
-        m_startTr = startTransform;
+        m_startTr = m_paddle.StartTr;
         transform.position = m_startTr.position;
-        Ball.Init(m_initialForce, m_power, m_startTr.position,
+        Ball.Init(m_initialForce, m_power,
             m_initialAngle, GetComponent<Rigidbody2D>(),isExtraBall);
     }
 
@@ -91,8 +93,7 @@ public class BallView : MonoBehaviour
     public void ResetBall(Vector2 swipe)
     {
         transform.position = m_startTr.position;
-        Ball.Active.Value = true;
-        Ball.AddInitialForce(swipe);
+        Ball.ResetBall(swipe);
     }
 
     private void OnDestroy()

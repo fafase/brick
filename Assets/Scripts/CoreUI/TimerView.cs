@@ -23,6 +23,12 @@ public class TimerView : MonoBehaviour
             .AsObservable<EndLevelSignal>()
             .Subscribe(_ => m_timer.Dispose())
             .AddTo(this);
+
+        ObservableSignal
+            .AsObservable<LoadLevelSignal>()
+            .DelayFrame(1)
+            .Subscribe(config => SetTimer(config.LvlConfig.time))
+            .AddTo(this);
     }
 
     private void BindTimer()
@@ -51,5 +57,10 @@ public class TimerView : MonoBehaviour
             .Where(data => data.NextState.Equals(GameState.Play))
             .Subscribe(data => StartTimer())
             .AddTo(this);
+    }
+
+    public void SetTimer(int s) 
+    {
+        m_sessionDuration = s;
     }
 }

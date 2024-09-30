@@ -2,7 +2,6 @@ using System;
 using Tools;
 using UniRx;
 using UnityEngine;
-using Zenject;
 
 public class BallPresenter : Presenter, IBallPresenter, IDisposable
 {
@@ -16,8 +15,8 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
     private float m_initialAngle;
     private Rigidbody2D m_rigidbody;
     public bool IsExtraBall { get; set; }
-
-    private Vector3 StartPosition { get; set; } 
+    private float m_minimumVelocity;
+    private Vector2 m_velocity;
 
     public BallPresenter()
     {
@@ -62,21 +61,43 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
                     }
                 })
             .AddTo(m_compositeDisposable);
+
+        ObservableSignal
+            .AsObservable<ResetBallSignal>()
+            .Subscribe(data => ResetBall(data.Swipe))
+            .AddTo(m_compositeDisposable);
+
+        Observable.EveryFixedUpdate()
+            .Where(_ => Active.Value)
+            .Subscribe(_ => 
+            {
+                var velocity = m_rigidbody.velocity;
+                if (velocity.magnitude < m_minimumVelocity)
+                {
+                    float boostMultiplier = Mathf.Max(m_minimumVelocity, velocity.magnitude + 0.1f);
+                    m_rigidbody.velocity = velocity.normalized * boostMultiplier;
+                }
+                if (Mathf.Abs(velocity.y) < 0.05f)
+                {
+                    velocity.y += (velocity.y > 0 ? 0.1f : -0.1f);
+                    m_rigidbody.velocity = velocity.normalized * m_rigidbody.velocity.magnitude;
+                }
+            })
+            .AddTo(m_compositeDisposable);
+
     }
 
-    public void Init(float initialForce, int power, Vector3 startPosition, float initialAngle, Rigidbody2D rigidbody, bool isExtraBall)
+    public void Init(float initialForce, int power, float initialAngle, Rigidbody2D rigidbody, bool isExtraBall)
     {
         InitialForce = initialForce;
         Power = power;
-        StartPosition = startPosition;
         m_initialAngle = initialAngle;
         m_rigidbody = rigidbody;
         IsExtraBall = isExtraBall;
     }
 
     public void AddInitialForce(Vector2 swipe)
-    {
-        
+    {     
         var force = (swipe == Vector2.zero) ? new Vector2(Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce, Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce)
             : swipe.normalized * InitialForce;
         
@@ -99,7 +120,6 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
         m_rigidbody.AddForce(bounceForce);
     }
 
-    private Vector2 m_velocity;
     private void ProcessPause() 
     {
         m_velocity = m_rigidbody.velocity;
@@ -121,6 +141,11 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
     public void UpdateScore(int score) 
     {
         Score.OnNext(score);
+    }
+    public void ResetBall(Vector2 swipe)
+    {
+        Active.Value = true;
+        AddInitialForce(swipe);
     }
 }
 public class BallActiveSignal : SignalData 
@@ -147,7 +172,8 @@ public interface IBallPresenter
     Subject<int> Score { get; }
     void AddInitialForce(Vector2 swipe);
     void CalculateBounceVelocityPaddle(Collision2D collider, float maxPaddleBounceAngle);
-    void Init(float m_initialForce, int m_power, Vector3 startPosition, float m_initialAngle, Rigidbody2D rigidbody2D, bool isExtraBall);
+    void Init(float m_initialForce, int m_power, float m_initialAngle, Rigidbody2D rigidbody2D, bool isExtraBall);
     void UpdateScore(int score);
     bool IsExtraBall { get; set; }
+    void ResetBall(Vector2 swipe);
 }

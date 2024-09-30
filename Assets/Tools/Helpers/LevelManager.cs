@@ -73,11 +73,26 @@ namespace Tools
             }
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        public ILevelConfig CurrentLevelConfig(int level) 
+        {
+            if (m_levelConfigs == null) 
+            {
+                throw new NullReferenceException();
+            }
+            if (level <= 0 || level >= m_levelConfigs.Count) 
+            {
+                throw new ArgumentException();
+            }
+
+            return m_levelConfigs[level];
+        }
     }
 
     public interface ILevelManager 
     {
         IObservable<Unit> Init<T>(string label) where T: ILevelConfig;
+        ILevelConfig CurrentLevelConfig(int level);
     }
     public interface ILevelConfig { }
 }
