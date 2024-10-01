@@ -2,6 +2,7 @@ using System;
 using Tools;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public class BallPresenter : Presenter, IBallPresenter, IDisposable
 {
@@ -62,11 +63,6 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
                 })
             .AddTo(m_compositeDisposable);
 
-        ObservableSignal
-            .AsObservable<ResetBallSignal>()
-            .Subscribe(data => ResetBall(data.Swipe))
-            .AddTo(m_compositeDisposable);
-
         Observable.EveryFixedUpdate()
             .Where(_ => Active.Value)
             .Subscribe(_ => 
@@ -84,7 +80,6 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
                 }
             })
             .AddTo(m_compositeDisposable);
-
     }
 
     public void Init(float initialForce, int power, float initialAngle, Rigidbody2D rigidbody, bool isExtraBall)
@@ -95,7 +90,6 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
         m_rigidbody = rigidbody;
         IsExtraBall = isExtraBall;
     }
-
     public void AddInitialForce(Vector2 swipe)
     {     
         var force = (swipe == Vector2.zero) ? new Vector2(Mathf.Sin(m_initialAngle * Mathf.Deg2Rad) * InitialForce, Mathf.Cos(m_initialAngle * Mathf.Deg2Rad) * InitialForce)
@@ -142,8 +136,10 @@ public class BallPresenter : Presenter, IBallPresenter, IDisposable
     {
         Score.OnNext(score);
     }
+
     public void ResetBall(Vector2 swipe)
     {
+
         Active.Value = true;
         AddInitialForce(swipe);
     }

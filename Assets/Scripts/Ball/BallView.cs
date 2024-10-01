@@ -75,6 +75,11 @@ public class BallView : MonoBehaviour
             .AsObservable<EndLevelSignal>()
             .Subscribe(_ => Ball.Active.Value = false)
             .AddTo(this);
+
+        ObservableSignal
+            .AsObservable<ResetBallSignal>()
+            .Subscribe(data => ResetBall(data.Swipe))
+            .AddTo(this);
     }
 
     public void Init(bool isExtraBall = false)
