@@ -11,9 +11,11 @@ namespace Tools
     {
         private CompositeDisposable m_compositeDisposable;
         private bool m_isDisposed = false;
+        private string m_current;
         public SceneLoading()
         {
             m_compositeDisposable = new CompositeDisposable();
+            m_current = "Loading";
         }
 
         public virtual IObservable<float> LoadMeta() => LoadScene("Meta");
@@ -26,6 +28,13 @@ namespace Tools
             var sceneObservable = Load(scene);
             sceneObservable
                 .Do(progress => Debug.Log(progress))
+                .DoOnCompleted(() => 
+                { 
+                    string temp = m_current; 
+                    m_current = scene;
+                    Debug.Log($"Changing scene from {temp} to {scene}");
+                    ObservableSignal.Broadcast(new SceneChangeSignal(scene, temp)); 
+                })
                 .Subscribe()
                 .AddTo(m_compositeDisposable);
             return sceneObservable;
@@ -71,5 +80,16 @@ namespace Tools
     {
         IObservable<float> LoadCore();
         IObservable<float> LoadMeta();
+    }
+    public class SceneChangeSignal : SignalData 
+    {
+        public readonly string NextScene;
+        public readonly string PreviousScene;
+
+        public SceneChangeSignal(string nextScene, string previousScene)
+        {
+            NextScene = nextScene;
+            PreviousScene = previousScene;
+        }
     }
 }
