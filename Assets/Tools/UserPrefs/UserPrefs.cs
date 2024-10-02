@@ -7,19 +7,24 @@ using UnityEngine;
 using Zenject;
 
 using Unity.Services.CloudSave;
+using UniRx;
 
 
 namespace Tools
 {
     public class UserPrefs : IUserPrefs, IInitializable
-    {
+    { 
         private const string UserPrefsKey = "UserPrefsKey";
         private JObject m_jsonObject;
         public bool IsDirty { get; set; }
         public bool IsInit { get; private set; }
         public string Json => m_jsonObject.ToString();
 
-        public event Action OnUpdate;
+        private Subject<IUserPrefs> m_subject = new Subject<IUserPrefs>();
+        public IObservable<IUserPrefs> AsObservable => m_subject;
+
+        private Subject<KeyValuePair<string,object>> m_subjectKVP = new Subject<KeyValuePair<string, object>>();
+        IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair => m_subjectKVP;
 
         public void Initialize()
         {
@@ -118,7 +123,8 @@ namespace Tools
             }
             m_jsonObject[key] = JToken.FromObject(value);
             SaveLocal();
-            OnUpdate?.Invoke();
+            m_subject.OnNext(this);
+            m_subjectKVP.OnNext(new KeyValuePair<string, object>(key, value));
         }
 
         public bool RemoveKey(string key) => m_jsonObject.Remove(key);
@@ -189,6 +195,11 @@ namespace Tools
                 { "playerData", up.Json }
             });
         }
+
+        public IDisposable Subscribe(IObserver<IUserPrefs> observer)
+        {
+            throw new NotImplementedException();
+        }
 #endif
     }
 
@@ -253,7 +264,8 @@ namespace Tools
         /// </summary>
         string Json { get; }
 
-        event Action OnUpdate;
+        IObservable<IUserPrefs> AsObservable { get; }
+        IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair { get; }
     }
 
     public class UserPrefsUpdate : SignalData
