@@ -18,7 +18,9 @@ namespace Tools
         public int PopupsCount => m_presenter.Count;
 
         [Inject] private Popup.Factory m_factory;
-            
+
+        private const string m_popupSfx = "Swoosh";
+
         protected override void Awake()
         {
             base.Awake();
@@ -31,7 +33,7 @@ namespace Tools
             result.CheckForDebug();
             if (result.IsSuccess) 
             {
-                ObservableSignal.Broadcast(new PopupSignal(typeof(T), State.Opening));
+                ObservableSignal.Broadcast(new AudioSignal(m_popupSfx));
             }
             return (T)result.Obj;
         }
@@ -42,7 +44,7 @@ namespace Tools
             result.CheckForDebug();
             if (result.IsSuccess)
             {
-                ObservableSignal.Broadcast(new PopupSignal(popup.GetType(), State.Closing));
+                ObservableSignal.Broadcast(new AudioSignal(m_popupSfx));
             }
         }
     
@@ -77,15 +79,15 @@ namespace Tools
         }
     }
 
-    public class PopupSignal : SignalData 
-    {
-        public readonly Type PopupType;
-        public readonly IPopup.State State;
+    //public class PopupSignal : SignalData 
+    //{
+    //    public readonly Type PopupType;
+    //    public readonly IPopup.State State;
 
-        public PopupSignal(Type popupType, State state)
-        {
-            PopupType = popupType;
-            State = state;
-        }
-    }
+    //    public PopupSignal(Type popupType, State state)
+    //    {
+    //        PopupType = popupType;
+    //        State = state;
+    //    }
+    //}
 }

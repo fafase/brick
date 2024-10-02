@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class SignalHelpers : MonoBehaviour
+namespace Tools
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EndLevelSignal : SignalData
     {
-        
-    }
+        public readonly bool IsWinning;
+        public readonly LossReason Reason;
+        public EndLevelSignal(bool isWinning)
+        {
+            IsWinning = isWinning;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public EndLevelSignal(bool isWinning, LossReason reason)
+        {
+            IsWinning = isWinning;
+            Reason = reason;
+        }
+
+        public enum LossReason
+        {
+            TimeUp, NoBall
+        }
     }
 }

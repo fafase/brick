@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 208381376830527331}
   - component: {fileID: 7324148350344804486}
+  - component: {fileID: -4739910857443403233}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11639825105d1b0439a071f6197d24d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_music: {fileID: 8300000, guid: aab73a6c8a8b29b4d8c466a6ae59df13, type: 3}
   m_maxVolume: 0.8
   m_volumeIncreaseSpeed: 1
   m_audioSourceContainer: {fileID: 2642675789685567933}
@@ -195,3 +195,25 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 01b8569acb6a5574ebe75bb2f1b2a768, type: 3}
   - name: Bloop
     audioClip: {fileID: 8300000, guid: 98348f537fdf8c644b6606dc4e581304, type: 3}
+--- !u!114 &-4739910857443403233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5303868377717009000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29e0205059d849448cc025bc585c35e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxVolume: 0.8
+  m_volumeIncreaseSpeed: 1
+  m_audioSourceContainer: {fileID: 0}
+  m_audioData:
+  - name: Idle
+    audioClip: {fileID: 8300000, guid: aab73a6c8a8b29b4d8c466a6ae59df13, type: 3}
+  - name: Win
+    audioClip: {fileID: 8300000, guid: 792222077f73b33458df24d4d74fcd94, type: 3}
+  - name: Lose
+    audioClip: {fileID: 8300000, guid: d9e0a44948071034b93902decc5e20d2, type: 3}
