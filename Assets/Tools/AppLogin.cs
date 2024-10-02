@@ -6,6 +6,7 @@ using Unity.Services.Authentication.PlayerAccounts;
 using Unity.Services.Core;
 //using Unity.Services.RemoteConfig;
 using UnityEngine;
+using Unity.Services.CloudSave;
 
 namespace Tools
 {
@@ -23,6 +24,7 @@ namespace Tools
                 .ObserveOnMainThread()
                 .Do(_ => Debug.Log("Initializing services"))
                 .SelectMany(_ => InitializeAuthentication())
+                .SelectMany(_ => InitializeCloudSaving())
                 .SelectMany(_ =>
                 {
                     ILoader loader = GetComponent<ILoader>();
@@ -48,6 +50,8 @@ namespace Tools
                 .ToObservable()
                 .ObserveOnMainThread();
         }
+
+        private IObservable<Unit> InitializeCloudSaving() => UnityServices.InitializeAsync().ToObservable().ObserveOnMainThread();
 
         private void OnAccountSignedIn()
         {
