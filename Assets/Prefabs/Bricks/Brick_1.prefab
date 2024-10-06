@@ -160,7 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41bd1c78460bf444bbff2b016a0ad79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_effect: 2
+  m_effect: 3
   m_scaleAmount: 1
   m_duration: 0.25
-  m_delay: 0
+  m_delay: 0.05
+  m_scaleUpSplash: 1.1

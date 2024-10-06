@@ -10,9 +10,9 @@ namespace Tools
         [SerializeField] private float m_scaleAmount = 1f;
         [SerializeField] private float m_duration = 0.5f;
         [SerializeField] private float m_delay = 0.0f;
+        [SerializeField] private float m_scaleUpSplash = 1.1f;
 
         private IDisposable m_animationSubscription;
-        private Vector3 m_initialScale;
 
         protected virtual void OnDestroy()
         {
@@ -39,6 +39,10 @@ namespace Tools
                             break;
                         case Effect.Disappear:
                             Disappear()
+                                .Subscribe();
+                            break;
+                        case Effect.Splash:
+                            Splash()
                                 .Subscribe();
                             break;
                     }
@@ -74,12 +78,12 @@ namespace Tools
         {
             return Observable.Create<Unit>(observer => 
             {
-                m_initialScale = transform.localScale;
+                Vector3 initialScale = transform.localScale;
                 LeanTween.scale(gameObject, new Vector3(m_scaleAmount, m_scaleAmount, 1f), m_duration)
                  .setEase(LeanTweenType.easeInOutQuad)
                  .setOnComplete(() =>
                  {
-                     LeanTween.scale(gameObject, m_initialScale, m_duration)
+                     LeanTween.scale(gameObject, initialScale, m_duration)
                          .setEase(LeanTweenType.easeInOutQuad)
                          .setOnComplete(()=> 
                          {
@@ -91,7 +95,29 @@ namespace Tools
             });
         }
 
-        enum Effect { None, Blob, Disappear }
+        protected virtual IObservable<Unit> Splash()
+        {
+            return Observable.Create<Unit>(observer =>
+            {
+                Vector3 scaleUpTarget = transform.localScale * m_scaleUpSplash;
+
+                LeanTween.scale(gameObject, scaleUpTarget, m_duration / 2f)
+                 .setEase(LeanTweenType.easeInOutQuad)
+                 .setOnComplete(() =>
+                 {
+                     LeanTween.scale(gameObject, Vector3.zero, m_duration)
+                         .setEase(LeanTweenType.easeInOutQuad)
+                         .setOnComplete(() =>
+                         {
+                             observer.OnNext(Unit.Default);
+                             observer.OnCompleted();
+                         });
+                 });
+                return Disposable.Empty;
+            });
+        }
+
+        enum Effect { None, Blob, Disappear, Splash }
     }
     public interface ILeanFX
     {

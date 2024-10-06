@@ -14,6 +14,8 @@ public class BrickView : View<BrickPresenter>, IDamage, IScore
 
     public IBrick Brick => m_presenter;
     public BrickType BrickType => m_type;
+
+    private bool m_isDestroyed = false;
     void Start() 
     { 
         m_presenter.Init(m_health, transform.position, m_type);
@@ -38,6 +40,11 @@ public class BrickView : View<BrickPresenter>, IDamage, IScore
 
     private void DestroyBrick()
     {
+        if (m_isDestroyed) 
+        {
+            return;
+        }
+        m_isDestroyed = true;  
         if (m_destructionFX != null)
         {
             Instantiate(m_destructionFX, transform.position, Quaternion.identity);
