@@ -335,21 +335,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1762894286}
     m_Modifications:
-    - target: {fileID: 58254401637978472, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 58254401637978472, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3704931938401202559, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
       propertyPath: m_Name
       value: Paddle
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704931938401202559, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6281222626081461676, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
       propertyPath: m_leftDeck
@@ -359,14 +347,6 @@ PrefabInstance:
       propertyPath: m_rightDeck
       value: 
       objectReference: {fileID: 1124661017}
-    - target: {fileID: 8253910032688887129, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8810460562754392457, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.338
-      objectReference: {fileID: 0}
     - target: {fileID: 9031176136038720615, guid: ebc7ea988eab226498e9ac50df5168c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
