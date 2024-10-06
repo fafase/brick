@@ -26,7 +26,7 @@ public class PaddleBlob : BlobEffect
 
         m_collisionDisposable = this.OnCollisionEnter2DAsObservable()
                     .Where(collider => collider.gameObject.CompareTag(Tags.BALL))
-                    .Subscribe(_ => PlayBlobAnimation())
+                    .Subscribe(_ => Blob().Subscribe().AddTo(this))
                     .AddTo(this);
     }
 

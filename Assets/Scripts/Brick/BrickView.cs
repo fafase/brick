@@ -1,6 +1,6 @@
+using Tools;
 using UniRx;
 using UnityEngine;
-using Tools;
 using Zenject;
 
 public class BrickView : View<BrickPresenter>, IDamage, IScore
@@ -15,7 +15,7 @@ public class BrickView : View<BrickPresenter>, IDamage, IScore
     public IBrick Brick => m_presenter;
     public BrickType BrickType => m_type;
     void Start() 
-    {
+    { 
         m_presenter.Init(m_health, transform.position, m_type);
         m_presenter.Health
             .Where(value => value <= 0)
@@ -42,7 +42,16 @@ public class BrickView : View<BrickPresenter>, IDamage, IScore
         {
             Instantiate(m_destructionFX, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+        if (TryGetComponent<ILeanFX>(out ILeanFX fx))
+        {
+            fx.PlayAnimation().Subscribe(_ => { },
+                () => Destroy(gameObject))
+                .AddTo(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public class Factory : PlaceholderFactory<BrickView, BrickView> { }
 }
