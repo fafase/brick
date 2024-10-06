@@ -23,10 +23,6 @@ public class BallView : MonoBehaviour
 
     private Transform m_startTr;
 
-    private const string s_brickTag = "Brick";
-    private const string s_paddleTag = "Paddle";
-    private const string s_deathZone = "Death";
-
     private float MaxPaddleBounceAngle => m_maxPaddleBounceAngle * Mathf.Deg2Rad;
     private IBallPresenter Ball { get;  set; }
 
@@ -40,7 +36,7 @@ public class BallView : MonoBehaviour
         var collision = this.OnCollisionEnter2DAsObservable();
 
         collision
-            .Where(collider => collider.gameObject.CompareTag(s_paddleTag))
+            .Where(collider => collider.gameObject.CompareTag(Tags.PADDLE))
             .Subscribe(collider =>
             {
                 Ball.CalculateBounceVelocityPaddle(collider, MaxPaddleBounceAngle);
@@ -49,12 +45,12 @@ public class BallView : MonoBehaviour
             .AddTo(this);
 
         collision
-            .Where(collider => collider.gameObject.CompareTag(s_brickTag))
+            .Where(collider => collider.gameObject.CompareTag(Tags.BRICK))
             .Subscribe(BrickCollision)
             .AddTo(this);
 
         collision
-            .Where(collider => collider.gameObject.CompareTag(s_deathZone))
+            .Where(collider => collider.gameObject.CompareTag(Tags.DEATH))
             .Subscribe(_ =>
             {
                 if (Ball.IsExtraBall) 
