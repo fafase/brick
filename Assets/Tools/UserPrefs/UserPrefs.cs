@@ -24,7 +24,7 @@ namespace Tools
         public IObservable<IUserPrefs> AsObservable => m_subject;
 
         private Subject<KeyValuePair<string,object>> m_subjectKVP = new Subject<KeyValuePair<string, object>>();
-        IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair => m_subjectKVP;
+        public IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair => m_subjectKVP;
 
         public void Initialize()
         {
