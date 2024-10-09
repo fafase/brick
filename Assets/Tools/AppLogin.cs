@@ -1,12 +1,14 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 using UniRx;
 using Unity.Services.Authentication;
 using Unity.Services.Authentication.PlayerAccounts;
+using Unity.Services.CloudSave;
 using Unity.Services.Core;
 //using Unity.Services.RemoteConfig;
 using UnityEngine;
-using Unity.Services.CloudSave;
+using UnityEngine.Assertions;
 
 namespace Tools
 {
@@ -24,10 +26,12 @@ namespace Tools
                 .ObserveOnMainThread()
                 .Do(_ => Debug.Log("Initializing services"))
                 .SelectMany(_ => InitializeAuthentication())
-                .SelectMany(_ => InitializeCloudSaving())
+                .SelectMany(_ => InitializeUnityServices())
+                .SelectMany(_ => InitializeCloudSave().Do(save => ObservableSignal.Broadcast(new CloudSaveSignal(save))))
                 .SelectMany(_ =>
                 {
                     ILoader loader = GetComponent<ILoader>();
+                    Assert.IsNotNull(loader);
                     return loader.InitializeAll();
                 })
                 .DoOnCompleted(() => 
@@ -51,7 +55,7 @@ namespace Tools
                 .ObserveOnMainThread();
         }
 
-        private IObservable<Unit> InitializeCloudSaving() => UnityServices.InitializeAsync().ToObservable().ObserveOnMainThread();
+        private IObservable<Unit> InitializeUnityServices() => UnityServices.InitializeAsync().ToObservable().ObserveOnMainThread();
 
         private void OnAccountSignedIn()
         {
@@ -91,8 +95,31 @@ namespace Tools
         ////            break;
         ////    }
         ////}
+        ///
+        private IObservable<string> InitializeCloudSave() 
+        {
+            return Observable.Create<string>(observer =>
+            {
+                var task = CloudSave.GetPlayerData();
+                task.ContinueWith(save => 
+                {
+                    observer.OnNext(save);
+                    observer.OnCompleted();
+                });
+                return Disposable.Empty;
+            });
+        }
+
     }
     public class LoginSignalData : SignalData
     {
+    }
+    public class CloudSaveSignal : SignalData
+    {
+        public readonly string Json;
+        public CloudSaveSignal(string json)
+        {
+            Json = json;
+        }
     }
 }

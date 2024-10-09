@@ -8,11 +8,12 @@ using Zenject;
 
 using Unity.Services.CloudSave;
 using UniRx;
+using Newtonsoft.Json;
 
 
 namespace Tools
 {
-    public class UserPrefs : IUserPrefs, IInitializable
+    public class UserPrefs : Presenter, IUserPrefs, IInitializable
     { 
         private const string UserPrefsKey = "UserPrefsKey";
         private JObject m_jsonObject;
@@ -25,12 +26,16 @@ namespace Tools
 
         private Subject<KeyValuePair<string,object>> m_subjectKVP = new Subject<KeyValuePair<string, object>>();
         public IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair => m_subjectKVP;
-
+        public IDictionary<string, object> ToDictionary() => JsonConvert.DeserializeObject<Dictionary<string, object>>(Json);
         public void Initialize()
         {
             string pp = PlayerPrefs.GetString(UserPrefsKey, "{}");
             m_jsonObject = JObject.Parse(pp);
             IsInit = true;
+            ObservableSignal
+                .AsObservable<CloudSaveSignal>()
+                .Subscribe(data => SetUserPrefsFromRemote(data.Json))
+                .AddTo(m_compositeDisposable);
         }
 
         private bool GetValue<T>(string key, out JToken token)
@@ -139,7 +144,6 @@ namespace Tools
             m_jsonObject = JObject.Parse("{}");
             SaveLocal();
         }
-
 
         public bool SetUserPrefsFromRemote(string remoteUserPrefs)
         {
@@ -266,6 +270,7 @@ namespace Tools
 
         IObservable<IUserPrefs> AsObservable { get; }
         IObservable<KeyValuePair<string, object>> AsObservableKeyValuePair { get; }
+        IDictionary<string,object> ToDictionary();
     }
 
     public class UserPrefsUpdate : SignalData
