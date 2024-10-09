@@ -20,7 +20,8 @@ public class ScoreView : MonoBehaviour
         m_scoreTxt = GetComponent<TextMeshProUGUI>();
         Score = new ReactiveProperty<int>();
         Score
-            .Subscribe(score => m_scoreTxt.text = $"SCORE\n{score}")
+            .Select(score => $"SCORE\n{score}")
+            .SubscribeToText(m_scoreTxt)
             .AddTo(this);
 
         ObservableSignal.AsObservable<BallScoreSignal>()

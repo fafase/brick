@@ -42,13 +42,14 @@ public class TimerView : MonoBehaviour
                 .Select(elapsed => m_remainingTime = m_sessionDuration - (int)elapsed)
                 .TakeWhile(remaining => remaining >= 0)
                 .DelayFrame(1)
-                .Subscribe(remainingTime => m_timerTxt.text = $"{remainingTime}s",
-                () =>
+                .Select(remainingTime =>$"{remainingTime}s")
+                .DoOnCompleted(() => 
                 {
                     m_timer.Dispose();
                     m_remainingTime = 0;
                     ObservableSignal.Broadcast(new EndLevelSignal(false, EndLevelSignal.LossReason.TimeUp));
                 })
+                .SubscribeToText(m_timerTxt)
                 .AddTo(this);
         }
 
