@@ -184,7 +184,7 @@ namespace Tools
 
 #if UNITY_EDITOR
         [MenuItem("Tools/Delete User prefs")]
-        static async void DoSomething()
+        static async void DeleteUserPrefs()
         {
             IUserPrefs up = new UserPrefs();
             ((IInitializable)up).Initialize();
