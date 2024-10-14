@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_popupManager: {fileID: 7153503878723307478, guid: 23cf3b80d71b63041a25d8929e9513fe, type: 3}
+  m_rewardManager: {fileID: 11400000, guid: f7c63ed2eb8a52341a6aff108b8fcc95, type: 2}
