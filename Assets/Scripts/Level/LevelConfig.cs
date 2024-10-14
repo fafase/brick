@@ -1,14 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Tools;
-
-[Serializable]
-public class Reward
-{
-    public string rewardType { get; set; }
-    public int amount { get; set; }
-}
-
 [Serializable]
 public class LevelConfig : ILevelConfig
 {

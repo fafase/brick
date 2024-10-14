@@ -91,8 +91,19 @@ namespace Tools
 
     public interface ILevelManager 
     {
-        IObservable<Unit> Init<T>(string label) where T: ILevelConfig;
+        IObservable<Unit> Init<T>(string label) where T : ILevelConfig;
         ILevelConfig CurrentLevelConfig(int level);
     }
-    public interface ILevelConfig { }
+
+    public interface ILevelConfig 
+    {
+        List<Reward> reward { get; set; }
+    }
+
+    [Serializable]
+    public class Reward
+    {
+        public string rewardType { get; set; }
+        public int amount { get; set; }
+    }
 }
