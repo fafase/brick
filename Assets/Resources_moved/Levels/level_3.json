@@ -2,7 +2,7 @@
   "name": "level_3",
   "version": "1.0.0",
   "bundle": 1,
-  "difficulty" :  0,
+  "difficulty": 0,
   "levelContent": [
     [ 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0 ],
@@ -28,7 +28,8 @@
   "ballAttempt": 3,
   "reward": [
     {
-      "coins" :  50
+      "rewardType": "coins",
+      "amount": 50
     }
   ]
 }

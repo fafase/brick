@@ -28,7 +28,8 @@
   "ballAttempt": 3,
   "reward": [
     {
-      "coins" :  50
+      "rewardType": "coins",
+      "amount" :  50
     }
   ]
 }
