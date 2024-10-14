@@ -362,7 +362,7 @@ TextureImporter:
         width: 112
         height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 45, y: 0, z: 45, w: 0}
       outline: []
       physicsShape: []
@@ -370,6 +370,27 @@ TextureImporter:
       bones: []
       spriteID: f7f52f54b720c174d9b38a17d080c86a
       internalID: -713636145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: breakout_sprites(no shadow)_11
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 247
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69467d9eddd99dd4ab611af129016a29
+      internalID: 1085820869
       vertices: []
       indices: 
       edges: []
