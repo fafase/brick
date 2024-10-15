@@ -1,7 +1,6 @@
 using System;
 using UniRx;
 using UnityEngine;
-using Tools;
 using Zenject;
 
 namespace Tools

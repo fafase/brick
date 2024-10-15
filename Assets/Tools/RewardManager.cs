@@ -11,6 +11,7 @@ using System;
 public class RewardManager : ScriptableObject, IReward, IMetaLoader, IInitializable
 {
     [Inject] private IUserPrefs m_userPrefs;
+    [Inject] private IPlayer m_player;
 
     private CompositeDisposable m_compositeDisposable = new CompositeDisposable();
     private ILevelConfig m_currentLevel;
@@ -35,9 +36,21 @@ public class RewardManager : ScriptableObject, IReward, IMetaLoader, IInitializa
 
     public async UniTask OnMetaLoad()
     {
-        if (m_userPrefs.TryGetObject<List<Reward>>(s_storageKey, out var rewards))
+        if (m_userPrefs.TryGetObject(s_storageKey, out List<RewardBundle> rewards))
         {
-            
+            if(rewards.Count > 0) 
+            {
+                foreach(RewardBundle bundle in rewards) 
+                {
+                    switch (bundle.rewardType)
+                    { 
+                        case RewardType.Coins:
+                            m_player.AddCoinInventory(bundle.amount);
+                            break;
+                    }
+                }
+            }
+            rewards.Clear();
         }
         await Task.Delay(1);
     }
@@ -85,6 +98,11 @@ public class RewardManager : ScriptableObject, IReward, IMetaLoader, IInitializa
     private void RetrieveStorageBundle() 
     {
     }
+}
+
+public static class RewardType 
+{
+    public const string Coins = "coins";
 }
 
 [Serializable]

@@ -5,6 +5,6 @@ public class ZenjectMetaContext : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<CoinPresenter>().FromNew().AsSingle().NonLazy();
+       
     }
 }

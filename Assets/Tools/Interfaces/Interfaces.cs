@@ -15,6 +15,7 @@ namespace Tools
 
         void IncreaseLevel();
         void SetLevel(int level);
+        void AddCoinInventory(int amount);
     }
 
     public interface IMetaLoader

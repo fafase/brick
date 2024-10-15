@@ -11,6 +11,7 @@ public class ZenjectProjectContext : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<LifePresenter>().FromNew().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<CoinPresenter>().FromNew().AsSingle().NonLazy();  
         Container.BindInterfacesAndSelfTo<UserPrefs>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<Player>().FromNew().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<LevelManager>().FromNew().AsSingle().NonLazy();

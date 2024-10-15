@@ -1,22 +1,20 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Tools;
 using UniRx;
-using Unity.Services.CloudSave;
 using Zenject;
 
 
 public class Player : Presenter, IPlayer, IInitializable
 {
     [Inject] private IUserPrefs m_userPrefs;
+    [Inject] private ICoin m_coins;
+
 
     private int m_level;
     public int Level => m_level;
     private bool m_dirtySave;
     private const string m_levelKey = "level";
+    private const string m_coinKey = "coins";
 
     public void Initialize()
     {
@@ -70,6 +68,13 @@ public class Player : Presenter, IPlayer, IInitializable
         {
             m_level = 1;
         }
+    }
+
+    public void AddCoinInventory(int amount) 
+    {
+        if (amount <= 0) { throw new System.Exception("Attempt to add negative or 0 coin"); }
+        m_coins.AddCoins(amount);
+        m_userPrefs.SetValue(m_coinKey, m_coins.CoinAmount);
     }
 }
 
