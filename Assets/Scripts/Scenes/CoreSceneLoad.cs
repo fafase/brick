@@ -69,13 +69,3 @@ public class CoreSceneLoad : MonoBehaviour
         });
     }
 }
-
-public class LoadLevelSignal : SignalData 
-{
-    public readonly LevelConfig LvlConfig;
-
-    public LoadLevelSignal(LevelConfig lvlConfig)
-    {
-        LvlConfig = lvlConfig;
-    }
-}

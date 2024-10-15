@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Unity.Services.CloudSave;
+using UnityEngine;
 
 public static class CloudSave 
 {
@@ -11,6 +12,7 @@ public static class CloudSave
     {
         try
         {
+            Debug.Log($"Saving cloud user prefs {json}");
             Dictionary<string, string> result = await CloudSaveService.Instance
                  .Data.Player
                  .SaveAsync(new Dictionary<string, object>
@@ -21,7 +23,7 @@ public static class CloudSave
         }
         catch (Exception ex)
         {
-            UnityEngine.Debug.LogError($"Direct SaveAsync error: {ex}");
+            Debug.LogError($"Direct SaveAsync error: {ex}");
             return new Dictionary<string, string>();
         }
     }
@@ -33,6 +35,8 @@ public static class CloudSave
         {
             if (playerData.TryGetValue(PLAYER_DATA, out var item))
             {
+                string json = item.Value.GetAsString();
+                Debug.Log($"Retrieved cloud user prefs {json}");
                 return item.Value.GetAsString();
             }
         }

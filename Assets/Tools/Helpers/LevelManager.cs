@@ -1,3 +1,4 @@
+using Codice.CM.WorkspaceServer.Tree;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -87,23 +88,5 @@ namespace Tools
 
             return m_levelConfigs[level];
         }
-    }
-
-    public interface ILevelManager 
-    {
-        IObservable<Unit> Init<T>(string label) where T : ILevelConfig;
-        ILevelConfig CurrentLevelConfig(int level);
-    }
-
-    public interface ILevelConfig 
-    {
-        List<Reward> reward { get; set; }
-    }
-
-    [Serializable]
-    public class Reward
-    {
-        public string rewardType { get; set; }
-        public int amount { get; set; }
     }
 }

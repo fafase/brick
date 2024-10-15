@@ -21,4 +21,15 @@ namespace Tools
             TimeUp, NoBall
         }
     }
+    public class LoadLevelSignal : SignalData
+    {
+        public readonly LevelConfig LvlConfig;
+
+        public LoadLevelSignal(LevelConfig lvlConfig)
+        {
+            LvlConfig = lvlConfig;
+        }
+    }
+
+    public class MetaLoaderSignal : SignalData { }
 }

@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using UniRx;
 
 namespace Tools
@@ -13,5 +15,22 @@ namespace Tools
 
         void IncreaseLevel();
         void SetLevel(int level);
+    }
+
+    public interface IMetaLoader
+    {
+        bool WaitForCompletion { get; }
+        UniTask OnMetaLoad();
+    }
+
+    public interface ILevelManager
+    {
+        IObservable<Unit> Init<T>(string label) where T : ILevelConfig;
+        ILevelConfig CurrentLevelConfig(int level);
+    }
+
+    public interface ILevelConfig
+    {
+        List<Reward> reward { get; set; }
     }
 }

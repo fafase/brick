@@ -1,10 +1,8 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading.Tasks;
 using UniRx;
 using Unity.Services.Authentication;
 using Unity.Services.Authentication.PlayerAccounts;
-using Unity.Services.CloudSave;
 using Unity.Services.Core;
 //using Unity.Services.RemoteConfig;
 using UnityEngine;

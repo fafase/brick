@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using Tools;
-using UniRx;
 using UnityEngine;
 
 public class MetaLoader : MonoBehaviour
@@ -13,7 +11,7 @@ public class MetaLoader : MonoBehaviour
     {
         foreach (var loader in m_loaders)
         { 
-            if(loader is ILoader l) 
+            if(loader is IMetaLoader l) 
             {
                 if (l.WaitForCompletion) 
                 {
@@ -27,11 +25,3 @@ public class MetaLoader : MonoBehaviour
         }
     }
 }
-
-public interface ILoader 
-{
-    bool WaitForCompletion { get; }
-    UniTask OnMetaLoad();
-}
-
-public class MetaLoaderSignal : SignalData{ }

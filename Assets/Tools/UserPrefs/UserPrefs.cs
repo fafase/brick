@@ -178,7 +178,9 @@ namespace Tools
 
         private void SaveLocal()
         {
-            PlayerPrefs.SetString(UserPrefsKey, m_jsonObject.ToString());
+            string json = Json;
+            Debug.Log($"Saving UserPrefs locally {json}");
+            PlayerPrefs.SetString(UserPrefsKey, json);
             IsDirty = true;
         }
 
@@ -223,7 +225,7 @@ namespace Tools
         /// <param name="value">Updated value if key is found, else value is defaultValue</param>
         /// <param name="defaultValue">Default value if key is not found</param>
         /// <returns>True if the value is found, else false</returns>
-        bool TryGetObject<T>(string key, out T value, T defaultValue = null) where T : class;
+        bool TryGetObject<T>(string key, out T value, T defaultValue = default(T)) where T : class;
 
         bool TryGetInt(string key, out int value, int defaultValue = 0);
         bool TryGetFloat(string key, out float value, float defaultValue = 0.0f);
