@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using Tools;
 using UniRx;
 using Zenject;
@@ -75,6 +76,13 @@ public class Player : Presenter, IPlayer, IInitializable
         if (amount <= 0) { throw new System.Exception("Attempt to add negative or 0 coin"); }
         m_coins.AddCoins(amount);
         m_userPrefs.SetValue(m_coinKey, m_coins.CoinAmount);
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        string json = m_userPrefs.Json;
+        CloudSave.SendCloudSave(json).Forget();
     }
 }
 
